@@ -3,140 +3,84 @@
 
 #include "Master.h"
 
-//コンストラクタ
+
 Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
 	:mvPosition(initPos)
 	, mpAttachment(nullptr)
 	, mvScale(VGet(1.0f, 1.0f, 1.0f))
 	, mnChangeTextureHandle(-1)
-	, mnRootFrameIndex(-1)              // ★New★
-	, mmInitializeMatrix(MGetIdent())   // ★New★
-{
-	//モデル読み込み
-	//mnHandle = MV1LoadModel(filename.c_str());
-	mnHandle = Master::mpResource->LoadModel(filename.c_str());
+	, mnRootFrameIndex(-1)
+	, mmInitializeMatrix(MGetIdent()) {
+	mnHandle = Master::mpResource->LoadModel(filename.c_str());	//モデル読み込み
 
-	// ★New★
-   // 条件分岐を追加
-	if (isSeparateAnimation)
-	{
-		// 分割アニメーションクラスの生成
-		mpSeparateAnimation = new SeparateModelAnimation(mnHandle);
+	if (isSeparateAnimation) {
+		mpSeparateAnimation = new SeparateModelAnimation(mnHandle);	// 分割アニメーションクラスの生成
 		mpAnimation = nullptr;
 	}
-	else
-	{
-		// 通常アニメーションクラスの生成
-		mpAnimation = new ModelAnimation(mnHandle);
+	else {
+		mpAnimation = new ModelAnimation(mnHandle);	// 通常アニメーションクラスの生成
 		mpSeparateAnimation = nullptr;
 	}
-		
-	MV1SetScale(mnHandle, mvScale);	//拡大値の設定
+
+	MV1SetScale(mnHandle, mvScale);	//拡大値の初期化
 }
 
 // アニメーション追加
-void Model::AddAnimation(AnimationState state, std::string filename)
-{
-	if (mpSeparateAnimation != nullptr)
-	{
+void Model::AddAnimation(AnimationState state, std::string filename) {
+	if (mpSeparateAnimation != nullptr) {
 		mpSeparateAnimation->AddAnimation(state, filename);
 	}
 }
 
-// ★New★
+
+//-- アニメーションによる移動を防ぐ関係 --//
 // 初期行列の設定
-void Model::SetupInitializeMatrix(std::string rootFrameName)
-{
-	// 指定されたフレーム名が存在するか探す
-	mnRootFrameIndex = MV1SearchFrame(mnHandle, rootFrameName.c_str());
+void Model::SetupInitializeMatrix(std::string rootFrameName) {
+	mnRootFrameIndex = MV1SearchFrame(mnHandle, rootFrameName.c_str());	// 指定されたフレーム名が存在するか探す
 
 	// フレームが有効なインデックスだった場合
-	if (ValidRootFrameIndex())
-	{
-		// MV1GetFrameLocalMatrix でも出来るが、
-		// 用途的には MV1GetFrameBaseLocalMatrix が合ってそうなので、そっちを使ってみる
-		//mmInitializeMatrix = MV1GetFrameLocalMatrix(mnHandle, mnRootFrameIndex);
-		mmInitializeMatrix = MV1GetFrameBaseLocalMatrix(mnHandle, mnRootFrameIndex);
+	if (ValidRootFrameIndex()) {
+		mmInitializeMatrix = MV1GetFrameBaseLocalMatrix(mnHandle, mnRootFrameIndex);	//ルートボーンの初期姿勢を保存
 	}
 }
 
-// ★New★
 // 有効なフレームかどうかの判定
-bool Model::ValidRootFrameIndex()
-{
-	// MV1SearchFrame では -1 か -2 がエラーで帰ってくるので、その判定用
-	return (mnRootFrameIndex != -1 && mnRootFrameIndex != -2);
+bool Model::ValidRootFrameIndex(){
+	return (mnRootFrameIndex != -1 && mnRootFrameIndex != -2);	// MV1SearchFrame では -1 か -2 がエラーで帰ってくるので、その判定用
 }
 
 
-//デストラクタ
-Model::~Model()
-{
-
-	//アニメーションクラスの破棄
-	if (mpAnimation != nullptr)
-	{
-		delete mpAnimation;
-	}
-
-	// ★New★
-   // 分割アニメーションクラスの破棄
-	if (mpSeparateAnimation != nullptr)
-	{
-		delete mpSeparateAnimation;
-	}
-
-	// アタッチモデルクラスの破棄
-	if (mpAttachment != nullptr)
-	{
-		mpAttachment->SetDeleteFlag(true);
-	}
-
-	// テクスチャを切り替えている場合はそのテクスチャの破棄
-	if (mnChangeTextureHandle != -1)
-	{
-		DeleteGraph(mnChangeTextureHandle);
-	}
-
-	//読み込んだモデルの削除
-	//note : 読み込んだモデルは勝手に破棄してくれないので、必要なくなったら手動で破棄する
-	MV1DeleteModel(mnHandle);
+Model::~Model() {
+	if (mpAnimation != nullptr) delete mpAnimation;							// アニメーションクラスの破棄
+	if (mpSeparateAnimation != nullptr) delete mpSeparateAnimation;			// 分割アニメーションクラスの破棄
+	if (mpAttachment != nullptr) mpAttachment->SetDeleteFlag(true);			// アタッチモデルクラスの破棄
+	if (mnChangeTextureHandle != -1) DeleteGraph(mnChangeTextureHandle);	// テクスチャを切り替えている場合はそのテクスチャの破棄
+	
+	MV1DeleteModel(mnHandle);	//読み込んだモデルの削除
 }
 
-//更新
-void Model::Update(float _deltaTime)
-{
+//更新処理
+void Model::Update(float _deltaTime){
 
-	// ★New★
-	// 固定した行列を一旦解除する
-	if (ValidRootFrameIndex())
-	{
-		MV1ResetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex);
+	
+	//-- 固定した行列を一旦解除する --//
+	//ルートフレームが見つかっている場合
+	if (ValidRootFrameIndex()) {
+		MV1ResetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex);	//固定した行列のリセット
 	}
 
-	if (mpAnimation != nullptr)
-	{
-		//アニメーションの更新
-		mpAnimation->Update();
-	}
-	// ★New★
-	// 分割アニメーションの更新
-	if (mpSeparateAnimation != nullptr)
-	{
-		mpSeparateAnimation->Update(_deltaTime);
-	}
-
-	// ★New★
-   // アニメーションで移動している成分だけを初期値に戻すことで、アニメーションでの移動を無効化しているようにみせる。
-   // note: 実験的な実装なので、上手く行かないアニメーションもあるかも。
-	if (ValidRootFrameIndex())
-	{
-		auto Matrix = MV1GetFrameLocalMatrix(mnHandle, mnRootFrameIndex);
-		MATRIX result = Matrix;
-		result.m[3][0] = mmInitializeMatrix.m[3][0];
+	if (mpAnimation != nullptr) mpAnimation->Update();								//通常アニメーションデータの更新
+	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->Update(_deltaTime);	//分割アニメーションデータの更新
+	
+	
+    // アニメーションで移動している成分だけを初期値に戻すことで、アニメーションでの移動を無効化しているようにみせる。
+    // note: 実験的な実装なので、上手く行かないアニメーションもあるかも。
+	if (ValidRootFrameIndex()){
+		MATRIX Matrix = MV1GetFrameLocalMatrix(mnHandle, mnRootFrameIndex);	//アニメーション + ボーン操作 + IKを含めた現瞬間の姿勢の行列取得
+		Matrix.m[3][0] = mmInitializeMatrix.m[3][0];
 		//result.m[3][1] = mmInitializeMatrix.m[3][1]; // Y成分だけは一旦反映しないようにしておく（反映してもよいが、見た目が少しおかしくなることが多い）
-		result.m[3][2] = mmInitializeMatrix.m[3][2];
-		MV1SetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex, result);
+		Matrix.m[3][2] = mmInitializeMatrix.m[3][2];
+		MV1SetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex, Matrix);
 	}
 
 	//座標設定
@@ -228,26 +172,6 @@ AnimationState Model::GetNowState()
 	}
 
 	return ret;
-}
-
-// ★New★
-// 攻撃モーション中かどうか
-bool Model::IsAnimationAttack()
-{
-	// 通常 or 分割のどちらかを使っているかで分岐
-	// note: （ほぼありえないが）もしどちらも無ければ、特に設定のない最大値で判定するようにしておく
-	AnimationState now = AnimationState::ANIMATION_MAX;
-
-	if (mpAnimation != nullptr)
-	{
-		now = mpAnimation->GetNowState();
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		now = mpSeparateAnimation->GetNowState();
-	}
-
-	return (now == ANIMATION_ATTACK || now == ANIMATION_ATTACK_2 || now == ANIMATION_ATTACK_3);
 }
 
 bool Model::IsAnimationLoopFinish()

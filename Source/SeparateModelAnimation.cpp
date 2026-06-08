@@ -35,7 +35,7 @@ SeparateModelAnimation::~SeparateModelAnimation() {
 }
 
 // 更新処理
-void SeparateModelAnimation::Update(float _deltaTime){
+void SeparateModelAnimation::Update(float _deltaTime) {
 
     //-- モーションのブレンド率を進める --//
 
@@ -50,89 +50,61 @@ void SeparateModelAnimation::Update(float _deltaTime){
     }
 
 
-    //モーションの更新
+    //-- 現アニメーションの処理 --//
     if (mnAnimationIndex != -1) {
         mfNowAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnAnimationIndex);     // 総再生時間の取得
+        mfAnimationTime += DEFAULT_ANIMATION_SPEED * _deltaTime;  // 速度補正追加,アニメーションの秒数を進める
 
-        mfAnimationTime += DEFAULT_ANIMATION_SPEED * mfAnimationSpeedScale;  // 速度補正追加
+        //アニメーションを再生しきった場合
+        if (mfAnimationTime > mfNowAnimTotalTime) {
 
-        // ★New★
-        // fAnimTotalTime をメンバ変数に変更
-        // ループさせる
-        if (mfAnimationTime > mfNowAnimTotalTime)
-        {
             // ループしない設定であれば
-            if (!mbLoop)
-            {
+            if (!mbLoop) {
                 // 次のモーションが設定されていない場合
-                if (mnLoopFinishState == ANIMATION_MAX)
-                {
-                    // モーションはこれ以上進めず、処理を中断させる
-                    mbLoopFinish = true;
+                if (mnLoopFinishState == ANIMATION_MAX) {
+                    mbLoopFinish = true;    // モーションはこれ以上進めず、処理を中断させる
                     return;
                 }
 
-                // ループ終了時のモーションへ変更
-                ChangeAnimation(mnLoopFinishState);
-                // ブレンドはしない
-                SetAnimationBlend(false);
-                // ★New★
-                // fAnimTotalTime をメンバ変数に変更
-                // 変更されたので改めて総再生時間をとっておく
-                mfNowAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnAnimationIndex);
-            }
+                ChangeAnimation(mnLoopFinishState);  // ループ終了時のモーションへ変更
+                SetAnimationBlend(false);   // ブレンドはしない
 
-            mfAnimationTime = 0.0f;
+                mfNowAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnAnimationIndex);     // 変更されたので改めて総再生時間をとっておく
+            }
+            mfAnimationTime = 0.0f; //現再生時間をリセット
         }
 
-        // モーションを反映
-        MV1SetAttachAnimTime(mnModelHandle, mnAnimationIndex, mfAnimationTime);
-
-        // ブレンド率を設定
-        MV1SetAttachAnimBlendRate(mnModelHandle, mnAnimationIndex, mfAnimBlendRate);
+        MV1SetAttachAnimTime(mnModelHandle, mnAnimationIndex, mfAnimationTime); // モーションを反映
+        MV1SetAttachAnimBlendRate(mnModelHandle, mnAnimationIndex, mfAnimBlendRate);    // ブレンド率を設定
     }
 
 
-    // １つ前のモーションを更新
-    float fAnimTotalTime = 0.0f;
-    if (mnOldAnimationIndex != -1)
-    {
-        // 総再生時間の取得
-        fAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnOldAnimationIndex);
+    //-- 前アニメーションの処理 --//
+    if (mnOldAnimationIndex != -1) {
+        float fAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnOldAnimationIndex); // 総再生時間の取得
+        mfOldAnimationTime += DEFAULT_ANIMATION_SPEED * mfAnimationSpeedScale;  // 速度補正追加,アニメーションの秒数を進める
 
-        // モーションを進める
-        mfOldAnimationTime += DEFAULT_ANIMATION_SPEED * mfAnimationSpeedScale;
-
-        // ループさせる
-        if (mfOldAnimationTime > fAnimTotalTime)
-        {
-            mfOldAnimationTime = 0.0f;
+        // アニメーションが回り切った場合
+        if (mfOldAnimationTime > fAnimTotalTime) {
+            mfOldAnimationTime = 0.0f;  //アニメーション再生時間をリセット
         }
 
-        // モーションを反映
-        MV1SetAttachAnimTime(mnModelHandle, mnOldAnimationIndex, mfOldAnimationTime);
-
-        // ブレンド率を設定
-        MV1SetAttachAnimBlendRate(mnModelHandle, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
+        MV1SetAttachAnimTime(mnModelHandle, mnOldAnimationIndex, mfOldAnimationTime);   // モーションを反映
+        MV1SetAttachAnimBlendRate(mnModelHandle, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);  // ブレンド率を設定
     }
 }
-    // ★New★
-    // 強制切り替えの引数を追加(isForce)
-    // モーション切り替え
+    
+    
+// モーション切り替え
 void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bool isForce)
 {
     // 切り替えようとしているモーションがすでに設定されている場合
-    if (mnState == state && !isForce)
-    {
-        return;     // 何もしない
-    }
+    if (mnState == state && !isForce)   return; //以降スルー
 
-    // 切り替え先の番号を保持
-    mnState = state;
+    //-- ↓モーションが変更されている場合 --//
 
-    // ★New★
-    // 速度をデフォルトでは1.0fにしておく
-    mfAnimationSpeedScale = 1.0f;
+    mnState = state;    // 切り替え先の番号を保持
+    mfAnimationSpeedScale = 1.0f;   // 速度をデフォルトでは1.0fにしておく
 
     // ループ情報の初期化
     mbLoop = true;  // 設定が特にない場合はループさせる
@@ -140,22 +112,16 @@ void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bo
     mbLoopFinish = false;
 
     // １つ前のモーションが有効状態であれば
-    if (mnOldAnimationIndex != -1)
-    {
-        // モーションのデタッチ（取り外す）
-        MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);
-        mnOldAnimationIndex = -1;
+    if (mnOldAnimationIndex != -1) {
+        MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);   // モーションのデタッチ（取り外す）
+        mnOldAnimationIndex = -1;   //前アニメーションのインデックスを無効化
     }
 
-    // 現在のモーション状態を保持する
-    mnOldAnimationIndex = mnAnimationIndex;
-    mfOldAnimationTime = mfAnimationTime;
+    mnOldAnimationIndex = mnAnimationIndex;  // 現在のモーション状態を前アニメーションへスライド
+    mfOldAnimationTime = mfAnimationTime;    // 現アニメーション再生時間を引き継ぐ
 
-    // モーションのアタッチ
-    mnAnimationIndex = MV1AttachAnim(mnModelHandle, index, GetAnimationHandle(state), TRUE);
-
-    // 再生時間の初期化
-    mfAnimationTime = 0.0f;
+    mnAnimationIndex = MV1AttachAnim(mnModelHandle, index, GetAnimationHandle(state), TRUE);    //現アニメーションのアタッチ
+    mfAnimationTime = 0.0f; // 再生時間の初期化
 
     // ブレンド状態を初期化
     // ブレンド率は、古いモーションが有効でない場合は1.0f（ブレンドしない状態）にしておく
@@ -164,38 +130,31 @@ void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bo
 
 
 // モーションのブレンド設定
-void SeparateModelAnimation::SetAnimationBlend(bool isBlend)
-{
-    if (isBlend)    // ブレンドする場合
-    {
+void SeparateModelAnimation::SetAnimationBlend(bool isBlend) {
+
+    //ブレンドする場合
+    if (isBlend) {
         // ブレンド率は、古いモーションが有効でない場合は1.0f（ブレンドしない状態）にしておく
         mfAnimBlendRate = (mnOldAnimationIndex == -1 ? 1.0f : 0.0f);
     }
-    else    // ブレンドしない場合
-    {
-        // ブレンドしない状態にする
-        mfAnimBlendRate = 1.0f;
+
+    //ブレンドしない場合
+    else {
+        mfAnimBlendRate = 1.0f;  // ブレンド率を現アニメーション100%に設定
 
         // ブレンドする必要がないので、古いモーションはデタッチしておく
-        if (mnOldAnimationIndex != -1)
-        {
-            MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);
-            mnOldAnimationIndex = -1;
+        if (mnOldAnimationIndex != -1) {
+            MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);  //前アニメーションをデタッチ
+            mnOldAnimationIndex = -1;   //前アニメーションのインデックスを無効化
         }
     }
 }
 
 // モーション追加
-void SeparateModelAnimation::AddAnimation(AnimationState state, std::string filename)
-{
-    // モーションモデル読み込み
-    int handle = MV1LoadModel(filename.c_str());
-
-    if (handle == -1)
-    {
-        return;
-    }
-
+void SeparateModelAnimation::AddAnimation(AnimationState state, std::string filename){
+    int handle = MV1LoadModel(filename.c_str());    // モーションモデル読み込み
+    if (handle == -1) return;   //アニメーションハンドルが読み込みに失敗した場合、以降スルー
+   
     // AnimationState と読み込んだハンドルの紐づけ
     AnimationInfo* pInfo = new AnimationInfo();
     pInfo->mState = state;
@@ -203,92 +162,35 @@ void SeparateModelAnimation::AddAnimation(AnimationState state, std::string file
     mAnimationInfoList.push_back(pInfo);
 
     // NEUTRALモーション（待機モーション）が追加されたらモーション変更処理をしておく
-    if (state == AnimationState::ANIMATION_NEUTRAL)
-    {
-        // 初期状態は待機モーションにしておく
-        ChangeAnimation(AnimationState::ANIMATION_NEUTRAL);
+    if (state == AnimationState::ANIMATION_NEUTRAL){
+        ChangeAnimation(AnimationState::ANIMATION_NEUTRAL);  // 初期状態は待機モーションにしておく
     }
 }
 
 // 対応したモーションハンドルの取得
-int SeparateModelAnimation::GetAnimationHandle(AnimationState state)
-{
+int SeparateModelAnimation::GetAnimationHandle(AnimationState state) {
+
     // そもそも空っぽの場合は探さない
-    if (mAnimationInfoList.empty())
-    {
+    if (mAnimationInfoList.empty()) {
         return -1;
     }
 
-    for (auto itr = mAnimationInfoList.begin(); itr != mAnimationInfoList.end(); itr++)
-    {
+    for (auto itr = mAnimationInfoList.begin();
+        itr != mAnimationInfoList.end();
+        itr++) {
         auto temp = *itr;
 
-        // 対応するモーションハンドルがあればそれを返す
-        if (temp->mState == state)
-        {
-            return temp->mnAnimationHandle;
+        //対応するアニメーションがある場合
+        if (temp->mState == state) {
+            return temp->mnAnimationHandle; //対応するハンドルを返す
         }
     }
 
-    // 見つからなかったら-1を返す
-    return -1;
+    // 見つからなかった場合
+    return -1;  //無効値を返す
 }
 
-
-bool SeparateModelAnimation::AttackCheack()
-{
-    for (auto index_anim : mAttackCheakInfoList)
-    {
-        //効果指定stateを再生している場合
-        if (index_anim->mnState == mnState)
-        {
-            if (index_anim->mfStartTime < mfAnimationTime
-                && mfAnimationTime < index_anim->mfFinishTime)
-            {
-                if (!index_anim->mbIsAttacked)
-                {
-                    index_anim->mbIsAttacked = true;
-                    return true;
-                }
-            }
-
-            else
-            {
-                index_anim->mbIsAttacked = false;
-                return false;
-            }
-        }
-
-        //指定外のstateは一応初期化しておく
-        else
-        {
-            index_anim->mbIsAttacked = false;
-        }
-    }
-
-    return false;
-}
-
-// ★New★
 // モーション進捗率の取得
-float SeparateModelAnimation::GetAnimationProgressRate()
-{
+float SeparateModelAnimation::GetAnimationProgressRate() {
     return mfAnimationTime / mfNowAnimTotalTime;
-}
-
-
-//攻撃判定に扱う
-void SeparateModelAnimation::AddAttackCheckInfo(
-    AnimationState mnState, //攻撃アニメーション
-    float mfStartTime,  //判定開始
-    float mfFinishTime // 判定終了
-)
-{
-    AttackCheckInfo* pInfo = new AttackCheckInfo;
-    pInfo->mnState = mnState;
-    pInfo->mfStartTime = mfStartTime;
-    pInfo->mfFinishTime = mfFinishTime;
-    pInfo->mbIsAttacked = false;
-
-    mAttackCheakInfoList.push_back(pInfo);
 }

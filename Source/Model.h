@@ -19,27 +19,24 @@ public:
 
 	void ChangeAnimation(AnimationState state, bool isForce = false);	// アニメーション切り替え
 
-	//ループ設定
-	void SetLoop(bool loop);
-	void SetLoopFinishState(AnimationState state);
-	bool IsAnimationLoopFinish();	//アニメーションのループが終了しているかどうか
+	void SetLoop(bool loop);						//ループ設定
+	void SetLoopFinishState(AnimationState state);	//ループが終わった時に再生したいアニメーション番号
+	bool IsAnimationLoopFinish();					//アニメーションのループが終了しているかどうか
 
 	void SetAnimationBlend(bool isBlend);	//アニメーションのブレンド設定
 
 	AnimationState GetNowState();	//現在再生されているアニメーションの取得
 
-	//アタッチメントを追加
-	void AddAttachment(std::string filename, std::string attachFrameName);
-	VECTOR GetAttachmentPosition();	//アタッチモデルの座標を取得
+
+	void AddAttachment(std::string filename, std::string attachFrameName);	//アタッチメントを追加
+	VECTOR GetAttachmentPosition();											//アタッチモデルの座標を取得
 
    
 	void SetAnimationSpeedScale(float speed);	// アニメーション速度補正
 	float GetAnimationProgressRate();	// アニメーション進捗率取得
 
 	
-	bool IsAnimationAttack();	// 攻撃モーション中かどうか
-
-	//inPlace関係
+	//-- アニメーションによる移動を防ぐ関係 --//
 	void SetupInitializeMatrix(std::string rootFrameName);	// 初期行列の設定
 	bool ValidRootFrameIndex();	// 有効なフレームかどうかの判定
 
