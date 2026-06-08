@@ -8,10 +8,17 @@ typedef struct tagVECTOR {
 #include "DxLib.h"
 #include "Master.h"
 #include "Scene.h"
-#include "SceneManager.h"
 #include "ObjectManager.h"
+#include "InputManager.h"
+
+#include "SceneManager.h"
+#include "Camera.h"
+#include "ResourceManager.h"
 
 SceneManager* Master::mpSceneManager = new SceneManager();	//シーンマネージャーを生成
+Camera* Master::mpCamera = new Camera();
+ResourceManager* Master::mpResource = new ResourceManager();
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -26,6 +33,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//Todo:	初期化処理系をここへ
 	Master::mpSceneManager->Initialize();	//シーンマネージャー初期化
+	Master::mpCamera->Initialize();	//カメラ生成
+	InputManager::SetKeyMode(KeyInputMode::MODE_NORMAL);	//キー入力モードの初期化
 
 	SetDrawScreen(DX_SCREEN_BACK);	// 描画先画面を裏画面に設定する
 
@@ -33,6 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
+	int prevTime = GetNowCount();
 	// メインループ
 	while (ProcessMessage() == 0
 		&& CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
@@ -42,8 +52,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		SetLightAmbColor(GetColorF(3.2f, 3.2f, 3.2f, 0.0f));	// アンビエント
 		int time = GetNowCount();
 
+		int currentTime = GetNowCount();	//現在の時間を取得
+		float deltaTime = (currentTime - prevTime) / 1000.0f;	//msをsに変換(deltaTimeを取得)
+		prevTime = currentTime;	//prevTimeを更新
+
 		//Todo:	更新処理をここへ
-		Master::mpSceneManager->Update();	//シーンマネージャー更新
+		Master::mpSceneManager->Update(deltaTime);	//シーンマネージャー更新
+		Master::mpCamera->Update(deltaTime);			//カメラ更新
 
 		ClearDrawScreen();	// 画面を初期化する
 
@@ -52,7 +67,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		ScreenFlip();	// 裏画面の内容を表画面に映す
 
-		while (GetNowCount() - time < 17) {
+		while (GetNowCount() - currentTime < 17) {
 			//60fpsに調整
 		}
 
@@ -65,6 +80,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	Master::mpSceneManager->Finalize();	//シーンマネージャー終了処理
 	delete  Master::mpSceneManager;	//シーンマネージャー解放
+	delete  Master::mpResource;		//リソースマネージャー開放
 
 	DxLib_End();	// DXライブラリ使用の終了
 	return 0;	//ソフトの終了

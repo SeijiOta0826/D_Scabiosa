@@ -9,7 +9,7 @@ Scene::~Scene() {
 }
 
 //XVˆ—
-void Scene::Update() {
+void Scene::Update(float _deltaTime) {
 
 }
 

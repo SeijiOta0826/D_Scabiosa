@@ -18,8 +18,8 @@ void SceneManager::Initialize() {
 	ChangeSceneIfNeeded();	//シーン遷移処理
 }
 
-void SceneManager::Update() {
-	mpCurrentScene->Update();	//シーン更新
+void SceneManager::Update(float _deltaTime) {
+	mpCurrentScene->Update(_deltaTime);	//シーン更新
 }
 
 void SceneManager::Draw(){

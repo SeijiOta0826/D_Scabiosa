@@ -16,7 +16,7 @@ public:
 	~SceneManager();
 
 	void Initialize();
-	void Update();
+	void Update(float _deltaTime);
 	void Draw();
 	void Finalize();
 
