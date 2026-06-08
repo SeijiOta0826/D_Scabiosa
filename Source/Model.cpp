@@ -60,199 +60,119 @@ Model::~Model() {
 }
 
 //更新処理
-void Model::Update(float _deltaTime){
+void Model::Update(float _deltaTime) {
 
-	
 	//-- 固定した行列を一旦解除する --//
+	 
 	//ルートフレームが見つかっている場合
 	if (ValidRootFrameIndex()) {
 		MV1ResetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex);	//固定した行列のリセット
 	}
 
+	//-- 主要な更新処理 --//
+
 	if (mpAnimation != nullptr) mpAnimation->Update();								//通常アニメーションデータの更新
 	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->Update(_deltaTime);	//分割アニメーションデータの更新
-	
-	
-    // アニメーションで移動している成分だけを初期値に戻すことで、アニメーションでの移動を無効化しているようにみせる。
-    // note: 実験的な実装なので、上手く行かないアニメーションもあるかも。
-	if (ValidRootFrameIndex()){
-		MATRIX Matrix = MV1GetFrameLocalMatrix(mnHandle, mnRootFrameIndex);	//アニメーション + ボーン操作 + IKを含めた現瞬間の姿勢の行列取得
-		Matrix.m[3][0] = mmInitializeMatrix.m[3][0];
-		//result.m[3][1] = mmInitializeMatrix.m[3][1]; // Y成分だけは一旦反映しないようにしておく（反映してもよいが、見た目が少しおかしくなることが多い）
-		Matrix.m[3][2] = mmInitializeMatrix.m[3][2];
-		MV1SetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex, Matrix);
+
+	//-- アニメーションによるモデル移動を無効化する --//
+
+	{
+		// アニメーションで移動している成分だけを初期値に戻すことで、アニメーションでの移動を無効化しているようにみせる。
+		// note: 実験的な実装なので、上手く行かないアニメーションもあるかも。
+		if (ValidRootFrameIndex()) {
+			MATRIX Matrix = MV1GetFrameLocalMatrix(mnHandle, mnRootFrameIndex);	//アニメーション + ボーン操作 + IKを含めた現瞬間の姿勢の行列取得
+			Matrix.m[3][0] = mmInitializeMatrix.m[3][0];	// X座標を初期値に戻す
+			//result.m[3][1] = mmInitializeMatrix.m[3][1];	// Y成分だけは一旦反映しないようにしておく（反映してもよいが、見た目が少しおかしくなることが多い）
+			Matrix.m[3][2] = mmInitializeMatrix.m[3][2];	// Z座標を初期値に戻す
+			MV1SetFrameUserLocalMatrix(mnHandle, mnRootFrameIndex, Matrix);	//補正した行列を設定
+		}
 	}
 
-	//座標設定
-	MV1SetPosition(mnHandle, mvPosition);
-
-	//回転設定
-	MV1SetRotationXYZ(mnHandle, mvRotation);
+	MV1SetPosition(mnHandle, mvPosition);		//座標設定
+	MV1SetRotationXYZ(mnHandle, mvRotation);	//回転設定
 }
 
-//描画
-void Model::Draw()
-{
+//描画処理
+void Model::Draw() {
 	MV1DrawModel(mnHandle);	//モデルの描画
 }
 
-// ★New★
-// 強制切り替え設定追加(isForce)
 // アニメ－ション切り替え
-void Model::ChangeAnimation(AnimationState state, bool isForce)
-{
-	// 
-	// 通常 or 分割のどちらかを使っているかで分岐
-	if (mpAnimation != nullptr)
-	{
-		mpAnimation->ChangeAnimation(state);
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		mpSeparateAnimation->ChangeAnimation(state, 0, isForce);
-	}
+void Model::ChangeAnimation(AnimationState state, bool isForce) {
+	if (mpAnimation != nullptr) mpAnimation->ChangeAnimation(state);								//通常アニメーション切り替え
+	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->ChangeAnimation(state, 0, isForce);	//分割アニメーション切り替え
 }
 
-void Model::SetLoop(bool loop)
-{
-	// ★New★
-	// 通常 or 分割のどちらかを使っているかで分岐
-	if (mpAnimation != nullptr)
-	{
-		mpAnimation->SetLoop(loop);
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		mpSeparateAnimation->SetLoop(loop);
-	}
+//ループ設定
+void Model::SetLoop(bool loop) {
+	if (mpAnimation != nullptr) mpAnimation->SetLoop(loop);						//通常アニメーションのループ設定
+	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetLoop(loop);		//分割アニメーションのループ設定
 }
 
-void Model::SetLoopFinishState(AnimationState state)
-{
-	// ★New★
-	// 通常 or 分割のどちらかを使っているかで分岐
-	if (mpAnimation != nullptr)
-	{
-		mpAnimation->SetLoopFinishState(state);
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		mpSeparateAnimation->SetLoopFinishState(state);
-	}
+//ループ後に再生するアニメーションの設定
+void Model::SetLoopFinishState(AnimationState state) {
+	if (mpAnimation != nullptr) mpAnimation->SetLoopFinishState(state);					//ループ後に再生するアニメーションの設定(通常)
+	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetLoopFinishState(state);	//ループ後に再生するアニメーションの設定(分割)
 }
 
-void Model::SetAnimationBlend(bool isBlend)
-{
-	// ★New★
-	 // 通常 or 分割のどちらかを使っているかで分岐
-	if (mpAnimation != nullptr)
-	{
-		mpAnimation->SetAnimationBlend(isBlend);
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		mpSeparateAnimation->SetAnimationBlend(isBlend);
-	}
+//モーションのブレンド設定
+void Model::SetAnimationBlend(bool isBlend) {
+	if (mpAnimation != nullptr) mpAnimation->SetAnimationBlend(isBlend);					//モーションのブレンド設定(通常)
+	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetAnimationBlend(isBlend);	//モーションのブレンド設定(分割)
 }
 
-AnimationState Model::GetNowState()
-{
-	// ★New★
-	// 通常 or 分割のどちらかを使っているかで分岐
-	// note: （ほぼありえないが）もしどちらも無ければ、特に設定のない最大値を返すようにする
-	AnimationState ret = AnimationState::ANIMATION_MAX;
+//現在のアニメーション状態を取得
+AnimationState Model::GetNowState() {
+	AnimationState ret = AnimationState::ANIMATION_MAX;	// 無効値で初期化
 
-	if (mpAnimation != nullptr)
-	{
-		ret = mpAnimation->GetNowState();
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		ret = mpSeparateAnimation->GetNowState();
-	}
+	if (mpAnimation != nullptr) ret = mpAnimation->GetNowState();					//通常アニメーションの状態取得
+	if (mpSeparateAnimation != nullptr) ret = mpSeparateAnimation->GetNowState();	//分割アニメーションの状態取得
 
 	return ret;
 }
 
-bool Model::IsAnimationLoopFinish()
-{
-	// ★New★
-	// 通常 or 分割のどちらかを使っているかで分岐
-	// note: （ほぼありえないが）もしどちらも無ければ、false を返すようにしておく
+bool Model::IsAnimationLoopFinish() {
+	bool ret = false;	//未終了で初期化
 
-	bool ret = false;
-
-	if (mpAnimation != nullptr)
-	{
-		ret = mpAnimation->IsLoopFinish();
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		ret = mpSeparateAnimation->IsLoopFinish();
-	}
+	if (mpAnimation != nullptr) ret = mpAnimation->IsLoopFinish();					//通常アニメーションのループ終了状態を取得
+	if (mpSeparateAnimation != nullptr) ret = mpSeparateAnimation->IsLoopFinish();	//分割アニメーションのループ終了状態を取得
 
 	return ret;
 }
 
+
+//-- アタッチメント関係 --//
 //アタッチメントを追加
-void Model::AddAttachment(std::string filename, std::string attachFrameName)
-{
-	//アタッチ先のフレーム番号を取得
-	int frameIndex = MV1SearchFrame(mnHandle, attachFrameName.c_str());
-
-	//アタッチメントモデルの生成
-	mpAttachment = new AttachmentModel(filename, mnHandle, frameIndex);
+void Model::AddAttachment(std::string filename, std::string attachFrameName){
+	int frameIndex = MV1SearchFrame(mnHandle, attachFrameName.c_str());	//アタッチ先のフレーム番号を取得
+	mpAttachment = new AttachmentModel(filename, mnHandle, frameIndex);	//アタッチメントモデルの生成
 }
 
 //アタッチモデルの座標取得
-VECTOR Model::GetAttachmentPosition()
-{
-	//何してるかはいつか理解するべし
-	if (mpAttachment != nullptr)
-	{
-		VECTOR vec = VGet(0.0f, -50.0f, 0.0f);
-		//行列の取得
-		MATRIX matrix = MV1GetFrameLocalWorldMatrix(mpAttachment->GetHandle(), 0);
-		//行列情報をもとに座標変換する
-		vec = VTransform(vec, matrix);
-		return vec;
+VECTOR Model::GetAttachmentPosition() {
+
+	if (mpAttachment != nullptr) {
+		VECTOR vec = VGet(0.0f, -50.0f, 0.0f);	//(剣とか武器専用)良い感じに持ってるぐらいの位置に調整
+		MATRIX matrix = MV1GetFrameLocalWorldMatrix(mpAttachment->GetHandle(), 0);	//行列の取得
+		vec = VTransform(vec, matrix);	//行列情報をもとに座標変換する
+		return vec;	
 	}
 
-	//アタッチメントがない場合は原点にしておく
-	return VGet(0.0f, 0.0f, 0.0f);
+	return VGet(0.0f, 0.0f, 0.0f);	//アタッチメントがない場合は原点にしておく
 }
 
-// ★New★
 // アニメーション速度補正
-void Model::SetAnimationSpeedScale(float speed)
-{
-	if (mpAnimation != nullptr)
-	{
-
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		mpSeparateAnimation->SetAnimationSpeed(speed);
-	}
+void Model::SetAnimationSpeedScale(float speed) {
+	//if (mpAnimation != nullptr)
+	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetAnimationSpeed(speed);	//分割アニメーションの速度補正
 }
 
-// ★New★
 // アニメーション進捗率取得
-float Model::GetAnimationProgressRate()
-{
-	// 通常 or 分割のどちらかを使っているかで分岐
-	// note: （ほぼありえないが）もしどちらも無ければ、0.0f を返すようにしておく
+float Model::GetAnimationProgressRate() {
+	float ret = 0.0f;	//未進行で初期化
 
-	float ret = 0.0f;
-
-	if (mpAnimation != nullptr)
-	{
-
-	}
-	if (mpSeparateAnimation != nullptr)
-	{
-		ret = mpSeparateAnimation->GetAnimationProgressRate();
-	}
+	//if (mpAnimation != nullptr)
+	if (mpSeparateAnimation != nullptr) ret = mpSeparateAnimation->GetAnimationProgressRate();	//分割アニメーションの進捗率取得
 
 	return ret;
 }
