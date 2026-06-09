@@ -12,7 +12,7 @@ public:
 
 	~AttachmentModel();
 
-	void Update() override;
+	void Update(float _deltaTime) override;
 
 	void Draw() override;
 

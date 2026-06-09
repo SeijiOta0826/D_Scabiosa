@@ -11,6 +11,8 @@ typedef struct tagVECTOR {
 #include "ObjectManager.h"
 #include "InputManager.h"
 
+#include "Utility.h"
+
 #include "SceneManager.h"
 #include "Camera.h"
 #include "ResourceManager.h"
@@ -24,7 +26,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
 	ChangeWindowMode(true);	// ウインドウモードで起動
-	SetGraphMode(1000, 850, 0);
+	SetGraphMode(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 0);
 
 	// DXライブラリ初期化
 	if (DxLib_Init() == -1){

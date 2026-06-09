@@ -7,8 +7,10 @@ class Object3D
 {
 public:
 	//3Dobjの種類を示す
-	enum Tag3D{
+	enum Tag3D {
 		None3D = 0,		//設定なし
+
+		OBJ_PLAYER,		//プレイヤー
 	};
 
 public:
@@ -16,7 +18,7 @@ public:
 	Object3D(VECTOR initPos);
 	virtual ~Object3D();
 
-	virtual void Update();	//更新処理
+	virtual void Update(float _deltaTime);	//更新処理
 	virtual void Draw();	//描画処理
 
 	//座標アクセサ

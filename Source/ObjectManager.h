@@ -14,7 +14,7 @@ public:
 	ObjectManager();
 	~ObjectManager();
 
-	void Update();	//更新処理	
+	void Update(float _deltaTime);	//更新処理	
 	void Draw();	//描画処理
 
 public:	//2D関係の関数宣言

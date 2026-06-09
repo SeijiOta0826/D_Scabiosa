@@ -6,8 +6,8 @@ class Utility
 
 public:
 
-	static const int SCREEN_WIDTH = 1000;
-	static const int SCREEN_HEIGHT = 850;
+	static const int SCREEN_WIDTH = 1280;
+	static const int SCREEN_HEIGHT = 720;
 
 	static constexpr float GRAVITY = 9.8f * 0.1;	//èdóÕ
 };

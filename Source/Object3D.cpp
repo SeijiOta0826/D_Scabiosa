@@ -16,7 +16,7 @@ Object3D::~Object3D(){
 
 }
 
-void Object3D::Update(){
+void Object3D::Update(float _deltaTime){
 
 }
 

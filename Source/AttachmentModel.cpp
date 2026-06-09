@@ -17,7 +17,7 @@ AttachmentModel::~AttachmentModel()
 	MV1DeleteModel(mnHandle);
 }
 
-void AttachmentModel::Update()
+void AttachmentModel::Update(float _deltaTime)
 {
 	//アタッチ先のモデルのフレームの行列情報を取得
 	MATRIX matrix = MV1GetFrameLocalWorldMatrix(mnParentHandle, mnParentFrameIndex);

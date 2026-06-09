@@ -9,6 +9,8 @@ public:
 	//シーン種類
 	enum SCENE_TYPE {
 		SCENE_NONE = 0,
+
+		SCENE_GAME = 1,	//ゲームシーン
 	};
 
 public:

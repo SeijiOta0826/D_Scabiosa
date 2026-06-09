@@ -34,8 +34,8 @@ void Camera::Update(float _deltaTime) {
 
 	//ターゲットobjがセッティングされていない場合
 	if (mpTarget == nullptr) {
-		//mpTarget = Master::mpSceneManager->GetCurrentScene()
-			//->GetObjectManager()->GetObject3DByTag(Object3D::PLAYER);	//mpTargetにプレイヤーのデータをぶち込む
+		mpTarget = Master::mpSceneManager->GetCurrentScene()
+			->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);	//mpTargetにプレイヤーのデータをぶち込む
 	}
 
 	//ターゲットobjがセッティングされている場合

@@ -9,7 +9,7 @@ ObjectManager::~ObjectManager(){
 }
 
 //XVˆ—
-void ObjectManager::Update()
+void ObjectManager::Update(float _deltaTime)
 {
 	for (std::list<Object2D*>::iterator itr = mObject2DList.begin();
 		itr != mObject2DList.end();
@@ -20,7 +20,7 @@ void ObjectManager::Update()
 	for (std::list<Object3D*>::iterator itr = mObject3DList.begin();
 		itr != mObject3DList.end();
 		itr++) {
-		(*itr)->Update();
+		(*itr)->Update(_deltaTime);
 	}
 }
 
