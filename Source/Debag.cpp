@@ -5,7 +5,7 @@ void Debag::Begin() {
 }
 
 template<typename... Args>
-void Debag::Log(const char* _format, Args&&... args) {
+void Debag::Log(Args&&... args) {
 	std::stringstream ss;
 
 	(ss << ... << args);
@@ -17,4 +17,8 @@ void Debag::Log(const char* _format, Args&&... args) {
 		GetColor(255, 255, 255));
 
 	++mLine_yPos;
+}
+
+void Debag::PosLog(const char* _format, const VECTOR& _pos) {
+	Log(_format, "( ", _pos.x, ",", _pos.y, ",", _pos.z, " )");
 }

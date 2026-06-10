@@ -5,9 +5,11 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "Debag.h"
 #include "Utility.h"
 
 //-- Obj関係 --//
+#include "Camera.h"
 #include "Player.h"
 
 GameScene::GameScene()
@@ -27,6 +29,8 @@ void GameScene::Update(float _deltaTime) {
 }
 
 void GameScene::Draw() {
+
+	DebagDraw();
 	Scene::Draw();
 }
 
@@ -36,10 +40,17 @@ void GameScene::Finalize() {
 
 void GameScene::DebagDraw() {
 
-
+	Debag::Begin();	//デバック表示位置の初期化
+	
 	auto pPlayer = 
 		Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
-	//DrawFormatString(0.0f,)
+
+	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());
+
+	VECTOR vCameraPos =
+		Master::mpCamera->GetPosition();
+
+	Debag::PosLog("CameraPos: ", vCameraPos);
 }
 
 

@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="D_Scabiosa.vcxproj" Id="01bb05a6-9a29-4f68-8ba8-46b5060e1f97" />
+</Solution>

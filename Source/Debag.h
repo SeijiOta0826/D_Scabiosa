@@ -5,11 +5,13 @@
 class Debag
 {
 public:
-	static void Begin();
-	template<typename... Args> 
-	static void Log(const char* _format, Args&&... args);
+	static void Begin();											//デバック描画位置の初期化
+	template<typename... Args>			
+	static void Log(Args&&... args);								//任意の値を表示
+
+	static void PosLog(const char* _format, const VECTOR& _pos);	//座標の値を表示
 
 private:
-	inline static float mLine_yPos = 0.0f;	//描画する縦座標
-	const float mfMargin = 10.0f;	//描画開始の縦横微妙な隙間分の値
+	inline static float mLine_yPos = 0.0f;				//描画する縦座標
+	inline static const float mfMargin = 10.0f;			//描画開始の縦横微妙な隙間分の値
 };
