@@ -22,7 +22,7 @@ public:
 	void Shake();	// 画面揺れ
 	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
 
-	//座標取得
+	//座標アクセサ
 	VECTOR GetPosition() { return mvPosition; }
 	void SetPosition(VECTOR _pos) { mvPosition = _pos; }
 
@@ -40,14 +40,14 @@ private:
 
 
 	//画面揺れ関係
-	int mnShakeTime;
-	int mnShakeTimeCount;
-	float mfShakeAngle;
-	float mfShakeTimeCounter;
-	float mfShakeTime;
-	float mfShakeWidth;
-	float mfShakeAngleSpeed;
-	float mfStepTime;
-	VECTOR mvShakePosition;
+	int mnShakeTime = 0;
+	int mnShakeTimeCount = 0;
+	float mfShakeAngle = 0.0f;
+	float mfShakeTimeCounter = 0.0f;
+	float mfShakeTime = 0.0f;
+	float mfShakeWidth = 0.0f;
+	float mfShakeAngleSpeed = 0.0f;
+	float mfStepTime = 0.0f;
+	VECTOR mvShakePosition = VGet(0.0f,0.0f,0.0f);
 
 };

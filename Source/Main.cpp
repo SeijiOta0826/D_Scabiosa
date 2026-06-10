@@ -59,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		prevTime = currentTime;	//prevTimeを更新
 
 		//Todo:	更新処理をここへ
-		Master::mpSceneManager->Update(deltaTime);	//シーンマネージャー更新
+		Master::mpSceneManager->Update(deltaTime);		//シーンマネージャー更新
 		Master::mpCamera->Update(deltaTime);			//カメラ更新
 
 		ClearDrawScreen();	// 画面を初期化する

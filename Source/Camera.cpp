@@ -28,7 +28,6 @@ void Camera::Initialize() {
 }
 
 void Camera::Update(float _deltaTime) {
-	VECTOR temp;	//作業用変数
 
 	UpdateRotation();	//回転処理
 
@@ -48,24 +47,16 @@ void Camera::Update(float _deltaTime) {
 		mvLookAtPosition.y = 80.0f;	//注視点を少し上にずらす
 	}
 
-	{
-		const float distance = 2000.0f;
-
-		temp.x = distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
-		temp.y = distance * sinf(mfVerticalAngle / 180.0f * DX_PI_F);
-		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
-	}
-
 	Shake();	// 画面揺れ処理
 
 	{
 		VECTOR temp;    // 作業用変数
 
 		// 球面上の座標を求める
-		const float distance = 2000.0f;
-		temp.x = distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F) * _deltaTime;
-		temp.y = distance * sinf(mfVerticalAngle / 180.0f * DX_PI_F) * _deltaTime;
-		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F)) * _deltaTime;
+		const float distance = 500.0f;
+		temp.x = distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
+		temp.y = distance * sinf(mfVerticalAngle / 180.0f * DX_PI_F);
+		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
 
 		// 上で求めた座標に注視点の座標を足したものがカメラ座標となる
 		mvPosition = VAdd(temp, mvLookAtPosition);
