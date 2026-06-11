@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	SetGraphMode(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 0);
 
 	// DXライブラリ初期化
-	if (DxLib_Init() == -1){
+	if (DxLib_Init() == -1) {
 		return -1;
 	}
 

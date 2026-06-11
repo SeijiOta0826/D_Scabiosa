@@ -29,7 +29,6 @@ void GameScene::Update(float _deltaTime) {
 }
 
 void GameScene::Draw() {
-
 	DebagDraw();
 	Scene::Draw();
 }
@@ -39,18 +38,17 @@ void GameScene::Finalize() {
 }
 
 void GameScene::DebagDraw() {
-
 	Debag::Begin();	//デバック表示位置の初期化
 	
 	auto pPlayer = 
 		Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
 
-	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());
+	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標を描画
 
 	VECTOR vCameraPos =
 		Master::mpCamera->GetPosition();
 
-	Debag::PosLog("CameraPos: ", vCameraPos);
+	Debag::PosLog("CameraPos: ", vCameraPos);				//カメラの座標表示
 }
 
 

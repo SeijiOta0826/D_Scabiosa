@@ -45,7 +45,7 @@ void Model::SetupInitializeMatrix(std::string rootFrameName) {
 }
 
 // 有効なフレームかどうかの判定
-bool Model::ValidRootFrameIndex(){
+bool Model::ValidRootFrameIndex() {
 	return (mnRootFrameIndex != -1 && mnRootFrameIndex != -2);	// MV1SearchFrame では -1 か -2 がエラーで帰ってくるので、その判定用
 }
 

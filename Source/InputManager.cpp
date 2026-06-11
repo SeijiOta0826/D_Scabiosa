@@ -9,15 +9,13 @@ int InputManager::mUpBuffer[256] = { 0 };
 int InputManager::mButtonBuffer[256] = { 0 };
 KeyInputMode InputManager::mnKeyModeNum = KeyInputMode::MODE_NORMAL;
 
-// コンストラクタ
-InputManager::InputManager()
-{
+
+InputManager::InputManager(){
 	mnKeyModeNum = KeyInputMode::MODE_NORMAL;
 }
 
-// デストラクタ
-InputManager::~InputManager()
-{
+
+InputManager::~InputManager(){
 
 }
 
