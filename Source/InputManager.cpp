@@ -5,24 +5,24 @@
 // 静的メンバ変数の初期化
 int InputManager::mDownBuffer[256] = { 0 };
 int InputManager::mUpBuffer[256] = { 0 };
-
 int InputManager::mButtonBuffer[256] = { 0 };
-KeyInputMode InputManager::mnKeyModeNum = KeyInputMode::MODE_NORMAL;
 
-
-InputManager::InputManager(){
-	mnKeyModeNum = KeyInputMode::MODE_NORMAL;
-}
-
-
-InputManager::~InputManager(){
+InputManager::InputManager() {
 
 }
 
+InputManager::~InputManager() {
+
+}
+
+//インスタンスの取得
+InputManager& InputManager::GetInstance() {
+	static InputManager instance;
+	return instance;
+}
 
 // スティック入力取得関数
-StickInfo InputManager::GetStickInfo(int pad)
-{
+StickInfo InputManager::GetStickInfo(int pad) {
 	StickInfo stick{};
 
 	// アナログスティック入力（-1000 ～ 1000）
@@ -125,10 +125,4 @@ int InputManager::CheckUpKey(int KeyCode)
 int InputManager::CheckPressKey(int KeyCode)
 {
 	return CheckHitKey(KeyCode);
-}
-
-//現Keyモードが指定のKeyモードであるかを示す
-bool InputManager::IsKeyMode(KeyInputMode state)
-{
-	return mnKeyModeNum == state;
 }

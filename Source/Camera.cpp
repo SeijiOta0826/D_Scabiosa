@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include <cmath>
 
-#include "Master.h"
+#include "SceneManager.h"
 #include "ObjectManager.h"
 #include "Scene.h"
 
@@ -20,11 +20,20 @@ Camera::~Camera() {
 
 }
 
+Camera& Camera::GetInstance() {
+	static Camera instance;
+	return instance;
+}
+
 void Camera::Initialize() {
 	SetCameraNearFar(100.f, 50000.0f);	//カメラのクリッピング距離の設定
 	SetBackgroundColor(200, 200, 200);	//背景色を設定(灰色)
 
 	SetCameraPositionAndTarget_UpVecY(mvPosition, mvLookAtPosition);	//カメラ座標とターゲットの座標をセット
+}
+
+void Camera::Finalize() {
+
 }
 
 void Camera::Update(float _deltaTime) {
@@ -33,7 +42,7 @@ void Camera::Update(float _deltaTime) {
 
 	//ターゲットobjがセッティングされていない場合
 	if (mpTarget == nullptr) {
-		mpTarget = Master::mpSceneManager->GetCurrentScene()
+		SceneManager::GetInstance().GetCurrentScene()
 			->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);	//mpTargetにプレイヤーのデータをぶち込む
 	}
 
@@ -72,61 +81,60 @@ void Camera::UpdateRotation() {
 	float fCameraSensitivity = 5.0f;	//カメラ感度
 	float fCameraMaxPitch = 80.0f;
 
-	if (InputManager::IsKeyMode(KeyInputMode::MODE_NORMAL)) {
 
-		//方向キーでカメラ操作
-		if (CheckHitKey(KEY_INPUT_LEFT)) {
-			mfHorizontalAngle += fCameraSensitivity;
-		}
-
-		if (CheckHitKey(KEY_INPUT_RIGHT)) {
-			mfHorizontalAngle -= fCameraSensitivity;
-		}
-
-		if (CheckHitKey(KEY_INPUT_UP)) {
-			mfVerticalAngle += fCameraSensitivity;
-		}
-
-		if (CheckHitKey(KEY_INPUT_DOWN)) {
-			mfVerticalAngle -= fCameraSensitivity;
-		}
-
-		Stick pStick = InputManager::GetStickInfo().Right;	//右スティックのい情報取得
-
-		if (pStick.x < 0.0f) {
-			mfHorizontalAngle += fCameraSensitivity * pStick.length;
-		}
-		else if (pStick.x > 0.0f) {
-			mfHorizontalAngle -= fCameraSensitivity * pStick.length;
-		}
-
-		if (pStick.y < 0.0f) {
-			mfVerticalAngle += fCameraSensitivity * pStick.length;
-		}
-		else if (pStick.y > 0.0f) {
-			mfVerticalAngle -= fCameraSensitivity * pStick.length;
-		}
-
-		if (mfHorizontalAngle >= 180.0f)
-		{
-			mfHorizontalAngle -= 360.0f;
-		}
-
-		if (mfHorizontalAngle <= -180.0f)
-		{
-			mfHorizontalAngle += 360.0f;
-		}
-
-		if (mfVerticalAngle >= fCameraMaxPitch)
-		{
-			mfVerticalAngle = fCameraMaxPitch;
-		}
-
-		if (mfVerticalAngle <= -fCameraMaxPitch)
-		{
-			mfVerticalAngle = -fCameraMaxPitch;
-		}
+	//方向キーでカメラ操作
+	if (CheckHitKey(KEY_INPUT_LEFT)) {
+		mfHorizontalAngle += fCameraSensitivity;
 	}
+
+	if (CheckHitKey(KEY_INPUT_RIGHT)) {
+		mfHorizontalAngle -= fCameraSensitivity;
+	}
+
+	if (CheckHitKey(KEY_INPUT_UP)) {
+		mfVerticalAngle += fCameraSensitivity;
+	}
+
+	if (CheckHitKey(KEY_INPUT_DOWN)) {
+		mfVerticalAngle -= fCameraSensitivity;
+	}
+
+	Stick pStick = InputManager::GetStickInfo().Right;	//右スティックのい情報取得
+
+	if (pStick.x < 0.0f) {
+		mfHorizontalAngle += fCameraSensitivity * pStick.length;
+	}
+	else if (pStick.x > 0.0f) {
+		mfHorizontalAngle -= fCameraSensitivity * pStick.length;
+	}
+
+	if (pStick.y < 0.0f) {
+		mfVerticalAngle += fCameraSensitivity * pStick.length;
+	}
+	else if (pStick.y > 0.0f) {
+		mfVerticalAngle -= fCameraSensitivity * pStick.length;
+	}
+
+	if (mfHorizontalAngle >= 180.0f)
+	{
+		mfHorizontalAngle -= 360.0f;
+	}
+
+	if (mfHorizontalAngle <= -180.0f)
+	{
+		mfHorizontalAngle += 360.0f;
+	}
+
+	if (mfVerticalAngle >= fCameraMaxPitch)
+	{
+		mfVerticalAngle = fCameraMaxPitch;
+	}
+
+	if (mfVerticalAngle <= -fCameraMaxPitch)
+	{
+		mfVerticalAngle = -fCameraMaxPitch;
+	}
+
 }
 
 // 画面揺れ

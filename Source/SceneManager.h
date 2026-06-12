@@ -17,6 +17,8 @@ public:
 	SceneManager();
 	~SceneManager();
 
+	static SceneManager& GetInstance();	//インスタンスを取得
+
 	void Initialize();
 	void Update(float _deltaTime);
 	void Draw();

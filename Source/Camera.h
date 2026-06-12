@@ -6,16 +6,14 @@ class Object3D;
 class Camera
 {
 public:
-	enum CameType {
-		None3D = 0,	//(デフォルト)設定なし
-	};
-
-public:
 
 	Camera();
 	~Camera();
 
+	static Camera& GetInstance(); //インスタンスの取得
+
 	void Initialize();
+	void Finalize();
 	void Update(float _deltaTime);
 	void UpdateRotation();
 
@@ -37,7 +35,6 @@ private:
 	VECTOR mvLookAtPosition;	//カメラの注視点座標
 
 	Object3D* mpTarget;			//カメラを向ける対象
-
 
 	//画面揺れ関係
 	int mnShakeTime = 0;

@@ -1,6 +1,6 @@
 #include "Object3D.h"
 
-#include "Master.h"
+#include "SceneManager.h"
 #include "ObjectManager.h"
 #include "Scene.h"
 
@@ -9,7 +9,7 @@ Object3D::Object3D(VECTOR initPos)
 	, mvRotation(VGet(0.0f, 0.0f, 0.0f))
 	, mbDeleteFlag(false)
 	, mnTag(Tag3D::None3D) {
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->AddObject(this);	//現在シーンのObjectManagerに自身(this)を追加する
+	SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->AddObject(this);	//現在シーンのObjectManagerに自身(this)を追加する
 }
 
 Object3D::~Object3D(){

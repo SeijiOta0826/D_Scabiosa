@@ -41,12 +41,12 @@ void GameScene::DebagDraw() {
 	Debag::Begin();	//デバック表示位置の初期化
 	
 	auto pPlayer = 
-		Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
+		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
 
 	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標を描画
 
 	VECTOR vCameraPos =
-		Master::mpCamera->GetPosition();
+		Camera::GetInstance().GetPosition();
 
 	Debag::PosLog("CameraPos: ", vCameraPos);				//カメラの座標表示
 }

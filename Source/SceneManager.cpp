@@ -15,6 +15,11 @@ SceneManager::~SceneManager() {
 
 }
 
+SceneManager& SceneManager::GetInstance() {
+	static SceneManager instance;
+	return instance;
+}
+
 void SceneManager::Initialize() {
 	mnNextSceneType = SCENE_TYPE::SCENE_GAME;	//初期シーンの設定
 	ChangeSceneIfNeeded();	//シーン遷移処理

@@ -17,10 +17,8 @@ typedef struct tagVECTOR {
 #include "Camera.h"
 #include "ResourceManager.h"
 
-SceneManager* Master::mpSceneManager = new SceneManager();	//シーンマネージャーを生成
-Camera* Master::mpCamera = new Camera();
-ResourceManager* Master::mpResource = new ResourceManager();
 
+ResourceManager* Master::mpResource = new ResourceManager();
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -34,9 +32,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	//Todo:	初期化処理系をここへ
-	Master::mpSceneManager->Initialize();	//シーンマネージャー初期化
-	Master::mpCamera->Initialize();	//カメラ生成
-	InputManager::SetKeyMode(KeyInputMode::MODE_NORMAL);	//キー入力モードの初期化
+	SceneManager::GetInstance().Initialize();	//シーンマネージャー初期化
+	Camera::GetInstance().Initialize();		//カメラ初期化
 
 	SetDrawScreen(DX_SCREEN_BACK);	// 描画先画面を裏画面に設定する
 
@@ -59,13 +56,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		prevTime = currentTime;	//prevTimeを更新
 
 		//Todo:	更新処理をここへ
-		Master::mpSceneManager->Update(deltaTime);		//シーンマネージャー更新
-		Master::mpCamera->Update(deltaTime);			//カメラ更新
+		SceneManager::GetInstance().Update(deltaTime);		//シーンマネージャー更新
+		Camera::GetInstance().Update(deltaTime);
 
 		ClearDrawScreen();	// 画面を初期化する
 
 		//Todo:	描画処理をここへ
-		Master::mpSceneManager->Draw();		//シーンマネージャー描画
+		SceneManager::GetInstance().Draw();		//シーンマネージャー描画
 
 		ScreenFlip();	// 裏画面の内容を表画面に映す
 
@@ -74,14 +71,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 
 		//削除する必要のあるオブジェクトがあれば削除する
-		Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->DeleteAll2DIfNeeded();
-		Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->DeleteAll3DIfNeeded();
+		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->DeleteAll2DIfNeeded();
+		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->DeleteAll3DIfNeeded();
 
-		Master::mpSceneManager->ChangeSceneIfNeeded();	// ループする直前にシーン遷移チェックを入れておく
+		SceneManager::GetInstance().ChangeSceneIfNeeded();	// ループする直前にシーン遷移チェックを入れておく
 	}
 
-	Master::mpSceneManager->Finalize();	//シーンマネージャー終了処理
-	delete  Master::mpSceneManager;	//シーンマネージャー解放
+	SceneManager::GetInstance().Finalize();	//シーンマネージャー終了処理
+	Camera::GetInstance().Finalize();	//カメラ終了処理
 	delete  Master::mpResource;		//リソースマネージャー開放
 
 	DxLib_End();	// DXライブラリ使用の終了
