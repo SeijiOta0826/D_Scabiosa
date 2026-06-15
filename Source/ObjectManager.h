@@ -14,6 +14,8 @@ public:
 	ObjectManager();
 	~ObjectManager();
 
+	static ObjectManager& GetInstance();
+
 	void Update(float _deltaTime);	//XVˆ—	
 	void Draw();	//•`‰æˆ—
 

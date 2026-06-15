@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 class ObjectManager;
 
@@ -7,7 +8,7 @@ class Scene
 public:
 
 	Scene();
-	~Scene();
+	~Scene() = default;
 
 	virtual void Initialize() = 0;	//初期化処理
 
@@ -16,7 +17,6 @@ public:
 
 	virtual void Finalize() = 0;	//終了処理
 
-	ObjectManager* GetObjectManager() { return mpObjectManager; }	//オブジェクトマネージャーの取得
-private:
-	ObjectManager* mpObjectManager;	//各シーンで管理するObjectManager
+protected:
+	std::unique_ptr<ObjectManager> mpObjectManager;
 };
