@@ -10,7 +10,7 @@ Object3D::Object3D(VECTOR initPos)
 	, mbDeleteFlag(false)
 	, mnTag(Tag3D::None3D) {
 	//SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->AddObject(this);	//Œ»ÝƒV[ƒ“‚ÌObjectManager‚ÉŽ©g(this)‚ð’Ç‰Á‚·‚é
-	SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->GetInstance().AddObject(this);
+	SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->AddObject(this);
 }
 
 Object3D::~Object3D(){

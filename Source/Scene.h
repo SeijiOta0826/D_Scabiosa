@@ -17,6 +17,10 @@ public:
 
 	virtual void Finalize() = 0;	//I—¹ˆ—
 
+	ObjectManager* GetObjectManager() const {
+		return mpObjectManager.get();
+	}
+
 protected:
 	std::unique_ptr<ObjectManager> mpObjectManager;
 };
