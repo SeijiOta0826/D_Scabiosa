@@ -38,12 +38,15 @@ void GameScene::Finalize() {
 }
 
 void GameScene::DebagDraw() {
+
+	Debag::Grid3D(500,5000);	//グリッド線の表示
+
 	Debag::Begin();	//デバック表示位置の初期化
 	
 	auto pPlayer = 
 		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
 
-	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標を描画
+	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標表示
 
 	VECTOR vCameraPos =
 		Camera::GetInstance().GetPosition();

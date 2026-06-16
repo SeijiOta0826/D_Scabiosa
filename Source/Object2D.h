@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "DxLib.h"
 #include <string>
+#include <memory>
 
 class Texture;
 
@@ -15,7 +16,7 @@ public:
 
 public:
 	Object2D(std::string filename,VECTOR initPos);
-	virtual ~Object2D();
+	virtual ~Object2D() = default;
 
 	virtual void Update();	//更新処理
 	virtual void Draw();	//描画処理
@@ -44,6 +45,7 @@ public:
 	//描画優先度
 	void SetZOrder(float z) { mvPosition.z = z; }
 
+	//レイヤー処理で用いる
 	struct CompareZOrder {
 		bool operator()(Object2D* a, Object2D* b)
 			const {
@@ -52,7 +54,7 @@ public:
 	};
 
 protected:
-	Texture* mpTexture;	//画像データ
+	std::unique_ptr<Texture> mpTexture;	//画像データ
 	VECTOR mvPosition;	//2DObjとしての座標
 
 	float mfsizeX;	//画像のサイズ(X)

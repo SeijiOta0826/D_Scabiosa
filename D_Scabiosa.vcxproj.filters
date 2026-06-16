@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\Scene">
       <UniqueIdentifier>{dd6b3a60-fd8c-4931-960f-44a4ff1fa8c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Physics">
+      <UniqueIdentifier>{990c48ff-1ca8-4888-9e66-3db281a02fff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Physics">
+      <UniqueIdentifier>{14a7a4d0-230f-457c-9190-f1c8a0a0e589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -104,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="Source\Debag.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>ソース ファイル\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="Source\Debag.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>ヘッダー ファイル\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
