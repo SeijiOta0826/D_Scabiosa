@@ -1,7 +1,9 @@
 #pragma once
 #include "Object3D.h"
+#include <memory>
 
 class Model;
+class Physics;
 
 class Player : public Object3D
 {
@@ -14,4 +16,5 @@ public:
 
 private:
 	Model* mpModel;	//モデルデータ
+	std::unique_ptr<Physics> mpPhysics;
 };
