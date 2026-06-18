@@ -114,6 +114,9 @@
     <ClCompile Include="Source\Physics.cpp">
       <Filter>ソース ファイル\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Vector3.cpp">
+      <Filter>ソース ファイル\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Master.h">
@@ -177,6 +180,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
+      <Filter>ヘッダー ファイル\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector3.h">
       <Filter>ヘッダー ファイル\Physics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -42,7 +42,7 @@ void Camera::Update(float _deltaTime) {
 
 	//ターゲットobjがセッティングされていない場合
 	if (mpTarget == nullptr) {
-		SceneManager::GetInstance().GetCurrentScene()
+		mpTarget = SceneManager::GetInstance().GetCurrentScene()
 			->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);	//mpTargetにプレイヤーのデータをぶち込む
 	}
 

@@ -164,6 +164,7 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SeparateModelAnimation.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AttachmentModel.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Source\SeparateModelAnimation.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Utility.h" />
+    <ClInclude Include="Source\Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

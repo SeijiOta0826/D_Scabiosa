@@ -15,6 +15,6 @@ public:
 	void Draw() override;
 
 private:
-	Model* mpModel;	//モデルデータ
-	std::unique_ptr<Physics> mpPhysics;
+	std::unique_ptr<Model> mpModel;			//モデルデータ
+	std::unique_ptr<Physics> mpPhysics;		//物理データ
 };
