@@ -7,7 +7,7 @@
 Model::Model(std::string filename, Vector3 initPos, bool isSeparateAnimation)
 	:mvPosition(initPos)
 	, mpAttachment(nullptr)
-	, mvScale(Vector3(0.0f,0.0f,0.0f))
+	, mvScale(Vector3(1.0f,1.0f,1.0f))
 	, mnChangeTextureHandle(-1)
 	, mnRootFrameIndex(-1)
 	, mmInitializeMatrix(MGetIdent()) {

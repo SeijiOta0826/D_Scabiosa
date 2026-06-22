@@ -22,8 +22,8 @@ public:
 	Vector3& operator-=(const Vector3& _other);
 	Vector3& operator*=(float value);
 	Vector3& operator/=(float value);
-	Vector3 operator==(const Vector3& _other) const;
-	Vector3 operator!=(const Vector3& _other) const;
+	bool operator==(const Vector3& _other) const;
+	bool operator!=(const Vector3& _other) const;
 
 	VECTOR ToDxVector() const { return VGet(x, y, z); }	//VECTORŒ^‚ğæ“¾‚·‚éŠÖ”
 };

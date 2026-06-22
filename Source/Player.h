@@ -14,6 +14,8 @@ public:
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
+	void Move();	//移動処理
+
 private:
 	std::unique_ptr<Model> mpModel;			//モデルデータ
 	std::unique_ptr<Physics> mpPhysics;		//物理データ

@@ -84,3 +84,17 @@ Vector3& Vector3::operator/=(float value) {
 
 	return *this;
 }
+
+bool Vector3::operator==(const Vector3& _other) const {
+	return 
+		x == _other.x &&
+		y == _other.y &&
+		z == _other.z;
+}
+
+bool Vector3::operator!=(const Vector3& _other) const {
+	return
+		x != _other.x ||
+		y != _other.y ||
+		z != _other.z;
+}
