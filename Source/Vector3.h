@@ -23,4 +23,9 @@ public:
 	Vector3& operator/=(float value);
 	Vector3 operator==(const Vector3& _other) const;
 	Vector3 operator!=(const Vector3& _other) const;
+
+	float Length() const;
+	Vector3 Normalize() const;
+	float Dot(const Vector3& _other) const;
+	Vector3 Cross(const Vector3& other) const;
 };
