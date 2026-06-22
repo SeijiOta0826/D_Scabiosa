@@ -1,5 +1,5 @@
 #pragma once
-
+#include "DxLib.h"
 class Vector3
 {
 public:
@@ -10,6 +10,7 @@ public:
 public:
 	Vector3();
 	Vector3(float _x, float _y, float _z);
+	Vector3(const VECTOR& _vector);
 
 	~Vector3() = default;
 
@@ -23,4 +24,6 @@ public:
 	Vector3& operator/=(float value);
 	Vector3 operator==(const Vector3& _other) const;
 	Vector3 operator!=(const Vector3& _other) const;
+
+	VECTOR ToDxVector() const { return VGet(x, y, z); }	//VECTORŒ^‚ğæ“¾‚·‚éŠÖ”
 };

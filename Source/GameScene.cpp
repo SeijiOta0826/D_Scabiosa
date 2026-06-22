@@ -48,7 +48,7 @@ void GameScene::DebagDraw() {
 
 	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標表示
 
-	VECTOR vCameraPos =
+	Vector3 vCameraPos =
 		Camera::GetInstance().GetPosition();
 
 	Debag::PosLog("CameraPos: ", vCameraPos);				//カメラの座標表示

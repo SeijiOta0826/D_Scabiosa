@@ -3,7 +3,7 @@
 
 AttachmentModel::AttachmentModel(std::string filename, int parentModelHandle, int parentFrameIndex)
 	//座標はアタッチ先によって変わるので初期値は0
-	:Object3D(VGet(0.0f,0.0f,0.0f))
+	:Object3D(Vector3(0.0f,0.0f,0.0f))
 	, mnParentHandle(parentModelHandle)
 	, mnParentFrameIndex(parentFrameIndex)
 {

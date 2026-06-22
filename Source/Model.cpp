@@ -4,10 +4,10 @@
 #include "Master.h"
 
 
-Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
+Model::Model(std::string filename, Vector3 initPos, bool isSeparateAnimation)
 	:mvPosition(initPos)
 	, mpAttachment(nullptr)
-	, mvScale(VGet(1.0f, 1.0f, 1.0f))
+	, mvScale(Vector3(0.0f,0.0f,0.0f))
 	, mnChangeTextureHandle(-1)
 	, mnRootFrameIndex(-1)
 	, mmInitializeMatrix(MGetIdent()) {
@@ -22,7 +22,7 @@ Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
 		mpSeparateAnimation = nullptr;
 	}
 
-	MV1SetScale(mnHandle, mvScale);	//拡大値の初期化
+	MV1SetScale(mnHandle, mvScale.ToDxVector());	//拡大値の初期化
 }
 
 // アニメーション追加
@@ -88,8 +88,8 @@ void Model::Update(float _deltaTime) {
 		}
 	}
 
-	MV1SetPosition(mnHandle, mvPosition);		//座標設定
-	MV1SetRotationXYZ(mnHandle, mvRotation);	//回転設定
+	MV1SetPosition(mnHandle, mvPosition.ToDxVector());		//座標設定
+	MV1SetRotationXYZ(mnHandle, mvRotation.ToDxVector());	//回転設定
 }
 
 //描画処理
@@ -149,12 +149,12 @@ void Model::AddAttachment(std::string filename, std::string attachFrameName){
 }
 
 //アタッチモデルの座標取得
-VECTOR Model::GetAttachmentPosition() {
+Vector3 Model::GetAttachmentPosition() {
 
 	if (mpAttachment != nullptr) {
-		VECTOR vec = VGet(0.0f, -50.0f, 0.0f);	//(剣とか武器専用)良い感じに持ってるぐらいの位置に調整
+		Vector3 vec = Vector3(0.0f, -50.0f, 0.0f);	//(剣とか武器専用)良い感じに持ってるぐらいの位置に調整
 		MATRIX matrix = MV1GetFrameLocalWorldMatrix(mpAttachment->GetHandle(), 0);	//行列の取得
-		vec = VTransform(vec, matrix);	//行列情報をもとに座標変換する
+		vec = Vector3(VTransform(vec.ToDxVector(), matrix));	//行列情報をもとに座標変換する
 		return vec;	
 	}
 

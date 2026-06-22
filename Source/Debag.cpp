@@ -19,7 +19,7 @@ void Debag::Log(Args&&... args) {
 	++mLine_yPos;
 }
 
-void Debag::PosLog(const char* _format, const VECTOR& _pos) {
+void Debag::PosLog(const char* _format, const Vector3& _pos) {
 	Log(_format, "( ", _pos.x, ",", _pos.y, ",", _pos.z, " )");
 }
 

@@ -22,7 +22,7 @@ void Player::Update(float _deltaTime) {
 		mpPhysics->AddForce(VGet(10.0f, 0.0f, 0.0f));
 	}
 
-	this->SetPosition(VAdd(mvPosition, mpPhysics->Update(_deltaTime)));
+	this->SetPosition(mvPosition + mpPhysics->Update(_deltaTime));
 	mpModel->SetPosition(mvPosition);
 	Object3D::Update(_deltaTime);
 	mpModel->Update(_deltaTime);
