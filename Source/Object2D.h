@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include <string>
 #include <memory>
+#include "Vector3.h"
 
 class Texture;
 
@@ -15,15 +16,15 @@ public:
 	};
 
 public:
-	Object2D(std::string filename,VECTOR initPos);
+	Object2D(std::string filename, Vector3 initPos);
 	virtual ~Object2D() = default;
 
 	virtual void Update();	//更新処理
 	virtual void Draw();	//描画処理
 
 	//座標アクセサ
-	void SetPosition(VECTOR pos) { mvPosition = pos; }
-	VECTOR GetPosition() { return mvPosition; }
+	void SetPosition(Vector3 pos) { mvPosition = pos; }
+	Vector3 GetPosition() { return mvPosition; }
 
 
 	//削除フラグ設定と取得
@@ -55,7 +56,7 @@ public:
 
 protected:
 	std::unique_ptr<Texture> mpTexture;	//画像データ
-	VECTOR mvPosition;	//2DObjとしての座標
+	Vector3 mvPosition;	//2DObjとしての座標
 
 	float mfsizeX;	//画像のサイズ(X)
 	float mfsizeY;	//画像のサイズ(Y)

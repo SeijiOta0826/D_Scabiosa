@@ -1,6 +1,6 @@
 ﻿#include "Texture.h"
 
-Texture::Texture(std::string filename, VECTOR centerPosition, int transFlag)
+Texture::Texture(std::string filename, Vector3 centerPosition, int transFlag)
 	: mnHandle(-1)
 	, mvPosition(centerPosition)
 	, mnSizeX(0)

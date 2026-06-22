@@ -15,6 +15,13 @@ Vector3::Vector3(float _x, float _y, float _z)
 
 }
 
+Vector3::Vector3(const VECTOR& _vector)
+	: x(_vector.x)
+	, y(_vector.y)
+	, z(_vector.z) {
+
+}
+
 Vector3 Vector3::operator+(const Vector3& _other) const {
 	return Vector3(
 		x + _other.x,
@@ -79,6 +86,20 @@ Vector3& Vector3::operator/=(float value) {
 	return *this;
 }
 
+bool Vector3::operator==(const Vector3& _other) const {
+	return
+		x == _other.x &&
+		y == _other.y &&
+		z == _other.z;
+}
+
+bool Vector3::operator!=(const Vector3& _other) const {
+	return
+		x != _other.x ||
+		y != _other.y ||
+		z != _other.z;
+}
+
 float Vector3::Length() const {
 	return sqrtf(
 		x * x +
@@ -113,5 +134,3 @@ Vector3 Vector3::Cross(const Vector3& other) const {
 		x * other.y - y * other.x
 	);
 }
-
-

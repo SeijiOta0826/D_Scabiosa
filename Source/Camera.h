@@ -1,5 +1,6 @@
 #pragma once
 #include "DxLib.h"
+#include "Vector3.h"
 
 class Object3D;
 
@@ -21,18 +22,18 @@ public:
 	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
 
 	//座標アクセサ
-	VECTOR GetPosition() { return mvPosition; }
-	void SetPosition(VECTOR _pos) { mvPosition = _pos; }
+	Vector3 GetPosition() { return mvPosition; }
+	void SetPosition(Vector3 _pos) { mvPosition = _pos; }
 
-	VECTOR GetLookAtPosition() { return mvLookAtPosition; }	//注視点取得
+	Vector3 GetLookAtPosition() { return mvLookAtPosition; }	//注視点取得
 
 private:
 	
 	float mfHorizontalAngle;	//水平方向アングル
 	float mfVerticalAngle;		//垂直方向アングル
 
-	VECTOR mvPosition;			//カメラ座標
-	VECTOR mvLookAtPosition;	//カメラの注視点座標
+	Vector3 mvPosition;			//カメラ座標
+	Vector3 mvLookAtPosition;	//カメラの注視点座標
 
 	Object3D* mpTarget;			//カメラを向ける対象
 
@@ -45,6 +46,6 @@ private:
 	float mfShakeWidth = 0.0f;
 	float mfShakeAngleSpeed = 0.0f;
 	float mfStepTime = 0.0f;
-	VECTOR mvShakePosition = VGet(0.0f,0.0f,0.0f);
+	Vector3 mvShakePosition;
 
 };

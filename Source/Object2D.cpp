@@ -6,7 +6,7 @@
 #include "SceneManager.h"
 #include "ObjectManager.h"
 
-Object2D::Object2D(std::string filename, VECTOR initPos)
+Object2D::Object2D(std::string filename, Vector3 initPos)
 	:mpTexture(std::make_unique<Texture>(filename, initPos, true))
 	, mvPosition(initPos)
 	, mbDeleteFlag(false) {

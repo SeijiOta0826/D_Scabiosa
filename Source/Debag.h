@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
 #include <sstream>
+#include "Vector3.h"
 
 class Debag
 {
@@ -9,7 +10,7 @@ public:
 	template<typename... Args>			
 	static void Log(Args&&... args);								//任意の値を表示
 
-	static void PosLog(const char* _format, const VECTOR& _pos);	//座標の値を表示
+	static void PosLog(const char* _format, const Vector3& _pos);	//座標の値を表示
 
 	static void Grid3D(int _gridSize, int _gridCount);				//グリッド線(3D)の表示
 

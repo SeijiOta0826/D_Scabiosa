@@ -10,8 +10,8 @@
 Camera::Camera()
 	:mfHorizontalAngle(0.0f)
 	, mfVerticalAngle(0.0f)
-	, mvPosition(VGet(0.0f, 0.0f, 0.0f))
-	, mvLookAtPosition(VGet(0.0f, 0.0f, 0.0f))
+	, mvPosition()
+	, mvLookAtPosition()
 	, mpTarget(nullptr) {
 
 }
@@ -29,7 +29,7 @@ void Camera::Initialize() {
 	SetCameraNearFar(100.f, 50000.0f);	//カメラのクリッピング距離の設定
 	SetBackgroundColor(200, 200, 200);	//背景色を設定(灰色)
 
-	SetCameraPositionAndTarget_UpVecY(mvPosition, mvLookAtPosition);	//カメラ座標とターゲットの座標をセット
+	SetCameraPositionAndTarget_UpVecY(mvPosition.ToDxVector(), mvLookAtPosition.ToDxVector());	//カメラ座標とターゲットの座標をセット
 }
 
 void Camera::Finalize() {
@@ -59,7 +59,7 @@ void Camera::Update(float _deltaTime) {
 	Shake();	// 画面揺れ処理
 
 	{
-		VECTOR temp;    // 作業用変数
+		Vector3 temp;    // 作業用変数
 
 		// 球面上の座標を求める
 		const float distance = 500.0f;
@@ -68,10 +68,10 @@ void Camera::Update(float _deltaTime) {
 		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
 
 		// 上で求めた座標に注視点の座標を足したものがカメラ座標となる
-		mvPosition = VAdd(temp, mvLookAtPosition);
+		mvPosition = temp + mvLookAtPosition;
 
 		// 画面揺れの分を加算するように変更
-		SetCameraPositionAndTarget_UpVecY(VAdd(mvPosition, mvShakePosition), VAdd(mvLookAtPosition, mvShakePosition));
+		SetCameraPositionAndTarget_UpVecY(VAdd(mvPosition.ToDxVector(), mvShakePosition.ToDxVector()), VAdd(mvLookAtPosition.ToDxVector(), mvShakePosition.ToDxVector()));
 
 	}
 }
@@ -154,7 +154,7 @@ void Camera::Shake() {
 	}
 	else {
 		// 揺らされていない場合は揺らし処理による加算座標を０にする
-		mvShakePosition = VGet(0.0f, 0.0f, 0.0f);
+		mvShakePosition *= 0.0f;
 	}
 }
 

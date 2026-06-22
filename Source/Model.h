@@ -4,6 +4,7 @@
 #include "ModelUtility.h"
 #include "ModelAnimation.h"
 #include "SeparateModelAnimation.h"
+#include "Vector3.h"
 
 class AttachmentModel;
 
@@ -11,7 +12,7 @@ class Model
 {
 public:
 
-	Model(std::string filename,VECTOR initPos, bool isSeparateAnimation = false);
+	Model(std::string filename, Vector3 initPos, bool isSeparateAnimation = false);
 	~Model();
 
 	void Update(float _deltaTime);	//更新処理
@@ -29,7 +30,7 @@ public:
 
 
 	void AddAttachment(std::string filename, std::string attachFrameName);	//アタッチメントを追加
-	VECTOR GetAttachmentPosition();											//アタッチモデルの座標を取得
+	Vector3 GetAttachmentPosition();											//アタッチモデルの座標を取得
 
    
 	void SetAnimationSpeedScale(float speed);	// アニメーション速度補正
@@ -41,14 +42,14 @@ public:
 	bool ValidRootFrameIndex();	// 有効なフレームかどうかの判定
 
 	//座標アクセサ
-	void SetPosition(VECTOR pos) { mvPosition = pos; }
-	VECTOR GetPosition() { return mvPosition; }
+	void SetPosition(Vector3 pos) { mvPosition = pos; }
+	Vector3 GetPosition() { return mvPosition; }
 
 	//回転値アクセサ
-	void SetRotation(VECTOR rot){mvRotation = rot;}
-	VECTOR GetRotation(){return mvRotation;}
+	void SetRotation(Vector3 rot){mvRotation = rot;}
+	Vector3 GetRotation(){return mvRotation;}
 	
-	void SetScale(VECTOR scale) { MV1SetScale(mnHandle, scale); }	//拡大処理
+	void SetScale(Vector3 scale) { MV1SetScale(mnHandle, scale.ToDxVector()); }	//拡大処理
 
 	//モデルデータ(int)のゲッター
 	int GetHandleData() { return mnHandle; }
@@ -64,9 +65,9 @@ public:
 private:
 	int mnHandle;	//ハンドルデータ
 	
-	VECTOR mvPosition;	//座標
-	VECTOR mvRotation;	//回転
-	VECTOR mvScale;	//モデルの拡大値
+	Vector3 mvPosition;	//座標
+	Vector3 mvRotation;	//回転
+	Vector3 mvScale;	//モデルの拡大値
 
 	int mnChangeTextureHandle;
 
