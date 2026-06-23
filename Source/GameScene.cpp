@@ -22,6 +22,7 @@ GameScene::~GameScene() {
 
 void GameScene::Initialize() {
 	Player* pPlayer = new Player();
+	pPlayer->AddAnimation(ANIMATION_NEUTRAL, "Resource/3D/Paladin/Idle.mv1");
 }
 
 void GameScene::Update(float _deltaTime) {
