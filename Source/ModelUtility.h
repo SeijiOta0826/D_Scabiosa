@@ -37,4 +37,15 @@ struct AnimationInfo
 {
     AnimationState mState;
     int mnAnimationHandle;
+
+    AnimationInfo(AnimationState _state, int _handle)
+        :mState()
+        , mnAnimationHandle(_handle) {
+    }
+
+    ~AnimationInfo() {
+        if (mnAnimationHandle != -1) {
+            MV1DeleteModel(mnAnimationHandle);
+        }
+    }
 };

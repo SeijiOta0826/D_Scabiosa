@@ -59,6 +59,8 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
+	static ResourceManager& GetInstance();	//インスタンスの取得 
+
 	int LoadModel(std::string pathName);	// モデルリソース生成
 	int LoadGraphics(std::string pathName);	// グラフィックリソース生成
 	DivGraphData* LoadDivGraphics(std::string pathName, int allNum, int numX, int numY);	// 分割されたグラフィックリソース生成

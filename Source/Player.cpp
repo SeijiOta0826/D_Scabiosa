@@ -10,7 +10,7 @@
 
 Player::Player() 
 	:Object3D(mvPosition)
-	, mpModel(std::make_unique<Model>("Resource/3D/Paladin/Mesh.mv1", mvPosition, true))
+	, mpModel(std::make_unique<Model>("Resource/3D/Paladin/Mesh.mv1", mvPosition))
 	, mpPhysics(std::make_unique<Physics>()){
 	this->SetTag(OBJ_PLAYER);	//タグを付与
 }

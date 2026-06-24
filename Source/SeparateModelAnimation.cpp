@@ -18,19 +18,9 @@ SeparateModelAnimation::SeparateModelAnimation(int modelHandle)
 }
 
 SeparateModelAnimation::~SeparateModelAnimation() {
-
     //-- 追加読み込みしたモーションの削除 --//
     if (!mAnimationInfoList.empty()) {
-        for (auto itr = mAnimationInfoList.begin();
-            itr != mAnimationInfoList.end(); ) {
-            auto temp = itr;   //アニメーションデータのアドレスをローカルへ一時避難
-
-            itr = mAnimationInfoList.erase(itr);    //アニメーションデータを消去
-            MV1DeleteModel(temp->mnAnimationHandle);        //アニメーションのハンドルを消去
-
-            delete temp;    //ローカルデータ解放
-            temp = nullptr; //一応null
-        }
+        mAnimationInfoList.clear(); //要素内のデストラクタが呼ばれる
     }
 }
 
@@ -157,11 +147,7 @@ void SeparateModelAnimation::AddAnimation(
     int handle = MV1LoadModel(filename.c_str());    // モーションモデル読み込み
     if (handle == -1) return;                          //アニメーションハンドルが読み込みに失敗した場合、以降スルー
 
-    // AnimationState と読み込んだハンドルの紐づけ
-    AnimationInfo pInfo;
-    pInfo.mState = state;
-    pInfo.mnAnimationHandle = handle;
-    mAnimationInfoList.push_back(pInfo);
+    mAnimationInfoList.push_back(AnimationInfo(state, handle)); //AnimationInfo内のコンストラクタでハンドルの紐づけを行う
 
     // NEUTRALモーション（待機モーション）が追加されたらモーション変更処理をしておく
     if (state == AnimationState::ANIMATION_NEUTRAL) {
@@ -171,25 +157,10 @@ void SeparateModelAnimation::AddAnimation(
 
 // 対応したモーションハンドルの取得
 int SeparateModelAnimation::GetAnimationHandle(AnimationState state) {
-
-    // そもそも空っぽの場合は探さない
-    if (mAnimationInfoList.empty()) {
-        return -1;
+    for (auto& animationInfo : mAnimationInfoList) {
+        if (animationInfo.mState == state) return animationInfo.mnAnimationHandle;  //目的のハンドルを返す
     }
-
-    for (auto itr = mAnimationInfoList.begin();
-        itr != mAnimationInfoList.end();
-        itr++) {
-        auto temp = itr;
-
-        //対応するアニメーションがある場合
-        if (temp->mState == state) {
-            return temp->mnAnimationHandle; //対応するハンドルを返す
-        }
-    }
-
-    // 見つからなかった場合
-    return -1;  //無効値を返す
+    return -1;  //見つからなかった場合、無効値を返す
 }
 
 // モーション進捗率の取得

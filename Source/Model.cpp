@@ -1,21 +1,18 @@
 #include "Model.h"
 #include "AttachmentModel.h"
 
-#include "Master.h"
+#include "ResourceManager.h"
 
-
-Model::Model(const std::string& filename,const Vector3& initPos, bool isSeparateAnimation)
+Model::Model(const std::string& filename,const Vector3& initPos)
 	:mvPosition(initPos)
 	, mpAttachment(nullptr)
 	, mvScale(Vector3(1.0f, 1.0f, 1.0f))
 	, mnChangeTextureHandle(-1)
 	, mnRootFrameIndex(-1)
 	, mmInitializeMatrix(MGetIdent()) {
-	mnHandle = Master::mpResource->LoadModel(filename.c_str());	//モデル読み込み
+	mnHandle = ResourceManager::GetInstance().LoadModel(filename.c_str());	//モデル読み込み
 
-	if (isSeparateAnimation) {
-		mpSeparateAnimation = new SeparateModelAnimation(mnHandle);	// 分割アニメーションクラスの生成
-	}
+	mpSeparateAnimation = std::make_unique<SeparateModelAnimation>(mnHandle);	// 分割アニメーションクラスの生成
 
 	MV1SetScale(mnHandle, mvScale.ToDxVector());	//拡大値の初期化
 }
@@ -46,7 +43,6 @@ bool Model::ValidRootFrameIndex() {
 
 
 Model::~Model() {
-	if (mpSeparateAnimation != nullptr) delete mpSeparateAnimation;			// 分割アニメーションクラスの破棄
 	if (mpAttachment != nullptr) mpAttachment->SetDeleteFlag(true);			// アタッチモデルクラスの破棄
 	if (mnChangeTextureHandle != -1) DeleteGraph(mnChangeTextureHandle);	// テクスチャを切り替えている場合はそのテクスチャの破棄
 	
@@ -130,7 +126,7 @@ bool Model::IsAnimationLoopFinish() {
 //アタッチメントを追加
 void Model::AddAttachment(std::string filename, std::string attachFrameName){
 	int frameIndex = MV1SearchFrame(mnHandle, attachFrameName.c_str());	//アタッチ先のフレーム番号を取得
-	mpAttachment = new AttachmentModel(filename, mnHandle, frameIndex);	//アタッチメントモデルの生成
+	mpAttachment = std::make_unique<AttachmentModel>(filename, mnHandle, frameIndex);	//アタッチメントモデルの生成
 }
 
 //アタッチモデルの座標取得

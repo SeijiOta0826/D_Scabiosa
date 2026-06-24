@@ -18,8 +18,6 @@ typedef struct tagVECTOR {
 #include "ResourceManager.h"
 
 
-ResourceManager* Master::mpResource = new ResourceManager();
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
@@ -79,7 +77,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	SceneManager::GetInstance().Finalize();	//シーンマネージャー終了処理
 	Camera::GetInstance().Finalize();	//カメラ終了処理
-	delete  Master::mpResource;		//リソースマネージャー開放
 
 	DxLib_End();	// DXライブラリ使用の終了
 	return 0;	//ソフトの終了

@@ -11,7 +11,7 @@ class Model
 {
 public:
 
-	Model(const std::string& filename, const Vector3& initPos, bool isSeparateAnimation = false);
+	Model(const std::string& filename, const Vector3& initPos);
 	~Model();
 
 	void Update(float _deltaTime);	//更新処理
@@ -57,15 +57,15 @@ public:
    // アニメーションデータの追加
    // note: SeparateModelAnimation クラスへの橋渡し関数
 	void AddAnimation(AnimationState state, std::string filename);
-	SeparateModelAnimation* GetSparateAnimData() { return mpSeparateAnimation;}	//セパレートアニメーションデータの取得
+	SeparateModelAnimation* GetSparateAnimData() { return mpSeparateAnimation.get();}	//セパレートアニメーションデータの取得
 
 
 
 private:
 	int mnHandle;	//ハンドルデータ
 	
-	Vector3 mvPosition;	//座標
-	Vector3 mvRotation;	//回転
+	Vector3 mvPosition;	//モデル描画座標
+	Vector3 mvRotation;	//モデル描画回転
 	Vector3 mvScale;	//モデルの拡大値
 
 	int mnChangeTextureHandle;
@@ -75,8 +75,8 @@ private:
 
 
 	// 分割読み込みバージョンのモデルアニメーションクラスのポインタ
-	SeparateModelAnimation* mpSeparateAnimation;
+	std::unique_ptr<SeparateModelAnimation> mpSeparateAnimation;
 
 	//アタッチモデル(複数持たせたい場合は std::vector や配列で管理すると良い)
-	AttachmentModel* mpAttachment;
+	std::unique_ptr<AttachmentModel> mpAttachment;
 };

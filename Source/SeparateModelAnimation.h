@@ -32,18 +32,11 @@ public:
     //       デフォルトで適用するインデックスを 1 にしておく
     void ChangeAnimation(AnimationState state, int index = 0, bool isForce = false); // モーション切り替え処理
 
-    // ★New★
-    // モーションデータの追加
-    // note: 分割されているモーションをデータとして登録する。
-    void AddAnimation(AnimationState state, const std::string& filename);
+    void UpdateCurrentAnimation();
 
-    // ★New★
-    // 対応したモーションハンドルの取得
-    // note: vector配列にデータが格納されているため、
-    //       毎回ハンドルを検索する手間が出てきてしまうので、
-    //       それを行うための関数。
-    int GetAnimationHandle(AnimationState state);
+    void AddAnimation(AnimationState state, const std::string& filename);   //モーションの追加
 
+    int GetAnimationHandle(AnimationState state);   // 対応したモーションハンドルの取得
 
     // ループ設定
     void SetLoop(bool isLoop) { mbLoop = isLoop; }

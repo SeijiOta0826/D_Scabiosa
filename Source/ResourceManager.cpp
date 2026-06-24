@@ -1,13 +1,11 @@
 #include "DxLib.h"
 #include "ResourceManager.h"
 
-ResourceManager::ResourceManager()
-{
+ResourceManager::ResourceManager(){
 
 }
 
-ResourceManager::~ResourceManager()
-{
+ResourceManager::~ResourceManager(){
     // オリジナルのハンドルを削除する
     for (int i = 0; i < resourceMapList.size(); i++)
     {
@@ -16,6 +14,11 @@ ResourceManager::~ResourceManager()
 
     MV1InitModel();
     InitGraph();
+}
+
+ResourceManager& ResourceManager::GetInstance() {
+    static ResourceManager instance;
+    return instance;
 }
 
 // モデルリソース生成
