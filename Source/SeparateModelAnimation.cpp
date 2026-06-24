@@ -23,7 +23,7 @@ SeparateModelAnimation::~SeparateModelAnimation() {
     if (!mAnimationInfoList.empty()) {
         for (auto itr = mAnimationInfoList.begin();
             itr != mAnimationInfoList.end(); ) {
-            auto temp = *itr;   //アニメーションデータのアドレスをローカルへ一時避難
+            auto temp = itr;   //アニメーションデータのアドレスをローカルへ一時避難
 
             itr = mAnimationInfoList.erase(itr);    //アニメーションデータを消去
             MV1DeleteModel(temp->mnAnimationHandle);        //アニメーションのハンドルを消去
@@ -151,18 +151,20 @@ void SeparateModelAnimation::SetAnimationBlend(bool isBlend) {
 }
 
 // モーション追加
-void SeparateModelAnimation::AddAnimation(AnimationState state, std::string filename){
+void SeparateModelAnimation::AddAnimation(
+    AnimationState state,
+    const std::string& filename) {
     int handle = MV1LoadModel(filename.c_str());    // モーションモデル読み込み
-    if (handle == -1) return;   //アニメーションハンドルが読み込みに失敗した場合、以降スルー
-   
+    if (handle == -1) return;                          //アニメーションハンドルが読み込みに失敗した場合、以降スルー
+
     // AnimationState と読み込んだハンドルの紐づけ
-    AnimationInfo* pInfo = new AnimationInfo();
-    pInfo->mState = state;
-    pInfo->mnAnimationHandle = handle;
+    AnimationInfo pInfo;
+    pInfo.mState = state;
+    pInfo.mnAnimationHandle = handle;
     mAnimationInfoList.push_back(pInfo);
 
     // NEUTRALモーション（待機モーション）が追加されたらモーション変更処理をしておく
-    if (state == AnimationState::ANIMATION_NEUTRAL){
+    if (state == AnimationState::ANIMATION_NEUTRAL) {
         ChangeAnimation(AnimationState::ANIMATION_NEUTRAL);  // 初期状態は待機モーションにしておく
     }
 }
@@ -178,7 +180,7 @@ int SeparateModelAnimation::GetAnimationHandle(AnimationState state) {
     for (auto itr = mAnimationInfoList.begin();
         itr != mAnimationInfoList.end();
         itr++) {
-        auto temp = *itr;
+        auto temp = itr;
 
         //対応するアニメーションがある場合
         if (temp->mState == state) {

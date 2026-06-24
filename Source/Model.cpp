@@ -4,10 +4,10 @@
 #include "Master.h"
 
 
-Model::Model(std::string filename, Vector3 initPos, bool isSeparateAnimation)
+Model::Model(const std::string& filename,const Vector3& initPos, bool isSeparateAnimation)
 	:mvPosition(initPos)
 	, mpAttachment(nullptr)
-	, mvScale(Vector3(1.0f,1.0f,1.0f))
+	, mvScale(Vector3(1.0f, 1.0f, 1.0f))
 	, mnChangeTextureHandle(-1)
 	, mnRootFrameIndex(-1)
 	, mmInitializeMatrix(MGetIdent()) {
@@ -15,11 +15,6 @@ Model::Model(std::string filename, Vector3 initPos, bool isSeparateAnimation)
 
 	if (isSeparateAnimation) {
 		mpSeparateAnimation = new SeparateModelAnimation(mnHandle);	// 分割アニメーションクラスの生成
-		mpAnimation = nullptr;
-	}
-	else {
-		mpAnimation = new ModelAnimation(mnHandle);	// 通常アニメーションクラスの生成
-		mpSeparateAnimation = nullptr;
 	}
 
 	MV1SetScale(mnHandle, mvScale.ToDxVector());	//拡大値の初期化
@@ -51,7 +46,6 @@ bool Model::ValidRootFrameIndex() {
 
 
 Model::~Model() {
-	if (mpAnimation != nullptr) delete mpAnimation;							// アニメーションクラスの破棄
 	if (mpSeparateAnimation != nullptr) delete mpSeparateAnimation;			// 分割アニメーションクラスの破棄
 	if (mpAttachment != nullptr) mpAttachment->SetDeleteFlag(true);			// アタッチモデルクラスの破棄
 	if (mnChangeTextureHandle != -1) DeleteGraph(mnChangeTextureHandle);	// テクスチャを切り替えている場合はそのテクスチャの破棄
@@ -70,12 +64,9 @@ void Model::Update(float _deltaTime) {
 	}
 
 	//-- 主要な更新処理 --//
-
-	if (mpAnimation != nullptr) mpAnimation->Update();								//通常アニメーションデータの更新
 	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->Update(_deltaTime);	//分割アニメーションデータの更新
 
 	//-- アニメーションによるモデル移動を無効化する --//
-
 	{
 		// アニメーションで移動している成分だけを初期値に戻すことで、アニメーションでの移動を無効化しているようにみせる。
 		// note: 実験的な実装なので、上手く行かないアニメーションもあるかも。
@@ -99,25 +90,21 @@ void Model::Draw() {
 
 // アニメ－ション切り替え
 void Model::ChangeAnimation(AnimationState state, bool isForce) {
-	if (mpAnimation != nullptr) mpAnimation->ChangeAnimation(state);								//通常アニメーション切り替え
 	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->ChangeAnimation(state, 0, isForce);	//分割アニメーション切り替え
 }
 
 //ループ設定
 void Model::SetLoop(bool loop) {
-	if (mpAnimation != nullptr) mpAnimation->SetLoop(loop);						//通常アニメーションのループ設定
 	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetLoop(loop);		//分割アニメーションのループ設定
 }
 
 //ループ後に再生するアニメーションの設定
 void Model::SetLoopFinishState(AnimationState state) {
-	if (mpAnimation != nullptr) mpAnimation->SetLoopFinishState(state);					//ループ後に再生するアニメーションの設定(通常)
 	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetLoopFinishState(state);	//ループ後に再生するアニメーションの設定(分割)
 }
 
 //モーションのブレンド設定
 void Model::SetAnimationBlend(bool isBlend) {
-	if (mpAnimation != nullptr) mpAnimation->SetAnimationBlend(isBlend);					//モーションのブレンド設定(通常)
 	if (mpSeparateAnimation != nullptr) mpSeparateAnimation->SetAnimationBlend(isBlend);	//モーションのブレンド設定(分割)
 }
 
@@ -125,7 +112,6 @@ void Model::SetAnimationBlend(bool isBlend) {
 AnimationState Model::GetNowState() {
 	AnimationState ret = AnimationState::ANIMATION_MAX;	// 無効値で初期化
 
-	if (mpAnimation != nullptr) ret = mpAnimation->GetNowState();					//通常アニメーションの状態取得
 	if (mpSeparateAnimation != nullptr) ret = mpSeparateAnimation->GetNowState();	//分割アニメーションの状態取得
 
 	return ret;
@@ -134,7 +120,6 @@ AnimationState Model::GetNowState() {
 bool Model::IsAnimationLoopFinish() {
 	bool ret = false;	//未終了で初期化
 
-	if (mpAnimation != nullptr) ret = mpAnimation->IsLoopFinish();					//通常アニメーションのループ終了状態を取得
 	if (mpSeparateAnimation != nullptr) ret = mpSeparateAnimation->IsLoopFinish();	//分割アニメーションのループ終了状態を取得
 
 	return ret;

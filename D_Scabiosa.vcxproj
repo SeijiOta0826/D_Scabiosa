@@ -153,7 +153,6 @@
     <ClCompile Include="Source\Loading.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Model.cpp" />
-    <ClCompile Include="Source\ModelAnimation.cpp" />
     <ClCompile Include="Source\Object2D.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="Source\Loading.h" />
     <ClInclude Include="Source\Master.h" />
     <ClInclude Include="Source\Model.h" />
-    <ClInclude Include="Source\ModelAnimation.h" />
     <ClInclude Include="Source\ModelUtility.h" />
     <ClInclude Include="Source\Object2D.h" />
     <ClInclude Include="Source\Object3D.h" />

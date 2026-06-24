@@ -69,9 +69,6 @@
     <ClCompile Include="Source\Model.cpp">
       <Filter>ソース ファイル\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModelAnimation.cpp">
-      <Filter>ソース ファイル\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>ヘッダー ファイル\Model</Filter>
     </ClInclude>
     <ClInclude Include="Source\Model.h">
-      <Filter>ヘッダー ファイル\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModelAnimation.h">
       <Filter>ヘッダー ファイル\Model</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModelUtility.h">

@@ -7,17 +7,11 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include "ModelUtility.h"
 
 class SeparateModelAnimation
 {
-    struct AttackCheckInfo
-    {
-        AnimationState mnState; //攻撃アニメーション
-        float mfStartTime;  //判定開始
-        float mfFinishTime; // 判定終了
-        bool mbIsAttacked;  // 攻撃済みかどうかを示すフラグ。true...攻撃済み/false...未攻撃
-    };
 public:
     SeparateModelAnimation(int modelHandle);   // コンストラクタ
     ~SeparateModelAnimation();  // デストラクタ
@@ -41,7 +35,7 @@ public:
     // ★New★
     // モーションデータの追加
     // note: 分割されているモーションをデータとして登録する。
-    void AddAnimation(AnimationState state, std::string filename);
+    void AddAnimation(AnimationState state, const std::string& filename);
 
     // ★New★
     // 対応したモーションハンドルの取得
@@ -110,13 +104,7 @@ private:
     float mfAnimationSpeedScale;    // ★New★　モーション速度係数
     float mfNowAnimTotalTime;       // ★New★　現在のモーションの総再生時間
 
-    // ★New★
-    // モーションデータのリスト
-    std::vector<AnimationInfo*> mAnimationInfoList;
-
-
-    //攻撃判定範囲(時間)を各オブジェクトで設定するためのリスト
-    std::vector<AttackCheckInfo*> mAttackCheakInfoList;
+    std::vector<AnimationInfo> mAnimationInfoList;  // モーションデータのリスト
 
 private:
     const float DEFAULT_ANIMATION_SPEED = 0.5f; // ★New★　モーションのデフォルト速度を定義

@@ -2,7 +2,6 @@
 #include "DxLib.h"
 #include <string>
 #include "ModelUtility.h"
-#include "ModelAnimation.h"
 #include "SeparateModelAnimation.h"
 #include "Vector3.h"
 
@@ -12,7 +11,7 @@ class Model
 {
 public:
 
-	Model(std::string filename, Vector3 initPos, bool isSeparateAnimation = false);
+	Model(const std::string& filename, const Vector3& initPos, bool isSeparateAnimation = false);
 	~Model();
 
 	void Update(float _deltaTime);	//更新処理
@@ -74,8 +73,6 @@ private:
 	MATRIX mmInitializeMatrix;  // ★New★ // モデル内部で移動をしている（であろう）フレームの初期行列
 	int mnRootFrameIndex;       // ★New★ // モデル内部で移動をしている（であろう）フレームのインデックス（初期値 -1）
 
-	//モデルアニメーションクラスのポインタ
-	ModelAnimation* mpAnimation;
 
 	// 分割読み込みバージョンのモデルアニメーションクラスのポインタ
 	SeparateModelAnimation* mpSeparateAnimation;
