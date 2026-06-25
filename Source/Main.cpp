@@ -1,11 +1,4 @@
-﻿#ifdef __INTELLISENSE__
-// IntelliSenseの時だけ、VECTORのダミー定義を認識させて黙らせる
-typedef struct tagVECTOR {
-	float x, y, z;
-} VECTOR;
-#endif
-
-#include "DxLib.h"
+﻿#include "DxLib.h"
 #include "Master.h"
 #include "Scene.h"
 #include "ObjectManager.h"

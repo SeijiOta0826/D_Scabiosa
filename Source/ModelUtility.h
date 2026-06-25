@@ -39,7 +39,7 @@ struct AnimationInfo
     int mnAnimationHandle;
 
     AnimationInfo(AnimationState _state, int _handle)
-        :mState()
+        :mState(_state)
         , mnAnimationHandle(_handle) {
     }
 

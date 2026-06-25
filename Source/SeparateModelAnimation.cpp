@@ -86,8 +86,7 @@ void SeparateModelAnimation::Update(float _deltaTime) {
     
     
 // モーション切り替え
-void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bool isForce)
-{
+void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bool isForce) {
     // 切り替えようとしているモーションがすでに設定されている場合
     if (mnState == state && !isForce)   return; //以降スルー
 
@@ -121,7 +120,6 @@ void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bo
 
 // モーションのブレンド設定
 void SeparateModelAnimation::SetAnimationBlend(bool isBlend) {
-
     //ブレンドする場合
     if (isBlend) {
         // ブレンド率は、古いモーションが有効でない場合は1.0f（ブレンドしない状態）にしておく
@@ -141,9 +139,7 @@ void SeparateModelAnimation::SetAnimationBlend(bool isBlend) {
 }
 
 // モーション追加
-void SeparateModelAnimation::AddAnimation(
-    AnimationState state,
-    const std::string& filename) {
+void SeparateModelAnimation::AddAnimation(AnimationState state, const std::string& filename) {
     int handle = MV1LoadModel(filename.c_str());    // モーションモデル読み込み
     if (handle == -1) return;                          //アニメーションハンドルが読み込みに失敗した場合、以降スルー
 

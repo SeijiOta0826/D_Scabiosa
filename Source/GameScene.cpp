@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "GameScene.h"
 
 //-- マスタデータ関係 --//
 #include "Master.h"
@@ -7,6 +7,7 @@
 #include "ObjectManager.h"
 #include "Debag.h"
 #include "Utility.h"
+#include "ModelUtility.h"
 
 //-- Obj関係 --//
 #include "Camera.h"
@@ -23,6 +24,8 @@ GameScene::~GameScene() {
 void GameScene::Initialize() {
 	Player* pPlayer = new Player();
 	pPlayer->AddAnimation(ANIMATION_NEUTRAL, "Resource/3D/Paladin/Idle.mv1");
+	pPlayer->AddAnimation(ANIMATION_WALKING, "Resource/3D/Paladin/Walking.mv1");
+	pPlayer->AddAnimation(ANIMATION_RUN, "Resource/3D/Paladin/Running.mv1");
 }
 
 void GameScene::Update(float _deltaTime) {
@@ -44,11 +47,12 @@ void GameScene::DebagDraw() {
 
 	Debag::Begin();	//デバック表示位置の初期化
 	
-	auto pPlayer = 
+	auto pPlayerObj = 
 		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
-
+	
+	auto pPlayer = dynamic_cast<Player*>(pPlayerObj);
 	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標表示
-
+	Debag::Log("アニメーション番号: ", pPlayer->DetermineAnimationState());
 	Vector3 vCameraPos =
 		Camera::GetInstance().GetPosition();
 

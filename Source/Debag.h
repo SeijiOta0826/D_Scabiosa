@@ -7,8 +7,22 @@ class Debag
 {
 public:
 	static void Begin();											//デバック描画位置の初期化
+	
+	//任意の値を表示
 	template<typename... Args>			
-	static void Log(Args&&... args);								//任意の値を表示
+	static void Log(Args&&... args) {
+		std::stringstream ss;
+
+		(ss << ... << args);
+
+		DrawString(
+			mfMargin,
+			mfMargin + mLine_yPos * (mfMargin * 2),
+			ss.str().c_str(),
+			GetColor(255, 255, 255));
+
+		++mLine_yPos;
+	}
 
 	static void PosLog(const char* _format, const Vector3& _pos);	//座標の値を表示
 
