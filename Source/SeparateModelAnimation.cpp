@@ -141,7 +141,7 @@ void SeparateModelAnimation::SetAnimationBlend(bool isBlend) {
 // モーション追加
 void SeparateModelAnimation::AddAnimation(AnimationState state, const std::string& filename) {
     int handle = MV1LoadModel(filename.c_str());    // モーションモデル読み込み
-    if (handle == -1) return;                          //アニメーションハンドルが読み込みに失敗した場合、以降スルー
+    if (handle == -1) return;                       //アニメーションハンドルが読み込みに失敗した場合、以降スルー
 
     mAnimationInfoList.push_back(AnimationInfo(state, handle)); //AnimationInfo内のコンストラクタでハンドルの紐づけを行う
 
