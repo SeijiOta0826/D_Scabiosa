@@ -18,7 +18,7 @@ Model::Model(const std::string& filename,const Vector3& initPos)
 }
 
 // アニメーション追加
-void Model::AddAnimation(AnimationState state, std::string filename) {
+void Model::AddAnimation(AnimationState state, const std::string& filename) {
 	if (mpSeparateAnimation != nullptr) {
 		mpSeparateAnimation->AddAnimation(state, filename);
 	}

@@ -43,9 +43,9 @@ struct AnimationInfo
         , mnAnimationHandle(_handle) {
     }
 
-    ~AnimationInfo() {
+   /* ~AnimationInfo() {
         if (mnAnimationHandle != -1) {
             MV1DeleteModel(mnAnimationHandle);
         }
-    }
+    }*/
 };

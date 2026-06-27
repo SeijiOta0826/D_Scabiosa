@@ -20,7 +20,7 @@ Player::~Player() {
 }
 
 // アニメーション追加
-void Player::AddAnimation(AnimationState state, std::string filename){
+void Player::AddAnimation(AnimationState state, const std::string& filename) {
 	mpModel->AddAnimation(state, filename);
 }
 

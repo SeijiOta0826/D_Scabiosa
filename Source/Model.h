@@ -56,7 +56,7 @@ public:
 
    // アニメーションデータの追加
    // note: SeparateModelAnimation クラスへの橋渡し関数
-	void AddAnimation(AnimationState state, std::string filename);
+	void AddAnimation(AnimationState state, const std::string& filename);
 	SeparateModelAnimation* GetSparateAnimData() { return mpSeparateAnimation.get();}	//セパレートアニメーションデータの取得
 
 

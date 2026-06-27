@@ -36,6 +36,7 @@ int ResourceManager::LoadModel(std::string pathName)
 
     // “Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚ÍV‚½‚É“Ç‚İ‚Ş
     int handle = MV1LoadModel(pathName.c_str());
+    printfDx("handle = %d\n", handle);
     if (handle == -1)
     {
         return -1;
