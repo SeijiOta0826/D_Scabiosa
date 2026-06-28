@@ -15,7 +15,7 @@ public:
 	~Model();
 
 	void Update(float _deltaTime);	//更新処理
-	void Draw();	//描画処理
+	void Draw();					//描画処理
 
 	void ChangeAnimation(AnimationState state, bool isForce = false);	// アニメーション切り替え
 
@@ -27,15 +27,12 @@ public:
 
 	AnimationState GetNowState();	//現在再生されているアニメーションの取得
 
-
 	void AddAttachment(std::string filename, std::string attachFrameName);	//アタッチメントを追加
-	Vector3 GetAttachmentPosition();											//アタッチモデルの座標を取得
-
+	Vector3 GetAttachmentPosition();										//アタッチモデルの座標を取得
    
 	void SetAnimationSpeedScale(float speed);	// アニメーション速度補正
 	float GetAnimationProgressRate();	// アニメーション進捗率取得
 
-	
 	//-- アニメーションによる移動を防ぐ関係 --//
 	void SetupInitializeMatrix(std::string rootFrameName);	// 初期行列の設定
 	bool ValidRootFrameIndex();	// 有効なフレームかどうかの判定
@@ -50,8 +47,7 @@ public:
 	
 	void SetScale(Vector3 scale) { MV1SetScale(mnHandle, scale.ToDxVector()); }	//拡大処理
 
-	//モデルデータ(int)のゲッター
-	int GetHandleData() { return mnHandle; }
+	int GetHandleData() { return mnHandle; }	//モデルハンドルの取得
 
 
    // アニメーションデータの追加
@@ -73,10 +69,6 @@ private:
 	MATRIX mmInitializeMatrix;  // ★New★ // モデル内部で移動をしている（であろう）フレームの初期行列
 	int mnRootFrameIndex;       // ★New★ // モデル内部で移動をしている（であろう）フレームのインデックス（初期値 -1）
 
-
-	// 分割読み込みバージョンのモデルアニメーションクラスのポインタ
-	std::unique_ptr<SeparateModelAnimation> mpSeparateAnimation;
-
-	//アタッチモデル(複数持たせたい場合は std::vector や配列で管理すると良い)
-	std::unique_ptr<AttachmentModel> mpAttachment;
+	std::unique_ptr<SeparateModelAnimation> mpSeparateAnimation;	// 分割読み込みバージョンのモデルアニメーションクラスのポインタ
+	std::unique_ptr<AttachmentModel> mpAttachment;	//アタッチモデル(複数持たせたい場合は std::vector や配列で管理すると良い)
 };

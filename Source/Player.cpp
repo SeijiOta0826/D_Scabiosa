@@ -10,7 +10,7 @@
 
 Player::Player() 
 	:Object3D(mvPosition)
-	, mpModel(std::make_unique<Model>("Resource/3D/Player/Mesh.mv1", mvPosition))
+	, mpModel(std::make_unique<Model>("Resource/3D/Paladin/Mesh.mv1", mvPosition))
 	, mpPhysics(std::make_unique<Physics>()){
 	this->SetTag(OBJ_PLAYER);	//タグを付与
 }
@@ -26,13 +26,13 @@ void Player::AddAnimation(AnimationState state, const std::string& filename) {
 
 AnimationState Player::DetermineAnimationState() {
 
-	/*if (mfCurrentSpeed > WALK_SPEED) {
+	if (mfCurrentSpeed > WALK_SPEED) {
 		return ANIMATION_RUN;		
 	}
 
 	if (mfCurrentSpeed > 0.05f) {
 		return ANIMATION_WALKING;
-	}*/
+	}
 
 	return ANIMATION_NEUTRAL;
 }
@@ -42,8 +42,7 @@ void Player::UpdateAnimation() {
 }
 
 void Player::Update(float _deltaTime) {
-	//UpdateAnimation();
-	mpModel->ChangeAnimation(ANIMATION_NEUTRAL);
+	UpdateAnimation();
 	Move();	//移動処理
 
 	this->SetPosition(mvPosition + mpPhysics->Update(_deltaTime));

@@ -4,22 +4,13 @@
 #include "ResourceManager.h"
 
 SeparateModelAnimation::SeparateModelAnimation(int modelHandle)
-    : mnModelHandle(modelHandle)
-    , mfAnimationTime(0.0f)
-    , mnAnimationIndex(-1)
-    , mfOldAnimationTime(0.0f)
-    , mnOldAnimationIndex(-1)
-    , mfAnimBlendRate(1.0f)
-    , mnState(AnimationState::ANIMATION_MAX)    // 最初は最大値としておく
-    , mbLoop(true)
-    , mnLoopFinishState(AnimationState::ANIMATION_MAX)
-    , mbLoopFinish(false)
-    , mAnimationInfoList() {
-    int moveAnimFrameIndex = MV1SearchFrame(mnModelHandle, "root"); // アニメーションで移動をしているフレーム番号を検索する
-    MV1SetFrameUserLocalMatrix( mnModelHandle,moveAnimFrameIndex, MGetIdent()); // アニメーションに付与されている移動を無効にする
+    : mnModelHandle(modelHandle) {
+    int moveAnimFrameIndex = MV1SearchFrame(mnModelHandle, "root");             // アニメーションで移動をしているフレーム番号を検索する
+    MV1SetFrameUserLocalMatrix(mnModelHandle, moveAnimFrameIndex, MGetIdent()); // アニメーションに付与されている移動を無効にする
 }
 
 SeparateModelAnimation::~SeparateModelAnimation() {
+    //全てのアニメーションハンドルを解放する
     for (auto& animationInfo : mAnimationInfoList) {
         if (animationInfo.mnAnimationHandle != -1) {
             MV1DeleteModel(animationInfo.mnAnimationHandle);
@@ -27,26 +18,17 @@ SeparateModelAnimation::~SeparateModelAnimation() {
     }
 }
 
-// 更新処理
 void SeparateModelAnimation::Update(float _deltaTime) {
+    UpdateBlend();
+    UpdateCurrentAnimation();
+    UpdateOldAniamtion();
+}
 
-    //-- モーションのブレンド率を進める --//
-
-    //ブレンド中の場合
-    if (mfAnimBlendRate < 1.0f) {
-        mfAnimBlendRate += 0.1f;    // += 0.1f はブレンド速度。自由に変えてもok
-
-        //ブレンド中にアニメーション割合が超えてしまった場合
-        if (mfAnimBlendRate > 1.0f) {
-            mfAnimBlendRate = 1.0f; //完全にアニメーションを切り替える
-        }
-    }
-
-
+void SeparateModelAnimation::UpdateCurrentAnimation() {
     //-- 現アニメーションの処理 --//
     if (mnAnimationIndex != -1) {
         mfNowAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnAnimationIndex);     // 総再生時間の取得
-        mfAnimationTime += DEFAULT_ANIMATION_SPEED * _deltaTime;  // 速度補正追加,アニメーションの秒数を進める
+        mfAnimationTime += DEFAULT_ANIMATION_SPEED;  // 速度補正追加,アニメーションの秒数を進める
 
         //アニメーションを再生しきった場合
         if (mfAnimationTime > mfNowAnimTotalTime) {
@@ -70,8 +52,9 @@ void SeparateModelAnimation::Update(float _deltaTime) {
         MV1SetAttachAnimTime(mnModelHandle, mnAnimationIndex, mfAnimationTime); // モーションを反映
         MV1SetAttachAnimBlendRate(mnModelHandle, mnAnimationIndex, mfAnimBlendRate);    // ブレンド率を設定
     }
+}
 
-
+void SeparateModelAnimation::UpdateOldAniamtion() {
     //-- 前アニメーションの処理 --//
     if (mnOldAnimationIndex != -1) {
         float fAnimTotalTime = MV1GetAttachAnimTotalTime(mnModelHandle, mnOldAnimationIndex); // 総再生時間の取得
@@ -84,6 +67,17 @@ void SeparateModelAnimation::Update(float _deltaTime) {
 
         MV1SetAttachAnimTime(mnModelHandle, mnOldAnimationIndex, mfOldAnimationTime);   // モーションを反映
         MV1SetAttachAnimBlendRate(mnModelHandle, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);  // ブレンド率を設定
+    }
+}
+
+void SeparateModelAnimation::UpdateBlend() {
+    if (mfAnimBlendRate < 1.0f) {
+        mfAnimBlendRate += 0.025f;    // += 0.1f はブレンド速度。自由に変えてもok
+
+        //ブレンド中にアニメーション割合が超えてしまった場合
+        if (mfAnimBlendRate > 1.0f) {
+            mfAnimBlendRate = 1.0f; //完全にアニメーションを切り替える
+        }
     }
 }
     
@@ -114,9 +108,6 @@ void SeparateModelAnimation::ChangeAnimation(AnimationState state, int index, bo
 
     mnAnimationIndex = MV1AttachAnim(mnModelHandle, index, GetAnimationHandle(state), TRUE);    //現アニメーションのアタッチ
     mfAnimationTime = 0.0f; // 再生時間の初期化
-
-    printfDx("MeshFrameNum = %d\n", MV1GetFrameNum(mnModelHandle));
-    printfDx("AnimFrameNum = %d\n", MV1GetFrameNum(GetAnimationHandle(state)));
 
     // ブレンド状態を初期化
     // ブレンド率は、古いモーションが有効でない場合は1.0f（ブレンドしない状態）にしておく

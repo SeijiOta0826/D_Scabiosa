@@ -1,10 +1,4 @@
 #pragma once
-
-// 
-// ★New★
-// 新規追加ファイル
-//
-
 class Object3D;
 
 // アニメーションの切り替え番号
@@ -31,8 +25,7 @@ enum AnimationState
     ANIMATION_MAX
 };
 
-// ★New★
-// 分割されているアニメーションのデータ
+// アニメーションのデータ
 struct AnimationInfo
 {
     AnimationState mState;
@@ -42,10 +35,4 @@ struct AnimationInfo
         :mState(_state)
         , mnAnimationHandle(_handle) {
     }
-
-   /* ~AnimationInfo() {
-        if (mnAnimationHandle != -1) {
-            MV1DeleteModel(mnAnimationHandle);
-        }
-    }*/
 };

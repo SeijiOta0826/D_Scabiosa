@@ -55,6 +55,12 @@
     <Filter Include="ヘッダー ファイル\Physics">
       <UniqueIdentifier>{14a7a4d0-230f-457c-9190-f1c8a0a0e589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\3D\Character">
+      <UniqueIdentifier>{eb8d1a4a-5f85-4bfa-93e6-77ac50ea3251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object\3D\Character">
+      <UniqueIdentifier>{9d030535-43c6-4c24-a015-806d79ba743f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -102,9 +108,6 @@
     <ClCompile Include="Source\GameScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>ソース ファイル\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Debag.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="Source\Vector3.cpp">
       <Filter>ソース ファイル\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>ソース ファイル\Object\3D\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,9 +173,6 @@
     <ClInclude Include="Source\GameScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>ヘッダー ファイル\Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Debag.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="Source\Vector3.h">
       <Filter>ヘッダー ファイル\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
