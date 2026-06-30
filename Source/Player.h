@@ -16,6 +16,7 @@ public:
 	void Draw() override;
 
 	void Move();								//移動処理
+	void RotationByMove();						//回転処理
 	void UpdateMovePower(const Vector3& _move, bool _isRunning);	//移動速度
 		
 	void AddAnimation(AnimationState state,const std::string& filename);	// アニメーション追加(Modelへの橋渡し)
@@ -31,4 +32,8 @@ private:
 	static constexpr float RUN_SPEED = 2.0f;		//走り時の限界速度
 	float mfCurrentSpeed = 0.0f;					//現在の速度
 	float mfTargetSpeed = 0.0f;						//目標の速度
+	float mfAngle = 0.0f;							//現在の角度
+	float mfTargetAngle = 0.0f;						//目標の角度
+	static constexpr float ROTATE_SPEED = 0.2f;		//回転速度
+
 };

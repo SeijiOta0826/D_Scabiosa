@@ -61,6 +61,12 @@
     <Filter Include="ヘッダー ファイル\Object\3D\Character">
       <UniqueIdentifier>{9d030535-43c6-4c24-a015-806d79ba743f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{c1321be2-d633-4161-a60e-0089ce45e6f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{77c49f5c-7db9-4406-b865-1b7f41228a8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -119,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transform .cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform .h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

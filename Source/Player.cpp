@@ -44,6 +44,7 @@ void Player::UpdateAnimation() {
 void Player::Update(float _deltaTime) {
 	UpdateAnimation();
 	Move();	//移動処理
+	RotationByMove();
 
 	this->SetPosition(mvPosition + mpPhysics->Update(_deltaTime));
 	mpModel->SetPosition(mvPosition);
@@ -86,10 +87,41 @@ void Player::Move() {
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);
+	if (vMoveVec.x != 0.0f || vMoveVec.z != 0.0f) {
+		vMoveVec = vMoveVec.Normalize();
+		mfTargetAngle = atan2f(vMoveVec.x, vMoveVec.z);
+	}
+
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_LSHIFT)) bIsRunning = true;
 	UpdateMovePower(vMoveVec, bIsRunning);
 
 	mpPhysics->AddForce(vMoveVec * mfCurrentSpeed);
+}
+
+void Player::RotationByMove() {
+	float fSubAngle = mfTargetAngle - mfAngle;
+
+	if (fSubAngle < -DX_PI_F) fSubAngle += DX_TWO_PI_F;
+	if (fSubAngle > DX_PI_F) fSubAngle -= DX_TWO_PI_F;
+
+	if (fSubAngle > 0.0f) {
+		fSubAngle -= ROTATE_SPEED;
+		if (fSubAngle < 0.0f) {
+			fSubAngle = 0.0f;
+		}
+	}
+
+	else if (fSubAngle < 0.0f) {
+		fSubAngle += ROTATE_SPEED;
+		if (fSubAngle > 0.0f) {
+			fSubAngle = 0.0f;
+		}
+	}
+
+	mfAngle = mfTargetAngle - fSubAngle;
+	mvRotation.y = mfAngle + DX_PI_F;
+
+	mpModel->SetRotation(mvRotation);
 }
 
 void Player::UpdateMovePower(const Vector3& _move, bool _isRunning) {
