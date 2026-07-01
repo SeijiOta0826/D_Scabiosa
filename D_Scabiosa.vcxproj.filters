@@ -129,8 +129,8 @@
     <ClCompile Include="Source\Transform .cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component.cpp">
-      <Filter>ソース ファイル\System</Filter>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Source\Component.h">
       <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

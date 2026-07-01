@@ -147,8 +147,8 @@
   <ItemGroup>
     <ClCompile Include="Source\AttachmentModel.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\Debag.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Loading.cpp" />
@@ -172,6 +172,7 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\Debag.h" />
+    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Loading.h" />

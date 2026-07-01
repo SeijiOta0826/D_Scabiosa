@@ -1,16 +1,24 @@
 #pragma once
+#include <memory>
 
+// 
 class Component
 {
 public:
-	virtual void Init();
-	virtual void Update();
-	virtual void Draw();
+	virtual ~Component() = default;
 
-	virtual void OnEnable();
-	virtual void OnDisable();
+	virtual void Init();		//初期化処理
+	virtual void Update();		//更新処理
+	virtual void Draw();		//描画処理
 
-	bool IsEnabled() const{return }
+	// コンポーネントが有効であるかどうかのアクセサ
+	bool IsEnabled() const { return mbEnabled; }
+	void SetEnabled(bool _enabled) { mbEnabled = _enabled; }
 
-	pro
+protected:
+	//Todo : GameObjectのクラスポインターを宣言しておく
+
+private:
+	//friend class :  GameObjectを設定する
+	bool mbEnabled = true;		// trueならUpdate・Drawなどの処理を行う
 };
