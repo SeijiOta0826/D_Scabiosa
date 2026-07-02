@@ -22,6 +22,8 @@ public:
 	void AddAnimation(AnimationState state,const std::string& filename);	// アニメーション追加(Modelへの橋渡し)
 	AnimationState DetermineAnimationState();						//アニメーション状態の決定ロジックに従い、遷移先アニメーションを決定する
 	void UpdateAnimation();
+
+	void Attack();	//攻撃処理
 	
 
 private:

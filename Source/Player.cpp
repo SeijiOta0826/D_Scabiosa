@@ -8,10 +8,10 @@
 #include "Camera.h"
 
 
-Player::Player() 
+Player::Player()
 	:Object3D(mvPosition)
 	, mpModel(std::make_unique<Model>("Resource/3D/Paladin/Mesh.mv1", mvPosition))
-	, mpPhysics(std::make_unique<Physics>()){
+	, mpPhysics(std::make_unique<Physics>()) {
 	this->SetTag(OBJ_PLAYER);	//タグを付与
 }
 
@@ -46,9 +46,12 @@ void Player::Update(float _deltaTime) {
 	Move();	//移動処理
 	RotationByMove();
 
+	//-- Object3Dの座標と更新処理 --//
 	this->SetPosition(mvPosition + mpPhysics->Update(_deltaTime));
-	mpModel->SetPosition(mvPosition);
 	Object3D::Update(_deltaTime);
+
+	//-- Modelの描画座標、アニメーション関係の更新処理 --//
+	mpModel->SetPosition(mvPosition);
 	mpModel->Update(_deltaTime);
 }
 
@@ -60,8 +63,6 @@ void Player::Draw() {
 void Player::Move() {
 	Vector3 vMoveVec;	//移動方向
 	bool bIsRunning = false;
-	//Todo : パワーが徐々に上がったり下がったりするようにする
-	float fMovePower = 1.0f;	//(仮)移動速度
 
 	Vector3 vUpMoveVector;				//カメラの前方向ベクトル(奥)
 	Vector3 vLeftMoveVector;			//カメラの左方向ベクトル
@@ -143,4 +144,9 @@ void Player::UpdateMovePower(const Vector3& _move, bool _isRunning) {
 	//「目標速度」へ徐々に「現在の速度」を追いつかせる
 	mfCurrentSpeed +=
 		(mfTargetSpeed - mfCurrentSpeed) * 0.1f;
+}
+
+void Player::Attack() {
+	bool IsAttack = false;
+	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_L)) IsAttack = true;
 }

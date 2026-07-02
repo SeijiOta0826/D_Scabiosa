@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+class GameObject;
 // 
 class Component
 {
@@ -16,9 +17,9 @@ public:
 	void SetEnabled(bool _enabled) { mbEnabled = _enabled; }
 
 protected:
-	//Todo : GameObjectのクラスポインターを宣言しておく
+	std::unique_ptr<GameObject> mpGameObject;
 
 private:
-	//friend class :  GameObjectを設定する
+	friend class mpGameObject;
 	bool mbEnabled = true;		// trueならUpdate・Drawなどの処理を行う
 };
