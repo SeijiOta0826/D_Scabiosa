@@ -114,9 +114,6 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Transform .cpp">
-      <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
@@ -124,6 +121,9 @@
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Vector3.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModelRenderer.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -198,6 +198,9 @@
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector3.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModelRenderer.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>

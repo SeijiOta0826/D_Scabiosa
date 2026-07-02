@@ -4,14 +4,15 @@
 
 class Component;
 
+// コンポーネントを保持・管理するゲームオブジェクトの基底クラス
 class GameObject
 {
 public:
 	virtual ~GameObject() = default;
 
-	virtual void Init() = 0;
-	virtual void Update();
-	virtual void Draw();
+	virtual void Init() = 0;	// 初期化処理
+	virtual void Update();		// 保有するコンポーネントの更新処理
+	virtual void Draw();		// 保有するコンポーネントの描画処理
 
 	// 自身にコンポーネントを追加する
 	template <class T,class...Args>

@@ -154,6 +154,7 @@
     <ClCompile Include="Source\Loading.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\ModelRenderer.cpp" />
     <ClCompile Include="Source\Object2D.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
@@ -164,7 +165,6 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SeparateModelAnimation.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\Transform .cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +178,7 @@
     <ClInclude Include="Source\Loading.h" />
     <ClInclude Include="Source\Master.h" />
     <ClInclude Include="Source\Model.h" />
+    <ClInclude Include="Source\ModelRenderer.h" />
     <ClInclude Include="Source\ModelUtility.h" />
     <ClInclude Include="Source\Object2D.h" />
     <ClInclude Include="Source\Object3D.h" />
