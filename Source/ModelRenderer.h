@@ -9,7 +9,7 @@ public:
 	void Update() override;			// 描画する座標,角度を更新
 	void Draw() override;			// モデルを描画
 
-	int GetModelHandle() const;		// モデルハンドルの取得
+	int GetModelHandle() const { return mnModelHandle; }		// モデルハンドルの取得
 
 private:
 	int mnModelHandle = -1;	//モデルハンドル

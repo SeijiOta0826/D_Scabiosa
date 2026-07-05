@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Animator.cpp" />
     <ClCompile Include="Source\AttachmentModel.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Debag.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Animator.h" />
     <ClInclude Include="Source\AttachmentModel.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Component.h" />
