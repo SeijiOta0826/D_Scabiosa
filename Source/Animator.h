@@ -25,10 +25,11 @@ public:
 	void Init() override;
 	void Update() override;
 
-	void Play(const std::string& _animationName, bool _forcePlay);
-	void CrossFade(const std::string& _animationName, float _fadeTime, bool _isForce);
+	void Play(const std::string& _animationName, bool _forcePlay = false);
+	void CrossFade(const std::string& _animationName, float _fadeTime, bool _isForce = false);
 	void SetCurrentAnimation(const std::string& _animationName, AnimationClip* _clip);
 	void AttachAniamtion();
+	void BeginBlend(float _blendTime);
 
 	void AddAnimation(const std::string& _animtionIndexName, const std::string& _animationFilename);
 
@@ -44,4 +45,6 @@ private:
 
 	float mfBlendRate = 1.0f;
 	float mfBlendSpeed = 0.1f;
+	float mfBlendDuration = 0.0f;
+	float mfBlendElapsed = 0.0f;
 };

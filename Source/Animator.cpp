@@ -24,40 +24,7 @@ void Animator::Update() {
 }
 
 void Animator::Play(const std::string& _animationName, bool _forcePlay) {
-	//-- モデルハンドルの取得 --//
-	if (!mpModelRenderer) return;
-	int nModelHandle = mpModelRenderer->GetModelHandle();
-
-	//-- 指定アニメーションが存在するかチェック --//
-	auto it = mAnimationTable.find(_animationName);
-	if (it == mAnimationTable.end()) return;
-
-	//-- 同じアニメーションを指定していないかチェック --//
-	if (!_forcePlay &&
-		msCurrentAnimationName == _animationName) {
-		return;
-	}
-
-	mOldAnimation = mCurrentAnimation;
-
-	//-- 新しいアニメーションを設定 --//
-	msCurrentAnimationName = _animationName;
-	mCurrentAnimation.mpClip = &it->second;
-	mCurrentAnimation.mfTime = 0.0f;
-
-	mCurrentAnimation.mnAttachIndex =
-		MV1AttachAnim(
-			nModelHandle,
-			0,
-			mCurrentAnimation.mpClip->mnAnimationHandle,
-			TRUE
-		);
-
-	//-- ブレンド開始 --//
-	mfBlendRate =
-		(mOldAnimation.mnAttachIndex == -1)
-		? 1.0f
-		: 0.0f;
+	CrossFade(_animationName, 0.0f);
 }
 
 void Animator::CrossFade(
@@ -86,6 +53,7 @@ void Animator::CrossFade(
 	AttachAniamtion();
 
 	//Todo : ブレンドの初期処理をする
+	BeginBlend(_fadeTime);
 }
 
 void Animator::SetCurrentAnimation(
@@ -101,16 +69,37 @@ void Animator::SetCurrentAnimation(
 }
 
 void Animator::AttachAniamtion() {
-	int nModelHandle = 
+	int nModelHandle =
 		mpModelRenderer->GetModelHandle();
 
-	mCurrentAnimation.mnAttachIndex = 
+	mCurrentAnimation.mnAttachIndex =
 		MV1AttachAnim(
 			nModelHandle,
 			0,
 			mCurrentAnimation.mpClip->mnAnimationHandle,
 			TRUE
 		);
+}
+
+void Animator::BeginBlend(float _blendTime) {
+	mfBlendDuration = _blendTime;
+
+	mfBlendElapsed = 0.0f;
+
+	if (_blendTime <= 0) {
+		mfBlendRate = 1.0f;
+
+		if (mOldAnimation.mnAttachIndex != -1) {
+			MV1DetachAnim(
+				mpModelRenderer->GetModelHandle(),
+				mOldAnimation.mnAttachIndex
+			);
+
+			mOldAnimation = {};
+		}
+		return;
+	}
+	mfBlendRate = 0.0f;
 }
 
 void Animator::AddAnimation(
