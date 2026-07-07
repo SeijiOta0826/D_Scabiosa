@@ -24,11 +24,14 @@ private:
 public:
 	void Init() override;
 	void Update() override;
+	void UpdateBlend();
+	void UpdateCurrentAnimation();
+	void UpdateOldAnimation();
 
 	void Play(const std::string& _animationName, bool _forcePlay = false);
 	void CrossFade(const std::string& _animationName, float _fadeTime, bool _isForce = false);
 	void SetCurrentAnimation(const std::string& _animationName, AnimationClip* _clip);
-	void AttachAniamtion();
+	void CurrentAttachAniamtion();
 	void BeginBlend(float _blendTime);
 
 	void AddAnimation(const std::string& _animtionIndexName, const std::string& _animationFilename);

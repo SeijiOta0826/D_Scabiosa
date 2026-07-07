@@ -9,6 +9,12 @@ void Animator::Init() {
 }
 
 void Animator::Update() {
+	//Todo : //-- ブレンド率の更新処理 --//
+	 
+	//Todo : //-- 現在のアニメーションの更新 --//
+
+	//Todo : //-- 前のアニメーションの更新 --//
+
 	//-- モデルハンドルの取得 --//
 	if (!mpModelRenderer) return;
 	int nModelHandle = mpModelRenderer->GetModelHandle();
@@ -21,6 +27,18 @@ void Animator::Update() {
 	);
 
 	mCurrentAnimation.mfTime += mCurrentAnimation.mpClip->mfDefaultSpeed;
+}
+
+void Animator::UpdateBlend() {
+	
+}
+
+void Animator::UpdateCurrentAnimation() {
+	//Todo : //-- UpdateAnimationInstance(共通処理関数)の作成 --//
+}
+
+void Animator::UpdateOldAnimation() {
+	//Todo : //-- UpdateAnimationInstance(共通処理関数)の作成 --//
 }
 
 void Animator::Play(const std::string& _animationName, bool _forcePlay) {
@@ -50,7 +68,7 @@ void Animator::CrossFade(
 	SetCurrentAnimation(_animationName, &it->second);
 
 	//Todo : アニメーションのアタッチ関係を行う
-	AttachAniamtion();
+	CurrentAttachAniamtion();
 
 	//Todo : ブレンドの初期処理をする
 	BeginBlend(_fadeTime);
@@ -68,7 +86,7 @@ void Animator::SetCurrentAnimation(
 	mCurrentAnimation.mfTime = 0.0f;
 }
 
-void Animator::AttachAniamtion() {
+void Animator::CurrentAttachAniamtion() {
 	int nModelHandle =
 		mpModelRenderer->GetModelHandle();
 
