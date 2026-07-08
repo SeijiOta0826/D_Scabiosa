@@ -27,6 +27,7 @@ public:
 	void UpdateBlend();
 	void UpdateCurrentAnimation();
 	void UpdateOldAnimation();
+	void UpdateAnimationInstance(AnimationInstance& _instance, float _blendRate);;
 
 	void Play(const std::string& _animationName, bool _forcePlay = false);
 	void CrossFade(const std::string& _animationName, float _fadeTime, bool _isForce = false);

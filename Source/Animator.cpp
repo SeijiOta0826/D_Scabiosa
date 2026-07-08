@@ -10,10 +10,13 @@ void Animator::Init() {
 
 void Animator::Update() {
 	//Todo : //-- ブレンド率の更新処理 --//
+	UpdateBlend();
 	 
 	//Todo : //-- 現在のアニメーションの更新 --//
+	UpdateCurrentAnimation();
 
 	//Todo : //-- 前のアニメーションの更新 --//
+	UpdateOldAnimation();
 
 	//-- モデルハンドルの取得 --//
 	if (!mpModelRenderer) return;
@@ -30,15 +33,88 @@ void Animator::Update() {
 }
 
 void Animator::UpdateBlend() {
-	
+	if (mfBlendRate >= 1.0f) return;	//ブレンド中でない場合
+
+	//-- ブレンド時間更新 --//
+	//Todo : fDeltaをDeltaTimeに置き換える
+	float fDelta = 1.0f;
+	mfBlendElapsed += fDelta;
+
+	//-- ブレンド率計算 --//
+	mfBlendRate = mfBlendElapsed / mfBlendDuration;
+
+	if (mfBlendRate > 1.0f) mfBlendRate = 1.0f;
+
+	//-- ブレンド終了 --//
+	if (mfBlendRate == 1.0f) {
+		MV1DetachAnim(
+			mpModelRenderer->GetModelHandle(),
+			mOldAnimation.mnAttachIndex
+		);
+
+		mOldAnimation = {};
+	}
 }
 
 void Animator::UpdateCurrentAnimation() {
 	//Todo : //-- UpdateAnimationInstance(共通処理関数)の作成 --//
+	UpdateAnimationInstance(
+		mCurrentAnimation,
+		mfBlendRate
+	);
 }
 
 void Animator::UpdateOldAnimation() {
 	//Todo : //-- UpdateAnimationInstance(共通処理関数)の作成 --//
+	UpdateAnimationInstance(
+		mOldAnimation,
+		(1.0f - mfBlendRate)
+	);
+}
+
+void Animator::UpdateAnimationInstance(
+	AnimationInstance& _instance, 
+	float _blendRate
+) {
+	//-- 有効チェック --//
+	if (_instance.mpClip == nullptr ||
+		_instance.mnAttachIndex == -1) {
+		return;
+	}
+
+	//-- 総再生時間取得 --//
+	float fTotalTime =
+		MV1GetAttachAnimTotalTime(
+			mpModelRenderer->GetModelHandle(),
+			_instance.mnAttachIndex
+		);
+
+	//-- 再生時間の更新 --//
+	float fDeltaTime = 1.0f;
+	_instance.mfTime +=
+		fDeltaTime * _instance.mpClip->mfDefaultSpeed;
+
+	//-- ループ判定 --//
+	if (_instance.mfTime > fTotalTime) {
+		if (_instance.mpClip->mbLoop) {
+			_instance.mfTime = 0.0f;
+		}
+		else {
+			_instance.mfTime = fTotalTime;
+		}
+	}
+
+	MV1SetAttachAnimTime(
+		mpModelRenderer->GetModelHandle(),
+		_instance.mnAttachIndex,
+		_instance.mfTime
+	);
+
+	MV1SetAttachAnimBlendRate(
+		mpModelRenderer->GetModelHandle(),
+		_instance.mnAttachIndex,
+		_blendRate
+	);
 }
 
 void Animator::Play(const std::string& _animationName, bool _forcePlay) {
