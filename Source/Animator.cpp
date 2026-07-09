@@ -4,32 +4,24 @@
 #include "GameObject.h"
 #include "ModelRenderer.h"
 
+#include "ResourceManager.h"
+
 void Animator::Init() {
+	// Init時点でModelRendererが存在している前提
 	mpModelRenderer = mpGameObject->GetComponent<ModelRenderer>();
 }
 
 void Animator::Update() {
-	//Todo : //-- ブレンド率の更新処理 --//
+	//-- モデルデータ有効チェック --//
+	if (!mpModelRenderer) return;
+
 	UpdateBlend();
 	 
-	//Todo : //-- 現在のアニメーションの更新 --//
 	UpdateCurrentAnimation();
 
-	//Todo : //-- 前のアニメーションの更新 --//
-	UpdateOldAnimation();
-
-	//-- モデルハンドルの取得 --//
-	if (!mpModelRenderer) return;
-	int nModelHandle = mpModelRenderer->GetModelHandle();
-
-	//-- アニメーションを更新 --//
-	MV1SetAttachAnimTime(
-		nModelHandle,
-		mCurrentAnimation.mnAttachIndex,
-		mCurrentAnimation.mfTime
-	);
-
-	mCurrentAnimation.mfTime += mCurrentAnimation.mpClip->mfDefaultSpeed;
+	if (mOldAnimation.mnAttachIndex != -1) {
+		UpdateOldAnimation();
+	}
 }
 
 void Animator::UpdateBlend() {
@@ -46,7 +38,7 @@ void Animator::UpdateBlend() {
 	if (mfBlendRate > 1.0f) mfBlendRate = 1.0f;
 
 	//-- ブレンド終了 --//
-	if (mfBlendRate == 1.0f) {
+	if (mfBlendRate >= 1.0f) {
 		MV1DetachAnim(
 			mpModelRenderer->GetModelHandle(),
 			mOldAnimation.mnAttachIndex
@@ -57,7 +49,6 @@ void Animator::UpdateBlend() {
 }
 
 void Animator::UpdateCurrentAnimation() {
-	//Todo : //-- UpdateAnimationInstance(共通処理関数)の作成 --//
 	UpdateAnimationInstance(
 		mCurrentAnimation,
 		mfBlendRate
@@ -65,7 +56,6 @@ void Animator::UpdateCurrentAnimation() {
 }
 
 void Animator::UpdateOldAnimation() {
-	//Todo : //-- UpdateAnimationInstance(共通処理関数)の作成 --//
 	UpdateAnimationInstance(
 		mOldAnimation,
 		(1.0f - mfBlendRate)
@@ -92,7 +82,7 @@ void Animator::UpdateAnimationInstance(
 	//-- 再生時間の更新 --//
 	float fDeltaTime = 1.0f;
 	_instance.mfTime +=
-		fDeltaTime * _instance.mpClip->mfDefaultSpeed;
+		fDeltaTime * mfPlaySpeed * _instance.mpClip->mfDefaultSpeed;
 
 	//-- ループ判定 --//
 	if (_instance.mfTime > fTotalTime) {
@@ -102,6 +92,8 @@ void Animator::UpdateAnimationInstance(
 		else {
 			_instance.mfTime = fTotalTime;
 		}
+
+		mbIsFinished = true;
 	}
 
 	MV1SetAttachAnimTime(
@@ -118,7 +110,7 @@ void Animator::UpdateAnimationInstance(
 }
 
 void Animator::Play(const std::string& _animationName, bool _forcePlay) {
-	CrossFade(_animationName, 0.0f);
+	CrossFade(_animationName, 0.0f, _forcePlay);
 }
 
 void Animator::CrossFade(
@@ -135,22 +127,19 @@ void Animator::CrossFade(
 	if (it == mAnimationTable.end()) return;
 
 	//-- 同じアニメーションを指定していないかチェック --//
-	if (_isForce &&
+	if (!_isForce &&
 		msCurrentAnimationName == _animationName) {
 		return;
 	}
 
-	//Todo : CurrentAnimationデータを設定しなおす
-	SetCurrentAnimation(_animationName, &it->second);
+	PrepareAnimationChange(_animationName, &it->second);
 
-	//Todo : アニメーションのアタッチ関係を行う
-	CurrentAttachAniamtion();
+	AttachCurrentAnimation();
 
-	//Todo : ブレンドの初期処理をする
 	BeginBlend(_fadeTime);
 }
 
-void Animator::SetCurrentAnimation(
+void Animator::PrepareAnimationChange(
 	const std::string& _animationName,
 	AnimationClip* _clip
 ) {
@@ -160,9 +149,11 @@ void Animator::SetCurrentAnimation(
 
 	mCurrentAnimation.mpClip = _clip;
 	mCurrentAnimation.mfTime = 0.0f;
+
+	mbIsFinished = false;
 }
 
-void Animator::CurrentAttachAniamtion() {
+void Animator::AttachCurrentAnimation() {
 	int nModelHandle =
 		mpModelRenderer->GetModelHandle();
 
@@ -200,9 +191,13 @@ void Animator::AddAnimation(
 	const std::string& _animtionName,
 	const std::string& _animationFilename
 ) {
+	//-- 同一のアニメーション登録を回避 --//
+	if (mAnimationTable.find(_animtionName) == mAnimationTable.end()) 
+		return;
+
+	//-- アニメーション読み込み & アニメーション登録 --//
 	AnimationClip clip;
-	//Todo : ResourceManagerを介したアニメーションハンドル取得を行う
-	clip.mnAnimationHandle = -1;
+	clip.mnAnimationHandle = ResourceManager::GetInstance().LoadModel(_animationFilename);
 
 	mAnimationTable.emplace(
 		_animtionName,

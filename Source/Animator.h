@@ -31,11 +31,15 @@ public:
 
 	void Play(const std::string& _animationName, bool _forcePlay = false);
 	void CrossFade(const std::string& _animationName, float _fadeTime, bool _isForce = false);
-	void SetCurrentAnimation(const std::string& _animationName, AnimationClip* _clip);
-	void CurrentAttachAniamtion();
+	void PrepareAnimationChange(const std::string& _animationName, AnimationClip* _clip);
+	void AttachCurrentAnimation();
 	void BeginBlend(float _blendTime);
 
 	void AddAnimation(const std::string& _animtionIndexName, const std::string& _animationFilename);
+
+	bool IsFinished() const { return mbIsFinished; }
+	void SetSpeed(float _speed) { mfPlaySpeed = _speed; }
+	float GetSpeed() { return mfPlaySpeed; }
 
 private:
 	ModelRenderer* mpModelRenderer = nullptr;
@@ -47,8 +51,10 @@ private:
 
 	std::string msCurrentAnimationName;
 
+	float mfPlaySpeed = 1.0f;
+	bool mbIsFinished = false;
+
 	float mfBlendRate = 1.0f;
-	float mfBlendSpeed = 0.1f;
 	float mfBlendDuration = 0.0f;
 	float mfBlendElapsed = 0.0f;
 };
