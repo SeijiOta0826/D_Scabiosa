@@ -3,6 +3,7 @@
 #include <memory>
 
 class Component;
+class ObjectManager;
 
 // コンポーネントを保持・管理するゲームオブジェクトの基底クラス
 class GameObject
@@ -39,6 +40,13 @@ public:
 
 		return nullptr;
 	}
+
+	// 同Scene内のObjectManagerへのゲッター
+	//ObjectManager* GetObjectManager() { return mpObjectManager; }
+private:
+	friend class ObjectManager;
+	ObjectManager* mpObjectManager;
+	void Initialize(ObjectManager* _manager);
 
 private:
 	std::vector<std::unique_ptr<Component>> mComponents;	//所持しているコンポーネントのコンテナ
