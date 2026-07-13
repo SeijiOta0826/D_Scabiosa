@@ -3,7 +3,7 @@
 #include <memory>
 
 class Component;
-class ObjectManager;
+class ObjectManager_test;
 
 // コンポーネントを保持・管理するゲームオブジェクトの基底クラス
 class GameObject
@@ -11,7 +11,8 @@ class GameObject
 public:
 	virtual ~GameObject() = default;
 
-	virtual void Init() = 0;	// 初期化処理
+	virtual void Init() = 0;			// 初期化処理
+	virtual void InitComponent() = 0;	// コンポーネント初期設定
 	virtual void Update();		// 保有するコンポーネントの更新処理
 	virtual void Draw();		// 保有するコンポーネントの描画処理
 
@@ -42,12 +43,20 @@ public:
 	}
 
 	// 同Scene内のObjectManagerへのゲッター
-	//ObjectManager* GetObjectManager() { return mpObjectManager; }
+	ObjectManager_test* GetObjectManager() { return mpObjectManager; }
+
+	// 解放するかどうかのフラグアクセサ
+	void Destroy() { mbDestroy = true; }
+	bool IsDestroy() { return mbDestroy; }
+
 private:
-	friend class ObjectManager;
-	ObjectManager* mpObjectManager;
-	void Initialize(ObjectManager* _manager);
+	friend class ObjectManager_test;
+	ObjectManager_test* mpObjectManager;
+	void Initialize(ObjectManager_test* _manager);
 
 private:
 	std::vector<std::unique_ptr<Component>> mComponents;	//所持しているコンポーネントのコンテナ
+
+private:
+	bool mbDestroy = false;
 };

@@ -7,12 +7,6 @@ class GameObject;
 class ObjectManager_test
 {
 public:
-	enum class ObjTag
-	{
-		OBJ_NONE = 0,
-		OBJ_PLAYER,
-	};
-public:
 	ObjectManager_test();
 	~ObjectManager_test();
 
@@ -33,8 +27,34 @@ public:
 		return ptr;
 	}
 
-	void FindObject(ObjTag _tag);	//w’èObj‚Ì’Tõ
-	void FindObjects(ObjTag _tag);	//w’è•¡”Obj
+	template<class T>
+	T* FindObject() {
+		for (auto& object : mObjects) {
+			if (auto ptr = dynamic_cast<T*>(object.get())) {
+				return ptr;
+			}
+		}
+
+		return nullptr;
+	}
+
+	template<class T>
+	std::vector<T*> FindObjects() {
+		static_assert(
+			std::is_base_of_v<GameObject, T>,
+			"T must derive from GameObject"
+			);
+
+		std::vector<T*> result;
+
+		for (auto& object : mObjects) {
+			if (auto ptr = dynamic_cast<T*>(object.get())) {
+				result.push_back(ptr);
+			}
+		}
+
+		return result;
+	}
 
 private:
 	std::vector<std::unique_ptr<GameObject>> mObjects;
