@@ -56,6 +56,11 @@ public:
 		return result;
 	}
 
+	void Clear();	// 全てのObjectを解放する(シーン終了時など)
+
+private:
+	void RemoveDestroyObjects();
+
 private:
 	std::vector<std::unique_ptr<GameObject>> mObjects;
 	

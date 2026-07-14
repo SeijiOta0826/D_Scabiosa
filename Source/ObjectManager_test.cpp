@@ -1,7 +1,16 @@
 #include "ObjectManager_test.h"
 
-//GameObject* ObjectManager_test::FindObject(ObjTag _tag) {
-//	for (auto& object : mObjects) {
-//		if(auto ptr = dynamic_cast<>)
-//	}
-//}
+#include "GameObject.h"
+
+void ObjectManager_test::RemoveDestroyObjects() {
+    std::erase_if(
+        mObjects,
+        [](const auto& object) {
+        return object->IsDestroy();
+    }
+    );
+}
+
+void ObjectManager_test::Clear() {
+
+}
