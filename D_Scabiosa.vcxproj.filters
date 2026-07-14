@@ -78,9 +78,6 @@
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ObjectManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -129,7 +126,7 @@
     <ClCompile Include="Source\Animator.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ObjectManager_test.cpp">
+    <ClCompile Include="Source\ObjectManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -165,9 +162,6 @@
       <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ObjectManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
@@ -212,7 +206,7 @@
     <ClInclude Include="Source\Animator.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ObjectManager_test.h">
+    <ClInclude Include="Source\ObjectManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>

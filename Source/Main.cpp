@@ -61,10 +61,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			//60fpsに調整
 		}
 
-		//削除する必要のあるオブジェクトがあれば削除する
-		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->DeleteAll2DIfNeeded();
-		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->DeleteAll3DIfNeeded();
-
 		SceneManager::GetInstance().ChangeSceneIfNeeded();	// ループする直前にシーン遷移チェックを入れておく
 	}
 

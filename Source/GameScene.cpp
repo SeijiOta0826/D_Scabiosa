@@ -47,10 +47,8 @@ void GameScene::DebagDraw() {
 
 	Debag::Begin();	//デバック表示位置の初期化
 	
-	auto pPlayerObj = 
-		SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);
-	
-	auto pPlayer = dynamic_cast<Player*>(pPlayerObj);
+	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
+
 	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標表示
 	Debag::Log("アニメーション番号: ", pPlayer->DetermineAnimationState());
 	Vector3 vCameraPos =

@@ -11,7 +11,7 @@ Object2D::Object2D(std::string filename, Vector3 initPos)
 	, mvPosition(initPos)
 	, mbDeleteFlag(false) {
 
-	SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->AddObject(this);	//現在シーンのObjectManagerに自身(this)を追加する
+	//SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->AddObject(this);	//現在シーンのObjectManagerに自身(this)を追加する
 
 	mfsizeX = mpTexture->GetSizeX();	//テクスチャのサイズをobjとして取得(X)
 	mfsizeY = mpTexture->GetSizeY();	//テクスチャのサイズをobjとして取得(Y)
