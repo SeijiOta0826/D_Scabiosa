@@ -146,7 +146,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Animator.cpp" />
-    <ClCompile Include="Source\AttachmentModel.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\Debag.cpp" />
@@ -155,24 +154,20 @@
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Loading.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\ModelRenderer.cpp" />
     <ClCompile Include="Source\Object2D.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
-    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Player_test.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\SeparateModelAnimation.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animator.h" />
-    <ClInclude Include="Source\AttachmentModel.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Character.h" />
     <ClInclude Include="Source\Component.h" />
@@ -182,19 +177,16 @@
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Loading.h" />
     <ClInclude Include="Source\Master.h" />
-    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\ModelRenderer.h" />
     <ClInclude Include="Source\ModelUtility.h" />
     <ClInclude Include="Source\Object2D.h" />
     <ClInclude Include="Source\Object3D.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Physics.h" />
-    <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Player_test.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\SeparateModelAnimation.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Utility.h" />

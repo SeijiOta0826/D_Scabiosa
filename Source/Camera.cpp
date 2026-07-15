@@ -3,8 +3,10 @@
 
 #include "SceneManager.h"
 #include "ObjectManager.h"
-#include "Player.h"
 #include "Scene.h"
+
+#include "Player_test.h"
+#include "Transform.h"
 
 #include "InputManager.h"
 
@@ -46,12 +48,12 @@ void Camera::Update(float _deltaTime) {
 /*		mpTarget = SceneManager::GetInstance().GetCurrentScene()
 			->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);	//mpTargetにプレイヤーのデータをぶち込む*/
 
-		mpTarget = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
+		mpTarget = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player_test>();
 	}
 
 	//ターゲットobjがセッティングされている場合
 	if (mpTarget != nullptr) {
-		mvLookAtPosition = mpTarget->GetPosition();	//基本座標を対象に座標にして少し上にずらす
+		mvLookAtPosition = mpTarget->GetComponent<Transform>()->GetPosition();	//基本座標を対象に座標にして少し上にずらす
 		mvLookAtPosition.y += 80.0f;
 	}
 

@@ -14,7 +14,6 @@
 
 //-- Obj関係 --//
 #include "Camera.h"
-#include "Player.h"
 #include "Player_test.h"
 
 GameScene::GameScene()
