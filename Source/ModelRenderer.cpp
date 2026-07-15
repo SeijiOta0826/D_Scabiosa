@@ -2,7 +2,7 @@
 
 #include "DxLib.h"
 #include "GameObject.h"
-#include "Transform .h"
+#include "Transform.h"
 
 ModelRenderer::ModelRenderer(const char* _filename) {
 	mnModelHandle = MV1LoadModel(_filename);

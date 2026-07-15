@@ -9,9 +9,6 @@ public:
 	Transform() = default;
 	virtual ~Transform() = default;
 
-	void Init() override;
-	void Update() override;
-
 	void SetPosition(const Vector3& _position) { mvPosition = _position; }
 	const Vector3& GetPosition() const{ return mvPosition; }
 

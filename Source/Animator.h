@@ -41,6 +41,8 @@ public:
 	void SetSpeed(float _speed) { mfPlaySpeed = _speed; }
 	float GetSpeed() { return mfPlaySpeed; }
 
+	const std::string& GetCurrentAnimationName() { return msCurrentAnimationName; }
+
 private:
 	ModelRenderer* mpModelRenderer = nullptr;
 

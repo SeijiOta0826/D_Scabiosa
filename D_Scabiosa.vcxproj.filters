@@ -129,6 +129,12 @@
     <ClCompile Include="Source\ObjectManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Character.cpp">
+      <Filter>ソース ファイル\Object\3D\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player_test.cpp">
+      <Filter>ソース ファイル\Object\3D\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Master.h">
@@ -185,7 +191,7 @@
     <ClInclude Include="Source\Player.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Transform .h">
+    <ClInclude Include="Source\Transform.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component.h">
@@ -208,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="Source\ObjectManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character.h">
+      <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player_test.h">
+      <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

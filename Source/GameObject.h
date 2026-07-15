@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <utility>
 
 class Component;
-class ObjectManager_test;
+class ObjectManager;
 
 // コンポーネントを保持・管理するゲームオブジェクトの基底クラス
 class GameObject
@@ -43,16 +44,16 @@ public:
 	}
 
 	// 同Scene内のObjectManagerへのゲッター
-	ObjectManager_test* GetObjectManager() { return mpObjectManager; }
+	ObjectManager* GetObjectManager() { return mpObjectManager; }
 
 	// 解放するかどうかのフラグアクセサ
 	void Destroy() { mbDestroy = true; }
 	bool IsDestroy() { return mbDestroy; }
 
 private:
-	friend class ObjectManager_test;
-	ObjectManager_test* mpObjectManager;
-	void Initialize(ObjectManager_test* _manager);
+	friend class ObjectManager;
+	ObjectManager* mpObjectManager;
+	void Initialize(ObjectManager* _manager);
 
 private:
 	std::vector<std::unique_ptr<Component>> mComponents;	//所持しているコンポーネントのコンテナ

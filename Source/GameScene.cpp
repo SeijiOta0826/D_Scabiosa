@@ -9,9 +9,13 @@
 #include "Utility.h"
 #include "ModelUtility.h"
 
+#include "Transform.h"
+#include "Animator.h"
+
 //-- Obj関係 --//
 #include "Camera.h"
 #include "Player.h"
+#include "Player_test.h"
 
 GameScene::GameScene()
 	:Scene() {
@@ -22,10 +26,12 @@ GameScene::~GameScene() {
 }
 
 void GameScene::Initialize() {
-	Player* pPlayer = new Player();
+	/*Player* pPlayer = new Player();
 	pPlayer->AddAnimation(ANIMATION_NEUTRAL, "Resource/3D/Paladin/Idle.mv1");
 	pPlayer->AddAnimation(ANIMATION_WALKING, "Resource/3D/Paladin/Walking.mv1");
-	pPlayer->AddAnimation(ANIMATION_RUN, "Resource/3D/Paladin/Running.mv1");
+	pPlayer->AddAnimation(ANIMATION_RUN, "Resource/3D/Paladin/Running.mv1");*/
+
+	auto player = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<Player_test>();
 }
 
 void GameScene::Update(float _deltaTime) {
@@ -47,10 +53,10 @@ void GameScene::DebagDraw() {
 
 	Debag::Begin();	//デバック表示位置の初期化
 	
-	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
+	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player_test>();
 
-	Debag::PosLog("PlayerPos: ", pPlayer->GetPosition());	//Playerの座標表示
-	Debag::Log("アニメーション番号: ", pPlayer->DetermineAnimationState());
+	Debag::PosLog("PlayerPos: ", pPlayer->GetComponent<Transform>()->GetPosition());	//Playerの座標表示
+	Debag::Log("アニメーション番号: ", pPlayer->GetComponent<Animator>()->GetCurrentAnimationName());
 	Vector3 vCameraPos =
 		Camera::GetInstance().GetPosition();
 
