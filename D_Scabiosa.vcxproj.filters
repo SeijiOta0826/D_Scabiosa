@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\Model">
-      <UniqueIdentifier>{bcdd235d-3f31-47e4-a834-78d67e54f1c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object">
       <UniqueIdentifier>{50a525d9-ac72-48dd-8849-83ae3ba9589f}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\3D">
       <UniqueIdentifier>{7c0ac10b-2ec3-4dc2-afea-89f15b0aaf5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Model">
-      <UniqueIdentifier>{ed96395a-ce12-4866-bb48-50155dde1d1f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{2b7d05c3-c1a3-4f72-898a-3b7bee758cc2}</UniqueIdentifier>
@@ -65,15 +59,6 @@
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AttachmentModel.cpp">
-      <Filter>ソース ファイル\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SeparateModelAnimation.cpp">
-      <Filter>ソース ファイル\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Model.cpp">
-      <Filter>ソース ファイル\Model</Filter>
     </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
@@ -143,18 +128,6 @@
     <ClInclude Include="Source\Utility.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AttachmentModel.h">
-      <Filter>ヘッダー ファイル\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Model.h">
-      <Filter>ヘッダー ファイル\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModelUtility.h">
-      <Filter>ヘッダー ファイル\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SeparateModelAnimation.h">
-      <Filter>ヘッダー ファイル\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Camera.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
@@ -220,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="Source\Player_test.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModelUtility.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
