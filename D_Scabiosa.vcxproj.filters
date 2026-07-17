@@ -93,9 +93,6 @@
     <ClCompile Include="Source\Debag.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>ソース ファイル\Object\3D\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
@@ -160,9 +157,6 @@
     </ClInclude>
     <ClInclude Include="Source\Debag.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\Transform.h">
       <Filter>ヘッダー ファイル\System</Filter>

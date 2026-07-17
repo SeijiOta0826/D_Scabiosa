@@ -4,6 +4,8 @@
 
 class Object3D;
 
+class GameObject;
+
 class Camera
 {
 public:
@@ -35,7 +37,7 @@ private:
 	Vector3 mvPosition;			//カメラ座標
 	Vector3 mvLookAtPosition;	//カメラの注視点座標
 
-	Object3D* mpTarget;			//カメラを向ける対象
+	GameObject* mpTarget;			//カメラを向ける対象
 
 	//画面揺れ関係
 	int mnShakeTime = 0;
