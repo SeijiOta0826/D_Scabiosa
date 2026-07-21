@@ -55,6 +55,8 @@ void GameScene::DebagDraw() {
 	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player_test>();
 
 	Debag::PosLog("PlayerPos: ", pPlayer->GetComponent<Transform>()->GetPosition());	//Playerの座標表示
+
+	auto i = pPlayer->GetComponent<Animator>()->GetCurrentAnimationName();
 	Debag::Log("アニメーション番号: ", pPlayer->GetComponent<Animator>()->GetCurrentAnimationName());
 	Vector3 vCameraPos =
 		Camera::GetInstance().GetPosition();

@@ -32,14 +32,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
+	SetLightDifColor(GetColorF(1.0f, 0.8f, 0.4f, 0.0f)); 	// ディフューズカラー
+	SetLightAmbColor(GetColorF(3.2f, 3.2f, 3.2f, 0.0f));	// アンビエント
+
 	int prevTime = GetNowCount();
 	// メインループ
 	while (ProcessMessage() == 0
-		&& CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
+		&& CheckHitKey(KEY_INPUT_ESCAPE) == 0
+		) {
 		SetUseLighting(TRUE);  // ライト処理ON
 
-		SetLightDifColor(GetColorF(1.0f, 0.8f, 0.4f, 0.0f)); 	// ディフューズカラー
-		SetLightAmbColor(GetColorF(3.2f, 3.2f, 3.2f, 0.0f));	// アンビエント
 		int time = GetNowCount();
 
 		int currentTime = GetNowCount();	//現在の時間を取得
