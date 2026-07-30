@@ -1,4 +1,4 @@
-#include "Player_test.h"
+#include "Player.h"
 
 #include "Transform.h"
 #include "ModelRenderer.h"
@@ -6,19 +6,20 @@
 
 #include "Camera.h"
 #include "InputManager.h"
+#include "InputManager_test.h"
 
 
-void Player_test::Init() {
+void Player::Init() {
 
 }
 
-void Player_test::InitComponent() {
+void Player::InitComponent() {
 	AddComponent<Transform>();
 	AddComponent<ModelRenderer>("Resource/3D/Paladin/Mesh.mv1");
 	AddComponent<Animator>();
 }
 
-void Player_test::Update() {
+void Player::Update() {
 	UpdateAnimation();
 	Move();	//移動処理
 	RotationByMove();
@@ -26,11 +27,11 @@ void Player_test::Update() {
 	GameObject::Update();
 }
 
-void Player_test::Draw() {
+void Player::Draw() {
 	GameObject::Draw();
 }
 
-void Player_test::Move() {
+void Player::Move() {
 	Vector3 vMoveVec;	//移動方向
 	bool bIsRunning = false;
 
@@ -54,10 +55,15 @@ void Player_test::Move() {
 		vLeftMoveVector = vLeftMoveVector.Normalize();
 	}
 
-	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_W)) vMoveVec = vMoveVec + vUpMoveVector;
+	/*if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_W)) vMoveVec = vMoveVec + vUpMoveVector;
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
-	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);
+	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);*/
+
+	if (InputManager_test::GetInstance().GetButton(InputManager_test::Button::Confirm)) vMoveVec = vMoveVec + vUpMoveVector;
+	/*if (InputManager_test::GetInstance().GetButton(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
+	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
+	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);*/
 	if (vMoveVec.x != 0.0f || vMoveVec.z != 0.0f) {
 		vMoveVec = vMoveVec.Normalize();
 		mfTargetAngle = atan2f(vMoveVec.x, vMoveVec.z);
@@ -70,7 +76,7 @@ void Player_test::Move() {
 		GetComponent<Transform>()->GetPosition() + vMoveVec * mfCurrentSpeed);
 }
 
-void Player_test::UpdateMovePower(const Vector3& _move, bool _isRunning) {
+void Player::UpdateMovePower(const Vector3& _move, bool _isRunning) {
 	bool bIsMove = _move.Length() != 0.0f;	//移動中であるかどうかを示す
 
 	//-- 入力状態によって目標速度を変更 --//
@@ -91,7 +97,7 @@ void Player_test::UpdateMovePower(const Vector3& _move, bool _isRunning) {
 		(mfTargetSpeed - mfCurrentSpeed) * 0.1f;
 }
 
-void Player_test::RotationByMove() {
+void Player::RotationByMove() {
 	float fSubAngle = mfTargetAngle - mfAngle;
 
 	if (fSubAngle < -DX_PI_F) fSubAngle += DX_TWO_PI_F;
@@ -122,7 +128,7 @@ void Player_test::RotationByMove() {
 	);
 }
 
-const std::string& Player_test::DetermineAnimationState() {
+const std::string& Player::DetermineAnimationState() {
 
 	if (mfCurrentSpeed > WALK_SPEED) {
 		return "Run";
@@ -135,6 +141,6 @@ const std::string& Player_test::DetermineAnimationState() {
 	return "Idel";
 }
 
-void Player_test::UpdateAnimation() {
+void Player::UpdateAnimation() {
 	GetComponent<Animator>()->CrossFade(DetermineAnimationState(), 2.0f);
 }

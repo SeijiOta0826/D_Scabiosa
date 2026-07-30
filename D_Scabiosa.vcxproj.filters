@@ -72,9 +72,6 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object3D.cpp">
-      <Filter>ソース ファイル\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object2D.cpp">
       <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
@@ -92,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="Source\Debag.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
       <Filter>ソース ファイル\System</Filter>
@@ -114,8 +108,14 @@
     <ClCompile Include="Source\Character.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player_test.cpp">
+    <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputManager_test.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="Source\Object2D.h">
       <Filter>ヘッダー ファイル\Object\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object3D.h">
-      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="Source\Texture.h">
       <Filter>ヘッダー ファイル\Object\2D</Filter>
@@ -164,9 +161,6 @@
     <ClInclude Include="Source\Component.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
@@ -185,11 +179,17 @@
     <ClInclude Include="Source\Character.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player_test.h">
+    <ClInclude Include="Source\Player.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModelUtility.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager_test.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

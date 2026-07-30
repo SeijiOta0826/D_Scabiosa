@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 #include "InputManager.h"
+#include "InputManager_test.h"
 
 #include "Utility.h"
 
@@ -25,6 +26,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	//Todo:	初期化処理系をここへ
 	SceneManager::GetInstance().Initialize();	//シーンマネージャー初期化
 	Camera::GetInstance().Initialize();		//カメラ初期化
+	InputManager_test::GetInstance().Initialize();
 
 	SetDrawScreen(DX_SCREEN_BACK);	// 描画先画面を裏画面に設定する
 
@@ -51,6 +53,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		//Todo:	更新処理をここへ
 		SceneManager::GetInstance().Update(deltaTime);		//シーンマネージャー更新
 		Camera::GetInstance().Update(deltaTime);
+		InputManager_test::GetInstance().Update();
 
 		ClearDrawScreen();	// 画面を初期化する
 

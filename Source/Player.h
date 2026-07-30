@@ -5,11 +5,11 @@
 #include <string>
 
 
-class Player_test : public GameObject
+class Player : public GameObject
 {
 public:
-	Player_test() = default;
-	virtual~Player_test() = default;
+	Player() = default;
+	virtual~Player() = default;
 
 	virtual void Init() override;
 	virtual void InitComponent() override;

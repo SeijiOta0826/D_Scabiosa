@@ -5,7 +5,7 @@
 #include "ObjectManager.h"
 #include "Scene.h"
 
-#include "Player_test.h"
+#include "Player.h"
 #include "Transform.h"
 
 #include "InputManager.h"
@@ -48,7 +48,7 @@ void Camera::Update(float _deltaTime) {
 /*		mpTarget = SceneManager::GetInstance().GetCurrentScene()
 			->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);	//mpTargetにプレイヤーのデータをぶち込む*/
 
-		mpTarget = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player_test>();
+		mpTarget = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
 	}
 
 	//ターゲットobjがセッティングされている場合

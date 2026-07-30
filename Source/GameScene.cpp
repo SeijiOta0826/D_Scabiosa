@@ -14,7 +14,7 @@
 
 //-- Obj関係 --//
 #include "Camera.h"
-#include "Player_test.h"
+#include "Player.h"
 
 GameScene::GameScene()
 	:Scene() {
@@ -30,7 +30,7 @@ void GameScene::Initialize() {
 	pPlayer->AddAnimation(ANIMATION_WALKING, "Resource/3D/Paladin/Walking.mv1");
 	pPlayer->AddAnimation(ANIMATION_RUN, "Resource/3D/Paladin/Running.mv1");*/
 
-	auto player = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<Player_test>();
+	auto player = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<Player>();
 }
 
 void GameScene::Update(float _deltaTime) {
@@ -52,7 +52,7 @@ void GameScene::DebagDraw() {
 
 	Debag::Begin();	//デバック表示位置の初期化
 	
-	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player_test>();
+	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
 
 	Debag::PosLog("PlayerPos: ", pPlayer->GetComponent<Transform>()->GetPosition());	//Playerの座標表示
 
