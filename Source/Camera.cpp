@@ -88,7 +88,7 @@ void Camera::UpdateRotation() {
 
 
 	//方向キーでカメラ操作
-	if (CheckHitKey(KEY_INPUT_LEFT)) {
+	/*if (CheckHitKey(KEY_INPUT_LEFT)) {
 		mfHorizontalAngle += fCameraSensitivity;
 	}
 
@@ -102,9 +102,15 @@ void Camera::UpdateRotation() {
 
 	if (CheckHitKey(KEY_INPUT_DOWN)) {
 		mfVerticalAngle -= fCameraSensitivity;
-	}
+	}*/
 
-	Stick pStick = InputManager::GetStickInfo().Right;	//右スティックのい情報取得
+	mfHorizontalAngle +=
+		InputManager::GetInstance().GetAxis(Axis::LookX);
+
+	mfVerticalAngle += 
+		InputManager::GetInstance().GetAxis(Axis::LookY);
+
+/*	Stick pStick = InputManager::GetStickInfo().Right;	//右スティックのい情報取得
 
 	if (pStick.x < 0.0f) {
 		mfHorizontalAngle += fCameraSensitivity * pStick.length;
@@ -118,7 +124,7 @@ void Camera::UpdateRotation() {
 	}
 	else if (pStick.y > 0.0f) {
 		mfVerticalAngle -= fCameraSensitivity * pStick.length;
-	}
+	}*/
 
 	if (mfHorizontalAngle >= 180.0f)
 	{

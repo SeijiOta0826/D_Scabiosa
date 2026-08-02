@@ -6,7 +6,6 @@
 
 #include "Camera.h"
 #include "InputManager.h"
-#include "InputManager_test.h"
 
 
 void Player::Init() {
@@ -60,7 +59,6 @@ void Player::Move() {
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
 	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);*/
 
-	if (InputManager_test::GetInstance().GetButton(InputManager_test::Button::Confirm)) vMoveVec = vMoveVec + vUpMoveVector;
 	/*if (InputManager_test::GetInstance().GetButton(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
 	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
 	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);*/
@@ -69,7 +67,7 @@ void Player::Move() {
 		mfTargetAngle = atan2f(vMoveVec.x, vMoveVec.z);
 	}
 
-	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_LSHIFT)) bIsRunning = true;
+	if (InputManager::GetInstance().GetButton(Button::Dash)) bIsRunning = true;
 	UpdateMovePower(vMoveVec, bIsRunning);
 
 	GetComponent<Transform>()->SetPosition(

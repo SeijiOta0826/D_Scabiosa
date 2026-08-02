@@ -55,13 +55,16 @@
     <Filter Include="ヘッダー ファイル\System">
       <UniqueIdentifier>{77c49f5c-7db9-4406-b865-1b7f41228a8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\Input">
+      <UniqueIdentifier>{75e89961-75aa-4339-bfe6-ce6176a227c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System\Input">
+      <UniqueIdentifier>{9a26dad6-1def-4d2d-943d-50e226d866ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\InputManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
@@ -114,8 +117,20 @@
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\InputManager_test.cpp">
+    <ClCompile Include="Source\InputManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Vector2.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Keyboard.cpp">
+      <Filter>ソース ファイル\System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mouse.cpp">
+      <Filter>ソース ファイル\System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GamePad.cpp">
+      <Filter>ソース ファイル\System\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +148,6 @@
     </ClInclude>
     <ClInclude Include="Source\Texture.h">
       <Filter>ヘッダー ファイル\Object\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\InputManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
@@ -188,8 +200,20 @@
     <ClInclude Include="Source\GameObject.h">
       <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InputManager_test.h">
+    <ClInclude Include="Source\InputManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector2.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Keyboard.h">
+      <Filter>ヘッダー ファイル\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mouse.h">
+      <Filter>ヘッダー ファイル\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GamePad.h">
+      <Filter>ヘッダー ファイル\System\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

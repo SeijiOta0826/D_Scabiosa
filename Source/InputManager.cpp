@@ -1,128 +1,252 @@
-﻿#include "InputManager.h"
-#include "DxLib.h"
+#include "InputManager.h"
+
+#include <DxLib.h>
 #include <cmath>
 
-// 静的メンバ変数の初期化
-int InputManager::mDownBuffer[256] = { 0 };
-int InputManager::mUpBuffer[256] = { 0 };
-int InputManager::mButtonBuffer[256] = { 0 };
-
-InputManager::InputManager() {
-
+namespace {
+	constexpr float AXIS_DEAD_ZONE = 0.2f;
 }
 
-InputManager::~InputManager() {
-
-}
-
-//インスタンスの取得
 InputManager& InputManager::GetInstance() {
 	static InputManager instance;
 	return instance;
 }
 
-// スティック入力取得関数
-StickInfo InputManager::GetStickInfo(int pad) {
-	StickInfo stick{};
-
-	// アナログスティック入力（-1000 ～ 1000）
-	int x_left = 0;
-	int y_left = 0;
-	int x_right = 0;
-	int y_right = 0;
-	
-	GetJoypadAnalogInput(&x_left, &y_left, pad);
-	GetJoypadAnalogInputRight(&x_right, &y_right, pad);
-
-	// -1.0 ～ 1.0 に正規化
-	stick.left.x = x_left / 1000.0f;
-	stick.left.y = y_left / 1000.0f;
-	stick.Right.x = x_right / 1000.0f;
-	stick.Right.y = y_right / 1000.0f;
-
-	// 倒し具合（ベクトルの長さ）
-	stick.left.length = sqrtf(stick.left.x * stick.left.x + stick.left.y * stick.left.y);
-	if (stick.left.length > 1.0f) stick.left.length = 1.0f;
-	// 倒し具合（ベクトルの長さ）
-	stick.Right.length = sqrtf(stick.Right.x * stick.Right.x + stick.Right.y * stick.Right.y);
-	if (stick.Right.length > 1.0f) stick.Right.length = 1.0f;
-
-	// デッドゾーン（小さな入力を0扱い）
-	const float DEAD_ZONE = 0.1f;
-	if (stick.left.length < DEAD_ZONE) {
-		stick.left.x = stick.left.y = 0.0f;
-		stick.left.length = 0.0f;
-	}
-
-	if (stick.Right.length < DEAD_ZONE) {
-		stick.Right.x = stick.Right.y = 0.0f;
-		stick.Right.length = 0.0f;
-	}
-
-	return stick;
-}
-
-int InputManager::CheckPadButton(int _button) {
-
-	// 戻り値用の変数を用意
-	int result = 0;
-	int nButtonState = GetJoypadInputState(DX_INPUT_PAD1) & _button;
-
-	if (mButtonBuffer[_button] == 0 && nButtonState > 0) {
-		result = 1;
-	}
-
-	mButtonBuffer[_button] = nButtonState;
-
-	if (mButtonBuffer[_button] > 1 && nButtonState == 0) {
-		mButtonBuffer[_button] = 0;
-	}
-	return result;
-}
-
-int InputManager::CheckDownKey(int KeyCode)
-{
-	// 戻り値用の変数を用意
-	int result = 0;
-
-	// 指定キーの現在の状態を取得
-	int keyState = CheckHitKey(KeyCode);
-
-	// 前回キーが押されておらず、かつ、現在キーが押されていたら「キーを押した瞬間」とする
-	if(mDownBuffer[KeyCode] == 0 && keyState == 1)
+void InputManager::InitializeButton() {
+	mButtonBindings[(int)Button::Confirm] =
 	{
-		result = 1;
-	}
+		KEY_INPUT_RETURN,
+		MOUSE_INPUT_LEFT,
+		PAD_INPUT_1
+	};
 
-	// 現在のキー状態をバッファに格納
-	mDownBuffer[KeyCode] = keyState;
-
-	return result;
-}
-
-// 指定されたキーが離された瞬間だけ 1 を返す関数
-int InputManager::CheckUpKey(int KeyCode)
-{
-	// 戻り値用の変数を用意
-	int result = 0;
-
-	// 指定キーの現在の状態を取得
-	int keyState = CheckHitKey(KeyCode);
-
-	// 前回キーが押されており、かつ、現在キーが押されていなかったら「キーを離した瞬間」とする
-	if(mUpBuffer[KeyCode] == 1 && keyState == 0)
+	mButtonBindings[(int)Button::Cancel] =
 	{
-		result = 1;
+		KEY_INPUT_ESCAPE,
+		-1,
+		PAD_INPUT_2
+	};
+
+	mButtonBindings[(int)Button::Jump] =
+	{
+		KEY_INPUT_SPACE,
+		-1,
+		PAD_INPUT_3
+	};
+
+	mButtonBindings[(int)Button::Attack] =
+	{
+		KEY_INPUT_Z,
+		-1,
+		PAD_INPUT_4
+	};
+
+	mButtonBindings[(int)Button::Dash] =
+	{
+		KEY_INPUT_LSHIFT,
+		-1,
+		PAD_INPUT_5
+	};
+}
+
+void InputManager::InitializeAxis() {
+	mAxisBindings[(int)Axis::MoveX] =
+	{
+		KEY_INPUT_D,
+		KEY_INPUT_A,
+		PadAxis::LeftX
+	};
+
+	mAxisBindings[(int)Axis::MoveY] =
+	{
+		KEY_INPUT_W,
+		KEY_INPUT_S,
+		PadAxis::LeftY
+	};
+
+	mAxisBindings[(int)Axis::LookX] =
+	{
+		KEY_INPUT_RIGHT,
+		KEY_INPUT_LEFT,
+		PadAxis::RightX
+	};
+
+	mAxisBindings[(int)Axis::LookY] =
+	{
+		KEY_INPUT_UP,
+		KEY_INPUT_DOWN,
+		PadAxis::RightY
+	};
+}
+
+void InputManager::Update() {
+	// 各入力デバイスを更新
+	mKeyboard.Update();
+	mMouse.Update();
+	mGamePad.Update();
+
+	// 論理入力を更新
+	UpdateButtons();
+	UpdateAxes();
+}
+
+void InputManager::UpdateButtons() {
+	// Todo : 全Bindingを繰り返して、Press,Down,Upの入力状態を得る
+	for (size_t i = 0;
+		i < static_cast<size_t>(Button::Max);
+		++i) {
+		const ButtonBinding& binding = mButtonBindings[i];
+
+		mButtonStates[i].Press =
+			IsButtonPressed(binding);
+
+		mButtonStates[i].Down =
+			IsButtonDown(binding);
+
+		mButtonStates[i].Up =
+			IsButtonUp(binding);
+	}
+}
+
+void InputManager::UpdateAxes() {
+	// Todo : 全Bindingを繰り返して、Valueを得る
+	for (size_t i = 0;
+		i < static_cast<size_t>(Axis::Max);
+		++i) {
+		const AxisBinding& binding = mAxisBindings[i];
+
+		mAxisStates[i] =
+			GetAxisValue(binding);
+	}
+}
+
+bool InputManager::IsButtonPressed(
+	const ButtonBinding& _binding) const {
+	if (_binding.mnKeyboardKey != -1 &&
+		mKeyboard.IsPress(_binding.mnKeyboardKey)) {
+		return true;
 	}
 
-	// 現在のキー状態をバッファに格納
-	mUpBuffer[KeyCode] = keyState;
+	if (_binding.mnMouseButton != -1 &&
+		mKeyboard.IsPress(_binding.mnMouseButton)) {
+		return true;
+	}
 
-	return result;
+	if (_binding.mnPadButton != -1 &&
+		mKeyboard.IsPress(_binding.mnPadButton)) {
+		return true;
+	}
+
+	return false;
 }
 
-// 指定されたキーを押し続けている間１を返す関数
-int InputManager::CheckPressKey(int KeyCode)
-{
-	return CheckHitKey(KeyCode);
+bool InputManager::IsButtonDown(
+	const ButtonBinding& _binding) const {
+	if (_binding.mnKeyboardKey != -1 &&
+		mKeyboard.IsDown(_binding.mnKeyboardKey)) {
+		return true;
+	}
+
+	if (_binding.mnMouseButton != -1 &&
+		mKeyboard.IsDown(_binding.mnMouseButton)) {
+		return true;
+	}
+
+	if (_binding.mnPadButton != -1 &&
+		mKeyboard.IsDown(_binding.mnPadButton)) {
+		return true;
+	}
+
+	return false;
 }
+
+bool InputManager::IsButtonUp(
+	const ButtonBinding& _binding) const {
+	if (_binding.mnKeyboardKey != -1 &&
+		mKeyboard.IsUp(_binding.mnKeyboardKey)) {
+		return true;
+	}
+
+	if (_binding.mnMouseButton != -1 &&
+		mKeyboard.IsUp(_binding.mnMouseButton)) {
+		return true;
+	}
+
+	if (_binding.mnPadButton != -1 &&
+		mKeyboard.IsUp(_binding.mnPadButton)) {
+		return true;
+	}
+
+	return false;
+}
+
+float InputManager::GetAxisValue(
+	const AxisBinding& _binding) const {
+	float fKeyboardValue = 0.0f;
+
+	if (_binding.mnPositiveKey != -1 &&
+		mKeyboard.IsPress(_binding.mnPositiveKey)) {
+		fKeyboardValue += 1.0f;
+	}
+
+	if (_binding.mnNegativeKey != -1 &&
+		mKeyboard.IsPress(_binding.mnNegativeKey)) {
+		fKeyboardValue -= 1.0f;
+	}
+
+	float fPadValue = 0.0f;
+
+	switch (_binding.padAxis) {
+	case PadAxis::LeftX:
+		fPadValue = mGamePad.GetLeftStick().x;
+		break;
+
+	case PadAxis::LeftY:
+		fPadValue = mGamePad.GetLeftStick().y;
+		break;
+
+	case PadAxis::RightX:
+		fPadValue = mGamePad.GetRightStick().x;
+		break;
+
+	case PadAxis::RightY:
+		fPadValue = mGamePad.GetRightStick().y;
+		break;
+	}
+
+	if (std::fabs(fPadValue) < AXIS_DEAD_ZONE) {
+		fPadValue = 0.0f;
+	}
+
+	if (fPadValue != 0.0f) {
+		return fPadValue;
+	}
+
+	return fKeyboardValue;
+}
+
+bool InputManager::GetButton(
+	Button _button
+) const {
+	return mButtonStates[(int)_button].Press;
+}
+
+bool InputManager::GetButtonDown(
+	Button _button
+) const {
+	return mButtonStates[(int)_button].Down;
+}
+
+bool InputManager::GetButtonUp(
+	Button _button
+) const {
+	return mButtonStates[(int)_button].Up;
+}
+
+float InputManager::GetAxis(
+	Axis _axis) const {
+	return mAxisStates[
+		static_cast<size_t>(_axis)
+	];
+}
+

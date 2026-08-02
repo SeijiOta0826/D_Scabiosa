@@ -1,41 +1,89 @@
-﻿#pragma once
-#include "DxLib.h"
-/*
-キー入力に関する補助関数
-DXLibに存在しないので自作
-*/
+#pragma once
 
-struct Stick {
-	float x;       // 横軸（-1.0 ～ 1.0）
-	float y;       // 縦軸（-1.0 ～ 1.0）
-	float length;  // 倒し具合（0.0 ～ 1.0）
+#include "Keyboard.h"
+#include "Mouse.h"
+#include "GamePad.h"
+
+#include <array>
+
+enum class Button {
+	Confirm,
+	Cancel,
+
+	Jump,
+	Attack,
+	Dash,
+
+	Max
 };
 
-struct StickInfo {
-	Stick left;	//左スティック
-	Stick Right;	//右スティック
+enum class Axis {
+	MoveX,
+	MoveY,
+
+	LookX,
+	LookY,
+
+	Max,
 };
 
 class InputManager
 {
+public:
+	struct ButtonBinding {
+		int mnKeyboardKey = -1;
+		int mnMouseButton = -1;
+		int mnPadButton = -1;
+	};
+
+	struct AxisBinding {
+		int mnPositiveKey = -1;
+		int mnNegativeKey = -1;
+
+		PadAxis padAxis;
+	};
+
+	struct ButtonState {
+		bool Press = false;
+		bool Down = false;
+		bool Up = false;
+	};
 
 public:
-	InputManager();
-	~InputManager();
+	InputManager() = default;
+	~InputManager() = default;
 
-	static InputManager& GetInstance();	//インスタンスの取得
+	static InputManager& GetInstance();
 
-	//-- キーボード入力 --//
-	static int CheckDownKey(int KeyCode);	// 指定されたキーが押された瞬間だけ 1 を返す関数
-	static int CheckUpKey(int KeyCode);		// 指定されたキーが離された瞬間だけ 1 を返す関数
-	static int CheckPressKey(int KeyCode);	// 指定されたキーを押し続けている間１を返す関数
+	void InitializeButton();
+	void InitializeAxis();
 
-	//-- コントローラー入力 --//
-	static StickInfo GetStickInfo(int pad = DX_INPUT_PAD1);	//スティックの入力取得
-	static int CheckPadButton(int _button);					//指定されたボタンが押された瞬間だけ 1 を返す関数
+	void Update();
+
+	bool GetButton(Button _button) const;
+	bool GetButtonDown(Button _button) const;
+	bool GetButtonUp(Button _button) const;
+ 
+	float GetAxis(Axis _axis) const;
 
 private:
-	static int mDownBuffer[256];	// CheckDownKey用のキーバッファ
-	static int mUpBuffer[256];		// CheckUpKey用のキーバッファ
-	static int mButtonBuffer[256];
+	void UpdateButtons();
+	void UpdateAxes();
+
+	bool IsButtonPressed(const ButtonBinding& _binding) const;
+	bool IsButtonDown(const ButtonBinding& _binding) const;
+	bool IsButtonUp(const ButtonBinding& _binding) const;
+
+	float GetAxisValue(const AxisBinding& _binding) const;
+
+private:
+	Keyboard mKeyboard;
+	Mouse mMouse;
+	GamePad mGamePad;
+
+	std::array<ButtonBinding, static_cast<size_t>(Button::Max)> mButtonBindings;
+	std::array<AxisBinding, static_cast<size_t>(Axis::Max)> mAxisBindings;
+
+	std::array<ButtonState, static_cast<size_t>(Button::Max)> mButtonStates;
+	std::array<float, static_cast<size_t>(Axis::Max)> mAxisStates;
 };
