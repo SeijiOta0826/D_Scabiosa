@@ -14,7 +14,7 @@ public:
 
 	virtual void Init() = 0;			// 初期化処理
 	virtual void InitComponent() = 0;	// コンポーネント初期設定
-	virtual void Update();		// 保有するコンポーネントの更新処理
+	virtual void Update(float _deltaTime);		// 保有するコンポーネントの更新処理
 	virtual void Draw();		// 保有するコンポーネントの描画処理
 
 	// 自身にコンポーネントを追加する
@@ -49,6 +49,9 @@ public:
 	// 解放するかどうかのフラグアクセサ
 	void Destroy() { mbDestroy = true; }
 	bool IsDestroy() { return mbDestroy; }
+
+protected:
+	virtual const char* GetModelFilename() const = 0;
 
 private:
 	friend class ObjectManager;

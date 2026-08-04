@@ -61,6 +61,12 @@
     <Filter Include="ヘッダー ファイル\System\Input">
       <UniqueIdentifier>{9a26dad6-1def-4d2d-943d-50e226d866ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Controller">
+      <UniqueIdentifier>{3d9f06fe-2c31-4959-9157-9a5de376cde4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Controller">
+      <UniqueIdentifier>{3574aa53-9de1-4644-b87b-d23bc857d3ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -74,9 +80,6 @@
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object2D.cpp">
-      <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
     <ClCompile Include="Source\Texture.cpp">
       <Filter>ソース ファイル\Object\2D</Filter>
@@ -108,9 +111,6 @@
     <ClCompile Include="Source\ObjectManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Character.cpp">
-      <Filter>ソース ファイル\Object\3D\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Player.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
     </ClCompile>
@@ -131,6 +131,15 @@
     </ClCompile>
     <ClCompile Include="Source\GamePad.cpp">
       <Filter>ソース ファイル\System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object2D.cpp">
+      <Filter>ソース ファイル\Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerController.cpp">
+      <Filter>ソース ファイル\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character.cpp">
+      <Filter>ソース ファイル\Object\3D\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +197,6 @@
     <ClInclude Include="Source\ObjectManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Character.h">
-      <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
@@ -214,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="Source\GamePad.h">
       <Filter>ヘッダー ファイル\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerController.h">
+      <Filter>ヘッダー ファイル\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character.h">
+      <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

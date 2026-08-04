@@ -7,7 +7,7 @@ void GameObject::Initialize(ObjectManager* _manager) {
 	this->InitComponent();	// 継承先が持つコンポーネント初期設定
 }
 
-void GameObject::Update() {
+void GameObject::Update(float _deltaTime) {
 	for (auto& component : mComponents) {
 		if (component->IsEnabled()) {
 			component->Update();

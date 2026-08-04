@@ -2,9 +2,9 @@
 
 #include "GameObject.h"
 
-void ObjectManager::Update() {
+void ObjectManager::Update(float _deltaTime) {
     for (auto& object : mObjects) {
-        object->Update();
+        object->Update(_deltaTime);
     }
 
     RemoveDestroyObjects();

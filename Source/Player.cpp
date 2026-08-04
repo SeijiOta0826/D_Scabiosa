@@ -13,24 +13,21 @@ void Player::Init() {
 }
 
 void Player::InitComponent() {
-	AddComponent<Transform>();
-	AddComponent<ModelRenderer>("Resource/3D/Paladin/Mesh.mv1");
-	AddComponent<Animator>();
 }
 
-void Player::Update() {
+void Player::Update(float _deltaTime) {
 	UpdateAnimation();
-	Move();	//移動処理
+	//Move();	//移動処理
 	RotationByMove();
 
-	GameObject::Update();
+	Character::Update(_deltaTime);
 }
 
 void Player::Draw() {
-	GameObject::Draw();
+	Character::Draw();
 }
 
-void Player::Move() {
+/*void Player::Move() {
 	Vector3 vMoveVec;	//移動方向
 	bool bIsRunning = false;
 
@@ -61,7 +58,7 @@ void Player::Move() {
 
 	/*if (InputManager_test::GetInstance().GetButton(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
 	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
-	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);*/
+	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);
 	if (vMoveVec.x != 0.0f || vMoveVec.z != 0.0f) {
 		vMoveVec = vMoveVec.Normalize();
 		mfTargetAngle = atan2f(vMoveVec.x, vMoveVec.z);
@@ -72,7 +69,7 @@ void Player::Move() {
 
 	GetComponent<Transform>()->SetPosition(
 		GetComponent<Transform>()->GetPosition() + vMoveVec * mfCurrentSpeed);
-}
+}*/
 
 void Player::UpdateMovePower(const Vector3& _move, bool _isRunning) {
 	bool bIsMove = _move.Length() != 0.0f;	//移動中であるかどうかを示す

@@ -11,7 +11,7 @@ public:
 	ObjectManager() = default;
 	~ObjectManager() = default;
 
-	void Update();
+	void Update(float _deltaTime);
 	void Draw();
 
 	template <class T,class...Args>

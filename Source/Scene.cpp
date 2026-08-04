@@ -8,7 +8,7 @@ Scene::Scene()
 
 //XVˆ—
 void Scene::Update(float _deltaTime) {
-	mpObjectManager->Update();
+	mpObjectManager->Update(_deltaTime);
 }
 
 //•`‰æˆ—
