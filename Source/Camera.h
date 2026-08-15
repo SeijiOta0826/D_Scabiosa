@@ -1,53 +1,86 @@
 #pragma once
-#include "DxLib.h"
 #include "Vector3.h"
-
-class Object3D;
-
+#include "CameraController.h"
 class GameObject;
 
+enum class CameraMode {
+	Follow,
+	Free,
+	Move,
+};
 class Camera
 {
 public:
+	Camera() = default;
+	~Camera() = default;
 
-	Camera();
-	~Camera();
-
-	static Camera& GetInstance(); //ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+	static Camera& GetInstance();
 
 	void Initialize();
 	void Finalize();
 	void Update(float _deltaTime);
-	void UpdateRotation();
 
-	void Shake();	// ‰æ–Ê—h‚ê
-	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
+	// åŸºæœ¬æƒ…å ±
+	Vector3 GetPosition() const;
+	Vector3 GetForward() const;
+	Vector3 GetRight() const;
+	Vector3 GetUp() const;
 
-	//À•WƒAƒNƒZƒT
-	Vector3 GetPosition() { return mvPosition; }
-	void SetPosition(Vector3 _pos) { mvPosition = _pos; }
+	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆè¨­å®š
+	void SetTarget(GameObject* _target) { mpTarget = _target; }
+	GameObject* GetTarget() const { return mpTarget; }
+	void ClearTarget() { mpTarget = nullptr; }
 
-	Vector3 GetLookAtPosition() { return mvLookAtPosition; }	//’‹“_æ“¾
+	// å›è»¢
+	// Memo : CameraControllerã§ä½¿ç”¨
+	void AddRotation(float _horizontal, float _vertical);
+
+	// é€šå¸¸ã‚«ãƒ¡ãƒ©
+	void SetDistance(float _distance) { mfDistance = _distance; }
+	void SetLookAtHeight(float _height) { mfLookAtHeight = _height; }
+
+	// æ¼”å‡º
+	void StartShake(
+		float _time,
+		float _width,
+		float _angleSpeed
+	);
+
+	void MoveTo(
+		const Vector3& _position,
+		const Vector3& _lookAt,
+		float _duration
+	);
+
+	void Wait(float _duration);
+
+	void FollowTarget();
 
 private:
-	
-	float mfHorizontalAngle;	//…•½•ûŒüƒAƒ“ƒOƒ‹
-	float mfVerticalAngle;		//‚’¼•ûŒüƒAƒ“ƒOƒ‹
+	void UpdatePosition();
+	void UpdateRotation();
+	void UpdateTarget();
+	//void UpdateShake();
+	void Apply();
 
-	Vector3 mvPosition;			//ƒJƒƒ‰À•W
-	Vector3 mvLookAtPosition;	//ƒJƒƒ‰‚Ì’‹“_À•W
+private:
+	GameObject* mpTarget = nullptr;
 
-	GameObject* mpTarget;			//ƒJƒƒ‰‚ğŒü‚¯‚é‘ÎÛ
+	CameraController mController;
 
-	//‰æ–Ê—h‚êŠÖŒW
-	int mnShakeTime = 0;
-	int mnShakeTimeCount = 0;
-	float mfShakeAngle = 0.0f;
-	float mfShakeTimeCounter = 0.0f;
-	float mfShakeTime = 0.0f;
-	float mfShakeWidth = 0.0f;
-	float mfShakeAngleSpeed = 0.0f;
-	float mfStepTime = 0.0f;
-	Vector3 mvShakePosition;
+	Vector3 mvPosition;
+	Vector3 mvLookAtPosition;
 
+	Vector3 mvForward;
+	Vector3 mvRight;
+	Vector3 mvWorldUp;
+
+	Vector3 mvTargetPosition;
+
+	float mfHorizontalAngle;
+	float mfVerticalAngle;
+	float mfDistance = 200.0f;
+	float mfLookAtHeight = 80.0f;
+
+	float mfRotationSpeed = 1.0f;
 };

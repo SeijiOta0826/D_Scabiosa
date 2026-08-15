@@ -84,9 +84,6 @@
     <ClCompile Include="Source\Texture.cpp">
       <Filter>ソース ファイル\Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Loading.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
@@ -141,6 +138,12 @@
     <ClCompile Include="Source\Character.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraController.cpp">
+      <Filter>ソース ファイル\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Master.h">
@@ -148,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="Source\Utility.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object2D.h">
       <Filter>ヘッダー ファイル\Object\2D</Filter>
@@ -226,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="Source\Character.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraController.h">
+      <Filter>ヘッダー ファイル\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,26 +1,13 @@
 #include "Camera.h"
-#include <cmath>
 
-#include "SceneManager.h"
-#include "ObjectManager.h"
-#include "Scene.h"
+#include <DxLib.h>
+#include <algorithm>
 
-#include "Player.h"
+#include "GameObject.h"
 #include "Transform.h"
-
-#include "InputManager.h"
-
-Camera::Camera()
-	:mfHorizontalAngle(0.0f)
-	, mfVerticalAngle(0.0f)
-	, mvPosition()
-	, mvLookAtPosition()
-	, mpTarget(nullptr) {
-
-}
-
-Camera::~Camera() {
-
+namespace {
+	constexpr float MIN_VERTICAL_ANGLE = -80.0f;
+	constexpr float MAX_VERTICAL_ANGLE = 80.0f;
 }
 
 Camera& Camera::GetInstance() {
@@ -29,152 +16,102 @@ Camera& Camera::GetInstance() {
 }
 
 void Camera::Initialize() {
-	SetCameraNearFar(100.f, 50000.0f);	//ƒJƒƒ‰‚ÌƒNƒŠƒbƒsƒ“ƒO‹——£‚Ìİ’è
-	SetBackgroundColor(200, 200, 200);	//”wŒiF‚ğİ’è(ŠDF)
+	SetCameraNearFar(100.0f, 50000.0f);	// ã‚«ãƒ¡ãƒ©è¨­å®š
+	SetBackgroundColor(200, 200, 200);	// æç”»è¨­å®š
 
-	SetCameraPositionAndTarget_UpVecY(mvPosition.ToDxVector(), mvLookAtPosition.ToDxVector());	//ƒJƒƒ‰À•W‚Æƒ^[ƒQƒbƒg‚ÌÀ•W‚ğƒZƒbƒg
+	mController.SetCamera(this);
+
+	mvWorldUp = Vector3(0.0f, 1.0f, 0.0f);
+	// æ¼”å‡ºç”¨çŠ¶æ…‹ã®åˆæœŸåŒ–ãªã©...
 }
 
 void Camera::Finalize() {
+	mpTarget = nullptr;
 
+	// ä»–çµ‚äº†å‡¦ç†...
 }
 
 void Camera::Update(float _deltaTime) {
+	mController.Update();
 
-	UpdateRotation();	//‰ñ“]ˆ—
-
-	//ƒ^[ƒQƒbƒgobj‚ªƒZƒbƒeƒBƒ“ƒO‚³‚ê‚Ä‚¢‚È‚¢ê‡
-	if (mpTarget == nullptr) {
-/*		mpTarget = SceneManager::GetInstance().GetCurrentScene()
-			->GetObjectManager()->GetObject3DByTag(Object3D::OBJ_PLAYER);	//mpTarget‚ÉƒvƒŒƒCƒ„[‚Ìƒf[ƒ^‚ğ‚Ô‚¿‚Ş*/
-
-		mpTarget = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
-	}
-
-	//ƒ^[ƒQƒbƒgobj‚ªƒZƒbƒeƒBƒ“ƒO‚³‚ê‚Ä‚¢‚éê‡
-	if (mpTarget != nullptr) {
-		mvLookAtPosition = mpTarget->GetComponent<Transform>()->GetPosition();	//Šî–{À•W‚ğ‘ÎÛ‚ÉÀ•W‚É‚µ‚Ä­‚µã‚É‚¸‚ç‚·
-		mvLookAtPosition.y += 80.0f;
-	}
-
-	else {
-		mvLookAtPosition.y = 80.0f;	//’‹“_‚ğ­‚µã‚É‚¸‚ç‚·
-	}
-
-	Shake();	// ‰æ–Ê—h‚êˆ—
-
-	{
-		Vector3 temp;    // ì‹Æ—p•Ï”
-
-		// ‹…–Êã‚ÌÀ•W‚ğ‹‚ß‚é
-		const float distance = 500.0f;
-		temp.x = distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
-		temp.y = distance * sinf(mfVerticalAngle / 180.0f * DX_PI_F);
-		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
-
-		// ã‚Å‹‚ß‚½À•W‚É’‹“_‚ÌÀ•W‚ğ‘«‚µ‚½‚à‚Ì‚ªƒJƒƒ‰À•W‚Æ‚È‚é
-		mvPosition = temp + mvLookAtPosition;
-
-		// ‰æ–Ê—h‚ê‚Ì•ª‚ğ‰ÁZ‚·‚é‚æ‚¤‚É•ÏX
-		SetCameraPositionAndTarget_UpVecY(VAdd(mvPosition.ToDxVector(), mvShakePosition.ToDxVector()), VAdd(mvLookAtPosition.ToDxVector(), mvShakePosition.ToDxVector()));
-
-	}
+	UpdateRotation();
+	UpdateTarget();
+	//UpdateShake();
+	UpdatePosition();
+	Apply();
 }
 
-//‰ñ“]ˆ—
+void Camera::AddRotation(
+	float _horizontal, float _vertical
+) {
+	mfHorizontalAngle += _horizontal * mfRotationSpeed;
+	mfVerticalAngle += _vertical * mfRotationSpeed;
+
+	mfVerticalAngle =
+		std::clamp(
+			mfVerticalAngle,
+			MIN_VERTICAL_ANGLE,
+			MAX_VERTICAL_ANGLE
+		);
+}
+
 void Camera::UpdateRotation() {
-	float fCameraSensitivity = 5.0f;	//ƒJƒƒ‰Š´“x
-	float fCameraMaxPitch = 80.0f;
+	// ç¾åœ¨è¨­å®šã•ã‚Œã¦ã„ã‚‹å›è»¢å€¤ã«åŸºã¥ã„ã¦ã‚«ãƒ¡ãƒ©ã®å›è»¢çŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
+	const float horazontal =
+		mfHorizontalAngle * DX_PI_F / 180.0f;
 
+	const float vertical =
+		mfVerticalAngle * DX_PI_F / 180.0f;
 
-	//•ûŒüƒL[‚ÅƒJƒƒ‰‘€ì
-	/*if (CheckHitKey(KEY_INPUT_LEFT)) {
-		mfHorizontalAngle += fCameraSensitivity;
-	}
+	mvForward = Vector3(
+		sinf(horazontal) * cosf(vertical),
+		sinf(vertical),
+		cosf(horazontal) * cosf(vertical)
+	);
 
-	if (CheckHitKey(KEY_INPUT_RIGHT)) {
-		mfHorizontalAngle -= fCameraSensitivity;
-	}
+	mvForward = mvForward.Normalize();
 
-	if (CheckHitKey(KEY_INPUT_UP)) {
-		mfVerticalAngle += fCameraSensitivity;
-	}
-
-	if (CheckHitKey(KEY_INPUT_DOWN)) {
-		mfVerticalAngle -= fCameraSensitivity;
-	}*/
-
-	mfHorizontalAngle +=
-		InputManager::GetInstance().GetAxis(Axis::LookX);
-
-	mfVerticalAngle += 
-		InputManager::GetInstance().GetAxis(Axis::LookY);
-
-/*	Stick pStick = InputManager::GetStickInfo().Right;	//‰EƒXƒeƒBƒbƒN‚Ì‚¢î•ñæ“¾
-
-	if (pStick.x < 0.0f) {
-		mfHorizontalAngle += fCameraSensitivity * pStick.length;
-	}
-	else if (pStick.x > 0.0f) {
-		mfHorizontalAngle -= fCameraSensitivity * pStick.length;
-	}
-
-	if (pStick.y < 0.0f) {
-		mfVerticalAngle += fCameraSensitivity * pStick.length;
-	}
-	else if (pStick.y > 0.0f) {
-		mfVerticalAngle -= fCameraSensitivity * pStick.length;
-	}*/
-
-	if (mfHorizontalAngle >= 180.0f)
-	{
-		mfHorizontalAngle -= 360.0f;
-	}
-
-	if (mfHorizontalAngle <= -180.0f)
-	{
-		mfHorizontalAngle += 360.0f;
-	}
-
-	if (mfVerticalAngle >= fCameraMaxPitch)
-	{
-		mfVerticalAngle = fCameraMaxPitch;
-	}
-
-	if (mfVerticalAngle <= -fCameraMaxPitch)
-	{
-		mfVerticalAngle = -fCameraMaxPitch;
-	}
-
+	mvRight =
+		mvWorldUp.Cross(mvForward);
 }
 
-// ‰æ–Ê—h‚ê
-void Camera::Shake() {
-	if (mfShakeTimeCounter < mfShakeTime) {
-		// sinf ‚ğ—˜—p‚µ‚Ä—h‚ç‚µÀ•W‚ğZo
-		// note: ˆê’UYÀ•W‚¾‚¯‚ğ—h‚ç‚µ‚Ä‚İ‚é
-		mvShakePosition.y = sinf(mfShakeAngle) * (1.0f - (mfShakeTimeCounter / mfShakeTime)) * mfShakeWidth;
-		mvShakePosition.x = 0.0f;
-		mvShakePosition.z = 0.0f;
+void Camera::UpdatePosition() {
+	// æ³¨è¦–ç‚¹ã‚’æ›´æ–°
+	mvLookAtPosition =
+		mvTargetPosition +
+		Vector3(0.0f, mfLookAtHeight, 0.0f);
 
-		// —h‚ç‚µˆ—‚Ég—p‚·‚é sinf ‚É“n‚·Šp“x‚Ì•ÏXˆ—
-		mfShakeAngle += mfShakeAngleSpeed * mfStepTime;
-
-		// —h‚ç‚·ŠÔ‚ğŒo‰ß‚³‚¹‚é
-		mfShakeTimeCounter += mfStepTime;
-	}
-	else {
-		// —h‚ç‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Í—h‚ç‚µˆ—‚É‚æ‚é‰ÁZÀ•W‚ğ‚O‚É‚·‚é
-		mvShakePosition *= 0.0f;
-	}
+	// æ³¨è¦–ç‚¹ã‹ã‚‰è·é›¢åˆ†ã ã‘å¾Œã‚ã¸é…ç½®
+	mvPosition =
+		mvLookAtPosition - 
+		GetForward() * mfDistance;
 }
 
-// ‰æ–Ê—h‚êİ’è
-void Camera::SetupShake(float time, float width, float angleSpeed, float stepTime) {
-	mfShakeTimeCounter = 0.0f;
-	mfShakeTime = time;
-	mfShakeWidth = width;
-	mfShakeAngleSpeed = angleSpeed;
-	mfStepTime = stepTime;
+void Camera::UpdateTarget() {
+	if (mpTarget == nullptr) return;
+	
+	mvTargetPosition =
+		mpTarget->GetComponent<Transform>()->GetPosition();
 }
 
+void Camera::Apply() {
+	SetCameraPositionAndTarget_UpVecY(
+		mvPosition.ToDxVector(),
+		mvLookAtPosition.ToDxVector()
+	);
+}
+
+Vector3 Camera::GetForward() const {
+	// Todo : ã‚«ãƒ¡ãƒ©ã®å‘ã„ã¦ã„ã‚‹æ–¹å‘ã®å–å¾—
+	return mvForward;
+}
+
+Vector3 Camera::GetRight() const {
+	// Todo : ã‚«ãƒ¡ãƒ©ã®å‘ã„ã¦ã„ã‚‹æ–¹å‘ã®å–å¾—
+	return mvRight;
+}
+
+Vector3 Camera::GetUp() const {
+	// Todo : ã‚«ãƒ¡ãƒ©ã®ä¸Šæ–¹å‘ã®å–å¾—
+	return mvWorldUp;
+}

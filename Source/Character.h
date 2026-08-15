@@ -17,6 +17,7 @@ public:
 	virtual void Draw() override;
 
 	void Move(const Vector3& _direction, float _deltaTime);
+	void RotateTo(const Vector3& _direction);
 	void Attack();
 	void TakeDamage(float _damage);
 

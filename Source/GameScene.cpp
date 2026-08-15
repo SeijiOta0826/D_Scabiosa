@@ -31,6 +31,8 @@ void GameScene::Initialize() {
 	pPlayer->AddAnimation(ANIMATION_RUN, "Resource/3D/Paladin/Running.mv1");*/
 
 	auto player = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<Player>();
+
+	Camera::GetInstance().SetTarget(player);
 }
 
 void GameScene::Update(float _deltaTime) {
@@ -58,8 +60,8 @@ void GameScene::DebagDraw() {
 
 	auto i = pPlayer->GetComponent<Animator>()->GetCurrentAnimationName();
 	Debag::Log("アニメーション番号: ", pPlayer->GetComponent<Animator>()->GetCurrentAnimationName());
-	Vector3 vCameraPos =
-		Camera::GetInstance().GetPosition();
+	Vector3 vCameraPos;
+		//Camera::GetInstance().GetPosition();
 
 	Debag::PosLog("CameraPos: ", vCameraPos);				//カメラの座標表示
 }

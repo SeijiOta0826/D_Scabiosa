@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//Todo:	初期化処理系をここへ
 	SceneManager::GetInstance().Initialize();	//シーンマネージャー初期化
-	Camera::GetInstance().Initialize();		//カメラ初期化
+	Camera::GetInstance().Initialize();
 	InputManager::GetInstance().InitializeButton();
 	InputManager::GetInstance().InitializeAxis();
 

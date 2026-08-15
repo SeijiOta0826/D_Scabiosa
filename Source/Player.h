@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include <string>
 
+#include "PlayerController.h"
 
 class Player : public Character
 {
@@ -35,8 +36,10 @@ protected:
 
 
 private:
-	static constexpr float WALK_SPEED = 1.0f;		//歩き時の限界速度
-	static constexpr float RUN_SPEED = 2.0f;		//走り時の限界速度
+	PlayerController mController;
+
+	static constexpr float WALK_SPEED = 100.0f;		//歩き時の限界速度
+	static constexpr float RUN_SPEED = 200.0f;		//走り時の限界速度
 	float mfCurrentSpeed = 0.0f;					//現在の速度
 	float mfTargetSpeed = 0.0f;						//目標の速度
 	float mfAngle = 0.0f;							//現在の角度

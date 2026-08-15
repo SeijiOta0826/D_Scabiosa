@@ -45,6 +45,27 @@ void Character::Move(
 	GetComponent<Transform>()->SetPosition(newPosition);
 }
 
+void Character::RotateTo(
+	const Vector3& _direction
+) {
+	// Todo : Moveに応じた回転処理
+	auto* transform = GetComponent<Transform>();
+
+	const float angle = atan2f(
+		_direction.x,
+		_direction.z
+	);
+
+	// モデルの正面方向がゲーム内の正面と180°ずれているため補正
+	transform->SetRotation(
+		Vector3(
+			0.0f,
+			angle + DX_PI_F,
+			0.0f
+		)
+	);
+}
+
 void Character::Attack() {
 	// Todo : CharaterとしてのAttack処理
 }

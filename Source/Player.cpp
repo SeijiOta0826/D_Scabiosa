@@ -7,18 +7,22 @@
 #include "Camera.h"
 #include "InputManager.h"
 
+#include "PlayerController.h"
 
 void Player::Init() {
-
+	Character::Init();
+	mController.Init(this);
 }
 
 void Player::InitComponent() {
+	Character::InitComponent();
 }
 
 void Player::Update(float _deltaTime) {
+	mController.Update(_deltaTime);
 	UpdateAnimation();
 	//Move();	//移動処理
-	RotationByMove();
+	//RotationByMove();
 
 	Character::Update(_deltaTime);
 }
