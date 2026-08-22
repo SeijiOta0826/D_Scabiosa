@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "ModelRenderer.h"
 #include "Animator.h"
+#include "Collider.h"
 
 #include "Camera.h"
 #include "InputManager.h"
@@ -12,10 +13,13 @@
 void Player::Init() {
 	Character::Init();
 	mController.Init(this);
+
+	GetComponent<Collider>()->Init();
 }
 
 void Player::InitComponent() {
 	Character::InitComponent();
+	AddComponent<Collider>();
 }
 
 void Player::Update(float _deltaTime) {
@@ -30,50 +34,6 @@ void Player::Update(float _deltaTime) {
 void Player::Draw() {
 	Character::Draw();
 }
-
-/*void Player::Move() {
-	Vector3 vMoveVec;	//移動方向
-	bool bIsRunning = false;
-
-	Vector3 vUpMoveVector;				//カメラの前方向ベクトル(奥)
-	Vector3 vLeftMoveVector;			//カメラの左方向ベクトル
-	Vector3 vWorldUp(0.0f, 1.0f, 0.0f);	//ワールド座標の上向きベクトル(左方向算出時使用)
-
-	{
-		//カメラから見た奥方向を取得
-		vUpMoveVector =
-			Camera::GetInstance().GetLookAtPosition() - Camera::GetInstance().GetPosition();
-		vUpMoveVector.y = 0.0f;
-
-		//カメラから見た左方向を取得
-		vLeftMoveVector =
-			vUpMoveVector.Cross(vWorldUp);
-		vLeftMoveVector.y = 0.0f;
-
-		//正規化
-		vUpMoveVector = vUpMoveVector.Normalize();
-		vLeftMoveVector = vLeftMoveVector.Normalize();
-	}
-
-	/*if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_W)) vMoveVec = vMoveVec + vUpMoveVector;
-	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
-	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
-	if (InputManager::GetInstance().CheckPressKey(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);*/
-
-	/*if (InputManager_test::GetInstance().GetButton(KEY_INPUT_A)) vMoveVec = vMoveVec + vLeftMoveVector;
-	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_S)) vMoveVec = vMoveVec + (vUpMoveVector * -1.0f);
-	if (InputManager_test::GetInstance().GetButton(KEY_INPUT_D)) vMoveVec = vMoveVec + (vLeftMoveVector * -1.0f);
-	if (vMoveVec.x != 0.0f || vMoveVec.z != 0.0f) {
-		vMoveVec = vMoveVec.Normalize();
-		mfTargetAngle = atan2f(vMoveVec.x, vMoveVec.z);
-	}
-
-	if (InputManager::GetInstance().GetButton(Button::Dash)) bIsRunning = true;
-	UpdateMovePower(vMoveVec, bIsRunning);
-
-	GetComponent<Transform>()->SetPosition(
-		GetComponent<Transform>()->GetPosition() + vMoveVec * mfCurrentSpeed);
-}*/
 
 void Player::UpdateMovePower(const Vector3& _move, bool _isRunning) {
 	bool bIsMove = _move.Length() != 0.0f;	//移動中であるかどうかを示す

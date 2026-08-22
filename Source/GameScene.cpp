@@ -15,6 +15,7 @@
 //-- Obj関係 --//
 #include "Camera.h"
 #include "Player.h"
+#include "TestBox.h"
 
 GameScene::GameScene()
 	:Scene() {
@@ -25,14 +26,20 @@ GameScene::~GameScene() {
 }
 
 void GameScene::Initialize() {
-	/*Player* pPlayer = new Player();
-	pPlayer->AddAnimation(ANIMATION_NEUTRAL, "Resource/3D/Paladin/Idle.mv1");
-	pPlayer->AddAnimation(ANIMATION_WALKING, "Resource/3D/Paladin/Walking.mv1");
-	pPlayer->AddAnimation(ANIMATION_RUN, "Resource/3D/Paladin/Running.mv1");*/
+	Scene::Initialize();
 
 	auto player = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<Player>();
+	player->SetTag("Player");
+	player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -1500.0f));
+
+	auto box = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<TestBox>();
+	box->SetTag("Box");
 
 	Camera::GetInstance().SetTarget(player);
+}
+
+void GameScene::Finalize() {
+	Scene::Finalize();
 }
 
 void GameScene::Update(float _deltaTime) {
@@ -42,10 +49,6 @@ void GameScene::Update(float _deltaTime) {
 void GameScene::Draw() {
 	DebagDraw();
 	Scene::Draw();
-}
-
-void GameScene::Finalize() {
-
 }
 
 void GameScene::DebagDraw() {

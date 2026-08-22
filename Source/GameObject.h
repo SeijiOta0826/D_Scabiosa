@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include <utility>
+#include <string>
 
 class Component;
 class ObjectManager;
@@ -50,6 +51,9 @@ public:
 	void Destroy() { mbDestroy = true; }
 	bool IsDestroy() { return mbDestroy; }
 
+	void SetTag(const std::string& _tag) { msTag = _tag; }
+	const std::string& GetTag() const { return msTag; }
+
 protected:
 	virtual const char* GetModelFilename() const = 0;
 
@@ -63,4 +67,5 @@ private:
 
 private:
 	bool mbDestroy = false;
+	std::string msTag;
 };

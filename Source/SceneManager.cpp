@@ -29,12 +29,12 @@ void SceneManager::Update(float _deltaTime) {
 	mpCurrentScene->Update(_deltaTime);	//シーン更新
 }
 
-void SceneManager::Draw(){
+void SceneManager::Draw() {
 	mpCurrentScene->Draw();		//シーン描画
 }
 
-void SceneManager::Finalize(){
-
+void SceneManager::Finalize() {
+	mpCurrentScene->Finalize();
 }
 
 void SceneManager::ChangeSceneIfNeeded() {

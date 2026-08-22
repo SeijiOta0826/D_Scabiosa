@@ -3,8 +3,8 @@
 
 void GameObject::Initialize(ObjectManager* _manager) {
 	mpObjectManager = _manager;
-	this->Init();			// 継承先特有の初期化処理
 	this->InitComponent();	// 継承先が持つコンポーネント初期設定
+	this->Init();			// 継承先特有の初期化処理
 }
 
 void GameObject::Update(float _deltaTime) {

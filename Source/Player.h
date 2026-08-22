@@ -18,7 +18,6 @@ public:
 	virtual void Update(float _deltaTime) override;
 	virtual void Draw() override;
 
-	//void Move();
 	void RotationByMove();
 	void UpdateMovePower(const Vector3& _move, bool _isRunning);	//移動速度
 
@@ -27,11 +26,11 @@ public:
 
 protected:
 	const char* GetModelFilename() const override {
-		return "Resource/3D/Player/Mesh.mv1";
+		return "Resource/3D/Character/Player/Mesh.mv1";
 	}
 
 	const float GetSpeed() const override {
-		return 10.0f;
+		return 200.0f;
 	}
 
 

@@ -149,6 +149,8 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CameraController.cpp" />
     <ClCompile Include="Source\Character.cpp" />
+    <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\Debag.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GamePad.cpp" />
@@ -161,12 +163,12 @@
     <ClCompile Include="Source\Mouse.cpp" />
     <ClCompile Include="Source\Object2D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
-    <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerController.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\TestBox.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Vector2.cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CameraController.h" />
     <ClInclude Include="Source\Character.h" />
+    <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\Debag.h" />
     <ClInclude Include="Source\GameObject.h" />
@@ -190,12 +194,12 @@
     <ClInclude Include="Source\Mouse.h" />
     <ClInclude Include="Source\Object2D.h" />
     <ClInclude Include="Source\ObjectManager.h" />
-    <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerController.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\TestBox.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Utility.h" />

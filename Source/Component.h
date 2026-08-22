@@ -17,6 +17,10 @@ public:
 	bool IsEnabled() const { return mbEnabled; }
 	void SetEnabled(bool _enabled) { mbEnabled = _enabled; }
 
+	// 付与先のGameObjectを返す
+	// memo : 主にColliderのような2つのObjから比較する際に使用
+	GameObject* GetGameObject() { return mpGameObject; }
+
 protected:
 	GameObject* mpGameObject = nullptr;	// このコンポーネントを所持するGameObject
 

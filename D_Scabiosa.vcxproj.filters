@@ -67,6 +67,12 @@
     <Filter Include="ヘッダー ファイル\Controller">
       <UniqueIdentifier>{3574aa53-9de1-4644-b87b-d23bc857d3ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\Component">
+      <UniqueIdentifier>{5c30d367-17a5-4632-bd58-36eada41b49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System\Component">
+      <UniqueIdentifier>{5b43c74f-dfa6-4080-a5e1-aee8083017b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -93,16 +99,7 @@
     <ClCompile Include="Source\Debag.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Vector3.cpp">
-      <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModelRenderer.cpp">
-      <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Animator.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\ObjectManager.cpp">
@@ -144,6 +141,21 @@
     <ClCompile Include="Source\CameraController.cpp">
       <Filter>ソース ファイル\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Animator.cpp">
+      <Filter>ソース ファイル\System\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModelRenderer.cpp">
+      <Filter>ソース ファイル\System\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>ソース ファイル\System\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestBox.cpp">
+      <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Master.h">
@@ -176,22 +188,7 @@
     <ClInclude Include="Source\Debag.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Transform.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Vector3.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModelRenderer.h">
-      <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animator.h">
       <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\ObjectManager.h">
@@ -232,6 +229,27 @@
     </ClInclude>
     <ClInclude Include="Source\CameraController.h">
       <Filter>ヘッダー ファイル\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animator.h">
+      <Filter>ヘッダー ファイル\System\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>ヘッダー ファイル\System\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModelRenderer.h">
+      <Filter>ヘッダー ファイル\System\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>ヘッダー ファイル\System\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>ヘッダー ファイル\System\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestBox.h">
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
