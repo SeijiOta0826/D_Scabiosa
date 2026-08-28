@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector3.h"
 
 class Player;
 
@@ -15,7 +16,10 @@ private:
 	void UpdateMove(float _deltaTime);
 	void UpdateAttack();
 	void UpdateJump();
+	void UpdateDash();
 
 private:
 	Player* mpPlayer;	// Player内にある関数を引っ張るための生ポインタ
+
+	Vector3 mvMoveDirection;
 };

@@ -12,8 +12,8 @@ void Character::Init() {
 void Character::InitComponent() {
 	AddComponent<Transform>();
 	AddComponent<ModelRenderer>(GetModelFilename());
-	AddComponent<Animator>();
-
+	auto animator = AddComponent<Animator>();
+	animator->Initialize();
 	// Todo : ColliderCoponent実装次第ここに追加
 }
 
@@ -46,7 +46,28 @@ void Character::Move(
 	const Vector3 newPosition =
 		transform->GetPosition() + moveAmount;
 
-	GetComponent<Transform>()->SetPosition(newPosition);
+	transform->SetPosition(newPosition);
+}
+
+void Character::UpdateMovePower(const Vector2& _move, bool _isRunning) {
+	bool bIsMove = _move.Length() != 0.0f;	//移動中であるかどうかを示す
+
+	//-- 入力状態によって目標速度を変更 --//
+	if (!bIsMove) {
+		mfTargetSpeed = 0.0f;
+	}
+
+	else if (_isRunning) {
+		mfTargetSpeed = GetRunSpeed();
+	}
+
+	else {
+		mfTargetSpeed = GetWalkSpeed();
+	}
+
+	//「目標速度」へ徐々に「現在の速度」を追いつかせる
+	mfCurrentSpeed +=
+		(mfTargetSpeed - mfCurrentSpeed) * 0.1f;
 }
 
 void Character::RotateTo(

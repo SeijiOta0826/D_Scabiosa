@@ -19,34 +19,41 @@ void PlayerController::Update(float _deltaTime) {
 	UpdateMove(_deltaTime);
 	UpdateAttack();
 	// UpdateJump();
+	UpdateDash();
 }
 
 void PlayerController::UpdateMove(float _deltaTime) {
-	Vector2 direction;
+	Vector2 inputDirection;
 
-	direction.x += InputManager::GetInstance().GetAxis(Axis::MoveX);
-	direction.y += InputManager::GetInstance().GetAxis(Axis::MoveY);
+	inputDirection.x += InputManager::GetInstance().GetAxis(Axis::MoveX);
+	inputDirection.y += InputManager::GetInstance().GetAxis(Axis::MoveY);
 
-	if (direction.Length() <= 0.0f) {
-		return;
+	mpPlayer->UpdateMovePower(
+		inputDirection,
+		mpPlayer->GetIsRunning()
+	);
+
+	// 入力がある場合だけ移動方向を更新
+	if (inputDirection.Length() > 0.0f) {
+		Vector3 forward = Camera::GetInstance().GetForward();
+		forward.y = 0.0f;
+		forward = forward.Normalize();
+
+		Vector3 right = Camera::GetInstance().GetRight();
+		right.y = 0.0f;
+		right = right.Normalize();
+
+		mvMoveDirection =
+			right * inputDirection.x +
+			forward * inputDirection.y;
+
+		mvMoveDirection = mvMoveDirection.Normalize();
+
+		mpPlayer->RotateTo(mvMoveDirection);
 	}
 
-	Vector3 forward = Camera::GetInstance().GetForward();
-	forward.y = 0.0f;
-	forward = forward.Normalize();
-
-	Vector3 right = Camera::GetInstance().GetRight();
-	right.y = 0.0f;
-	right = right.Normalize();
-
-	Vector3 moveDirection =
-		right * direction.x +
-		forward * direction.y;
-
-	moveDirection = moveDirection.Normalize();
-
-	mpPlayer->Move(moveDirection, _deltaTime);
-	mpPlayer->RotateTo(moveDirection);
+	// 入力がなくても、保持している方向に移動する
+	mpPlayer->Move(mvMoveDirection, _deltaTime);
 }
 
 void PlayerController::UpdateAttack() {
@@ -54,3 +61,8 @@ void PlayerController::UpdateAttack() {
 		mpPlayer->Attack();
 	}
 }
+
+void PlayerController::UpdateDash() {
+	mpPlayer->SetIsRunning(InputManager::GetInstance().GetButton(Button::Dash));
+}
+

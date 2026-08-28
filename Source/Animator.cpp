@@ -196,7 +196,7 @@ void Animator::AddAnimation(
 	const std::string& _animationFilename
 ) {
 	//-- 同一のアニメーション登録を回避 --//
-	if (mAnimationTable.find(_animtionName) == mAnimationTable.end()) 
+	if (mAnimationTable.find(_animtionName) != mAnimationTable.end()) 
 		return;
 
 	//-- アニメーション読み込み & アニメーション登録 --//

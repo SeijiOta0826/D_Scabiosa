@@ -31,6 +31,12 @@ void Player::Init() {
 void Player::InitComponent() {
 	Character::InitComponent();
 	AddComponent<BoxCollider>();
+
+	auto animator = GetComponent<Animator>();
+
+	animator->AddAnimation("Idle", "Resource/3D/Character/Paladin/Idle.mv1");
+	animator->AddAnimation("Walk", "Resource/3D/Character/Paladin/Walking.mv1");
+	animator->AddAnimation("Run", "Resource/3D/Character/Paladin/Running.mv1");
 }
 
 void Player::Update(float _deltaTime) {
@@ -44,27 +50,6 @@ void Player::Update(float _deltaTime) {
 
 void Player::Draw() {
 	Character::Draw();
-}
-
-void Player::UpdateMovePower(const Vector3& _move, bool _isRunning) {
-	bool bIsMove = _move.Length() != 0.0f;	//移動中であるかどうかを示す
-
-	//-- 入力状態によって目標速度を変更 --//
-	if (!bIsMove) {
-		mfTargetSpeed = 0.0f;
-	}
-
-	else if (_isRunning) {
-		mfTargetSpeed = RUN_SPEED;
-	}
-
-	else {
-		mfTargetSpeed = WALK_SPEED;
-	}
-
-	//「目標速度」へ徐々に「現在の速度」を追いつかせる
-	mfCurrentSpeed +=
-		(mfTargetSpeed - mfCurrentSpeed) * 0.1f;
 }
 
 void Player::RotationByMove() {
@@ -98,17 +83,17 @@ void Player::RotationByMove() {
 	);
 }
 
-const std::string& Player::DetermineAnimationState() {
+std::string Player::DetermineAnimationState() {
 
-	if (mfCurrentSpeed > WALK_SPEED) {
+	if (GetSpeed() > GetWalkSpeed() + 100.0f) {
 		return "Run";
 	}
 
-	if (mfCurrentSpeed > 0.05f) {
+	if (GetSpeed() > 10.0f) {
 		return "Walk";
 	}
 
-	return "Idel";
+	return "Idle";
 }
 
 void Player::UpdateAnimation() {

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #include "Vector3.h"
+#include "Vector2.h"
 
 // キャラクターの共通処理を一元化するクラス
 class Character : public GameObject
@@ -23,6 +24,21 @@ public:
 	void Attack();
 	void TakeDamage(float _damage);
 
+	void SetSpeed(float _speed) { mfCurrentSpeed = _speed; }
+	float GetSpeed() { return mfCurrentSpeed; }
+
+	void SetIsRunning(float _flag) { mbIsRunning = _flag; }
+	float GetIsRunning() { return mbIsRunning; }
+
+	void UpdateMovePower(const Vector2& _move, bool _isRunning);
+
 protected:
-	virtual const float GetSpeed() const = 0;	// 移動速度
+	virtual const float GetWalkSpeed() const = 0;
+	virtual const float GetRunSpeed() const = 0;
+
+private:
+	float mfCurrentSpeed = 0.0f;
+	float mfTargetSpeed = 0.0f;
+
+	bool mbIsRunning = false;
 };
