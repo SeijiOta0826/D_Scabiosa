@@ -10,22 +10,25 @@ Scene::Scene()
 Scene::~Scene() {}
 
 void Scene::Initialize() {
-
+	mpObjectManager->Initialize();
+	mpCollisionManager->Initialize();
 }
 
 void Scene::Finalize() {
+	mpObjectManager->Finalize();
 	mpCollisionManager->Finalize();
 }
 
 //XVˆ—
 void Scene::Update(float _deltaTime) {
-	mpObjectManager->Update(_deltaTime);
 	mpCollisionManager->Update();
+	mpObjectManager->Update(_deltaTime);
 }
 
 //•`‰æˆ—
 void Scene::Draw() {
 	mpObjectManager->Draw();
+	mpCollisionManager->DrawDebag();
 }
 
 

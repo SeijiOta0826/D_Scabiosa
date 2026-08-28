@@ -6,9 +6,13 @@
 
 #include "ResourceManager.h"
 
-void Animator::Init() {
+void Animator::Initialize() {
 	// Init時点でModelRendererが存在している前提
 	mpModelRenderer = mpGameObject->GetComponent<ModelRenderer>();
+}
+
+void Animator::Finalize() {
+
 }
 
 void Animator::Update() {

@@ -6,15 +6,16 @@
 
 #include "Transform.h"
 
-Collider::~Collider() {
-	SceneManager::GetInstance().GetCurrentScene()
-		->GetCollisionManager()
-		->Unregister(this);
-}
-void Collider::Init() {
+void Collider::Initialize() {
 	SceneManager::GetInstance().GetCurrentScene()
 		->GetCollisionManager()
 		->Register(this);
+}
+
+void Collider::Finalize() {
+	SceneManager::GetInstance().GetCurrentScene()
+		->GetCollisionManager()
+		->Unregister(this);
 }
 
 bool Collider::IsColliding() const{
@@ -37,7 +38,8 @@ GameObject* Collider::GetCollision(
 	const std::string& _tag
 ) const {
 	for (auto* collider : mCollisions) {
-		if (collider->GetGameObject()->GetTag() == _tag) {
+		std::string str = collider->GetGameObject()->GetTag();
+		if (str == _tag) {
 			return collider->GetGameObject();
 		}
 	}

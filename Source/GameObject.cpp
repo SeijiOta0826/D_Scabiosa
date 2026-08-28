@@ -7,6 +7,14 @@ void GameObject::Initialize(ObjectManager* _manager) {
 	this->Init();			// Œp³æ“Á—L‚Ì‰Šú‰»ˆ—
 }
 
+void GameObject::Finalize() {
+	for (auto component = mComponents.rbegin();
+		component != mComponents.rend();
+		++component) {
+		(*component)->Finalize();
+	}
+}
+
 void GameObject::Update(float _deltaTime) {
 	for (auto& component : mComponents) {
 		if (component->IsEnabled()) {

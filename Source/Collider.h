@@ -4,6 +4,9 @@
 
 #include <string>
 #include <vector>
+#include <variant>
+
+#include "CollisionManager.h"
 
 class GameObject;
 class CollisionManager;
@@ -12,22 +15,23 @@ class Collider : public Component
 {
 public:
 	Collider() = default;
-	~Collider();
+	virtual ~Collider() = default;
 
-	void Init() override;
+	virtual void Initialize() override;	// 初期処理
+	virtual void Finalize() override;	// 終了処理
 
-	void SetRadius(float _radius) { mfRadius = _radius; }
-	float GetRadius() const { return mfRadius; }
-
+	// Objの位置(Transform)からの相対オフセット位置アクセサ
 	void SetOffset(const Vector3& _offset) { mvOffSetPos = _offset; }
 	const Vector3& GetOffset() const { return mvOffSetPos; }
+	
+	Vector3 GetWorldPosition() const;	// Collider中心座標(Transform + Offset)を返す
 
-	Vector3 GetWorldPosition() const;
+	bool IsColliding() const;							// 何かしらに当たったら反応
+	bool IsColliding(const std::string& _tag) const;	// 指定タグのColliderに衝突時、反応
+	GameObject* GetCollision(const std::string& _tag) const;	// 指定タグの衝突したGameObjectを返す
 
-	bool IsColliding() const;	// 何かしらに当たったら反応
-	bool IsColliding(const std::string& _tag) const;
-
-	GameObject* GetCollision(const std::string& _tag) const;
+protected:
+	virtual const Shape GetShapeType() const = 0;
 
 private:
 	friend class CollisionManager;
@@ -36,8 +40,7 @@ private:
 	void ClearCollisions() { mCollisions.clear(); }
 
 private:
-	float mfRadius = 1.0f;
-	Vector3 mvOffSetPos;
+	Vector3 mvOffSetPos;	// Objの位置(Transform)からの相対オフセット位置
 
 	std::vector<Collider*> mCollisions;
 };

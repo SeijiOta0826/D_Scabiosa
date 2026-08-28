@@ -29,11 +29,9 @@ void GameScene::Initialize() {
 	Scene::Initialize();
 
 	auto player = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<Player>();
-	player->SetTag("Player");
-	player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, -1500.0f));
 
 	auto box = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->CreateObject<TestBox>();
-	box->SetTag("Box");
+	box->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 1500.0f));
 
 	Camera::GetInstance().SetTarget(player);
 }
@@ -58,7 +56,6 @@ void GameScene::DebagDraw() {
 	Debag::Begin();	//デバック表示位置の初期化
 	
 	auto pPlayer = SceneManager::GetInstance().GetCurrentScene()->GetObjectManager()->FindObject<Player>();
-
 	Debag::PosLog("PlayerPos: ", pPlayer->GetComponent<Transform>()->GetPosition());	//Playerの座標表示
 
 	auto i = pPlayer->GetComponent<Animator>()->GetCurrentAnimationName();

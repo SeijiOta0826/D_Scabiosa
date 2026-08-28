@@ -73,6 +73,12 @@
     <Filter Include="ヘッダー ファイル\System\Component">
       <UniqueIdentifier>{5b43c74f-dfa6-4080-a5e1-aee8083017b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\Component\Collider">
+      <UniqueIdentifier>{bfccecc1-9a2b-490e-b292-72e4b10abfc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System\Component\Collider">
+      <UniqueIdentifier>{9c4ba2d4-fcb6-48fc-8893-cfc635eb1800}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -147,14 +153,23 @@
     <ClCompile Include="Source\ModelRenderer.cpp">
       <Filter>ソース ファイル\System\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Collider.cpp">
-      <Filter>ソース ファイル\System\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\TestBox.cpp">
       <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SphereCollider.cpp">
+      <Filter>ソース ファイル\System\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BoxCollider.cpp">
+      <Filter>ソース ファイル\System\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CapsuleCollider.cpp">
+      <Filter>ソース ファイル\System\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>ソース ファイル\System\Component\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,14 +257,23 @@
     <ClInclude Include="Source\Transform.h">
       <Filter>ヘッダー ファイル\System\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Collider.h">
-      <Filter>ヘッダー ファイル\System\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\TestBox.h">
       <Filter>ヘッダー ファイル\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SphereCollider.h">
+      <Filter>ヘッダー ファイル\System\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BoxCollider.h">
+      <Filter>ヘッダー ファイル\System\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CapsuleCollider.h">
+      <Filter>ヘッダー ファイル\System\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>ヘッダー ファイル\System\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

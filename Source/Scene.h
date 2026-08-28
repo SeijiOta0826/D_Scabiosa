@@ -12,11 +12,10 @@ public:
 	virtual ~Scene();
 
 	virtual void Initialize();			//初期化処理
+	virtual void Finalize();			//終了処理
 
 	virtual void Update(float _deltaTime);	//更新処理
 	virtual void Draw();					//描画処理
-
-	virtual void Finalize();			//終了処理
 
 	// ObjectManagerの取得関数
 	// 各SceneデータからObject情報を引っ張る際に用いる

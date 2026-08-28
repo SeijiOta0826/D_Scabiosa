@@ -22,7 +22,8 @@ private:
 		float mfTime = 0.0f;
 	};
 public:
-	void Init() override;
+	void Initialize() override;
+	void Finalize() override;
 	void Update() override;
 	void UpdateBlend();
 	void UpdateCurrentAnimation();

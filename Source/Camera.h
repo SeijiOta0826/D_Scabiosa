@@ -79,7 +79,7 @@ private:
 
 	float mfHorizontalAngle;
 	float mfVerticalAngle;
-	float mfDistance = 200.0f;
+	float mfDistance = 500.0f;
 	float mfLookAtHeight = 80.0f;
 
 	float mfRotationSpeed = 1.0f;

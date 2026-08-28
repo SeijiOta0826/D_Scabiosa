@@ -5,7 +5,8 @@ class ModelRenderer : public Component
 {
 public:
 	ModelRenderer(const char* _filename);
-	void Init() override;			// 初期化処理
+	void Initialize() override;			// 初期化処理
+	void Finalize() override;
 	void Update() override;			// 描画する座標,角度を更新
 	void Draw() override;			// モデルを描画
 

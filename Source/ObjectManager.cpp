@@ -2,6 +2,14 @@
 
 #include "GameObject.h"
 
+void ObjectManager::Initialize() {
+
+}
+
+void ObjectManager::Finalize() {
+
+}
+
 void ObjectManager::Update(float _deltaTime) {
     for (auto& object : mObjects) {
         object->Update(_deltaTime);

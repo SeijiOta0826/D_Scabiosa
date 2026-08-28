@@ -8,7 +8,11 @@ ModelRenderer::ModelRenderer(const char* _filename) {
 	mnModelHandle = MV1LoadModel(_filename);
 }
 
-void ModelRenderer::Init() {
+void ModelRenderer::Initialize() {
+
+}
+
+void ModelRenderer::Finalize() {
 
 }
 

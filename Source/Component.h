@@ -9,7 +9,8 @@ class Component
 public:
 	virtual ~Component() = default;
 
-	virtual void Init() {};		//‰Šú‰»ˆ—
+	virtual void Initialize() {};		// ‰Šú‰»ˆ—
+	virtual void Finalize() {};			// I—¹ˆ—
 	virtual void Update() {};		//XVˆ—
 	virtual void Draw() {};		//•`‰æˆ—
 

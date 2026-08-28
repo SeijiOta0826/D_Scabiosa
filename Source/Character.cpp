@@ -17,6 +17,10 @@ void Character::InitComponent() {
 	// Todo : ColliderCoponent実装次第ここに追加
 }
 
+void Character::Finalize() {
+
+}
+
 void Character::Update(float _deltaTime) {
 	GameObject::Update(_deltaTime);
 

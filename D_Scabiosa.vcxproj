@@ -146,8 +146,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Animator.cpp" />
+    <ClCompile Include="Source\BoxCollider.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CameraController.cpp" />
+    <ClCompile Include="Source\CapsuleCollider.cpp" />
     <ClCompile Include="Source\Character.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\SphereCollider.cpp" />
     <ClCompile Include="Source\TestBox.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Vector2.cpp" />
@@ -175,8 +178,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animator.h" />
+    <ClInclude Include="Source\BoxCollider.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CameraController.h" />
+    <ClInclude Include="Source\CapsuleCollider.h" />
     <ClInclude Include="Source\Character.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\CollisionManager.h" />
@@ -199,6 +204,7 @@
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\SphereCollider.h" />
     <ClInclude Include="Source\TestBox.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />

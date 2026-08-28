@@ -11,6 +11,9 @@ public:
 	ObjectManager() = default;
 	~ObjectManager() = default;
 
+	void Initialize();
+	void Finalize();
+
 	void Update(float _deltaTime);
 	void Draw();
 

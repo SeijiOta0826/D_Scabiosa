@@ -24,6 +24,7 @@ public:
 	const std::string& DetermineAnimationState();	//アニメーション状態の決定ロジックに従い、遷移先アニメーションを決定する
 	void UpdateAnimation();
 
+	void ResolveWallCollision();	// 壁との衝突による移動制限を行う
 protected:
 	const char* GetModelFilename() const override {
 		return "Resource/3D/Character/Player/Mesh.mv1";

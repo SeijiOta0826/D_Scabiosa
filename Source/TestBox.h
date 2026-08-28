@@ -9,6 +9,7 @@ public:
 
 	void Init() override;
 	void InitComponent() override;
+	void Finalize() override;
 	void Update(float _deltaTime) override;
 	void Draw() override;
 
