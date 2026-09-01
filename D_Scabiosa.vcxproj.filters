@@ -22,9 +22,6 @@
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{17f86221-46a6-409c-b13b-a5627fcf96c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\2D">
-      <UniqueIdentifier>{2d94b762-0091-4282-8cd3-cbd15bd8fcde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\3D">
       <UniqueIdentifier>{7c0ac10b-2ec3-4dc2-afea-89f15b0aaf5c}</UniqueIdentifier>
     </Filter>
@@ -33,9 +30,6 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Object\3D">
       <UniqueIdentifier>{81263b87-b777-45f7-88b4-1c6a687a0bc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Object\2D">
-      <UniqueIdentifier>{9d9a1d08-7b74-4d6c-bd98-ac408ab292ec}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Manager">
       <UniqueIdentifier>{f3703a63-d290-485f-ab40-9c9bede7ad6f}</UniqueIdentifier>
@@ -93,12 +87,6 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>ソース ファイル\Object\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Loading.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -132,17 +120,11 @@
     <ClCompile Include="Source\GamePad.cpp">
       <Filter>ソース ファイル\System\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object2D.cpp">
-      <Filter>ソース ファイル\Object\2D</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PlayerController.cpp">
       <Filter>ソース ファイル\Controller</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character.cpp">
       <Filter>ソース ファイル\Object\3D\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>ソース ファイル\Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="Source\CameraController.cpp">
       <Filter>ソース ファイル\Controller</Filter>
@@ -156,9 +138,6 @@
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TestBox.cpp">
-      <Filter>ソース ファイル\Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SphereCollider.cpp">
       <Filter>ソース ファイル\System\Component\Collider</Filter>
     </ClCompile>
@@ -171,19 +150,22 @@
     <ClCompile Include="Source\Collider.cpp">
       <Filter>ソース ファイル\System\Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GoalFlag.cpp">
+      <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResultScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Master.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object2D.h">
-      <Filter>ヘッダー ファイル\Object\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>ヘッダー ファイル\Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
@@ -193,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="Source\Scene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Loading.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
@@ -211,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModelUtility.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject.h">
       <Filter>ヘッダー ファイル\Object\3D</Filter>
@@ -239,9 +215,6 @@
     <ClInclude Include="Source\Character.h">
       <Filter>ヘッダー ファイル\Object\3D\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>ヘッダー ファイル\Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CameraController.h">
       <Filter>ヘッダー ファイル\Controller</Filter>
     </ClInclude>
@@ -260,9 +233,6 @@
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TestBox.h">
-      <Filter>ヘッダー ファイル\Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SphereCollider.h">
       <Filter>ヘッダー ファイル\System\Component\Collider</Filter>
     </ClInclude>
@@ -274,6 +244,18 @@
     </ClInclude>
     <ClInclude Include="Source\Collider.h">
       <Filter>ヘッダー ファイル\System\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GoalFlag.h">
+      <Filter>ヘッダー ファイル\Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ResultScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

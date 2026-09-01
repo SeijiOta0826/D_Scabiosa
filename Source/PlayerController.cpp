@@ -57,9 +57,7 @@ void PlayerController::UpdateMove(float _deltaTime) {
 }
 
 void PlayerController::UpdateAttack() {
-	if (InputManager::GetInstance().GetButtonDown(Button::Attack)) {
-		mpPlayer->Attack();
-	}
+
 }
 
 void PlayerController::UpdateDash() {

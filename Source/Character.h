@@ -21,8 +21,9 @@ public:
 
 	void Move(const Vector3& _direction, float _deltaTime);
 	void RotateTo(const Vector3& _direction);
-	void Attack();
+	void Attack(Character* _target);
 	void TakeDamage(float _damage);
+	bool IsInAttackRange(Character* _target);
 
 	void SetSpeed(float _speed) { mfCurrentSpeed = _speed; }
 	float GetSpeed() { return mfCurrentSpeed; }
@@ -41,4 +42,5 @@ private:
 	float mfTargetSpeed = 0.0f;
 
 	bool mbIsRunning = false;
+	float mfAttackRange = 100.0f;
 };

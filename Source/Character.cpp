@@ -3,7 +3,6 @@
 #include "Transform.h"
 #include "ModelRenderer.h"
 #include "Animator.h"
-//#include "Collider.h"
 
 void Character::Init() {
 	// Character共通の初期化は現状なし
@@ -14,7 +13,6 @@ void Character::InitComponent() {
 	AddComponent<ModelRenderer>(GetModelFilename());
 	auto animator = AddComponent<Animator>();
 	animator->Initialize();
-	// Todo : ColliderCoponent実装次第ここに追加
 }
 
 void Character::Finalize() {
@@ -90,16 +88,3 @@ void Character::RotateTo(
 		)
 	);
 }
-
-void Character::Attack() {
-	// Todo : CharaterとしてのAttack処理
-}
-
-void Character::TakeDamage(float _damage) {
-	// Todo : CharaterとしてのTakeDamage処理
-}
-
-
-
-
-

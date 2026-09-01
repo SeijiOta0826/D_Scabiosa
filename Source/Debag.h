@@ -26,12 +26,6 @@ public:
 
 	static void PosLog(const char* _format, const Vector3& _pos);	//座標の値を表示
 
-	static void DrawSphere(
-		const Vector3& _position,
-		float _radius,
-		int _color
-	);
-
 	static void DrawDebugBox(const Vector3& center, const Vector3& size, unsigned int color);
 
 	static void Grid3D(int _gridSize, int _gridCount);				//グリッド線(3D)の表示

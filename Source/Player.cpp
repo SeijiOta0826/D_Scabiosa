@@ -12,8 +12,6 @@
 
 #include "Camera.h"
 #include "InputManager.h"
-
-#include "PlayerController.h"
 #include "Debag.h"
 
 void Player::Init() {
@@ -24,8 +22,8 @@ void Player::Init() {
 
 	auto* collider = GetComponent<BoxCollider>();
 	collider->Initialize();
-	collider->SetHalfSize(Vector3(10.0f, 30.0f, 10.0f));
-	collider->SetOffset(Vector3(0.0f, 50.0f, 0.0f));
+	collider->SetHalfSize(Vector3(25.0f, 100.0f, 25.0f));
+	collider->SetOffset(Vector3(0.0f, 100.0f, 0.0f));
 }
 
 void Player::InitComponent() {

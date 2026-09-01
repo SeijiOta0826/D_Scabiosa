@@ -28,7 +28,7 @@ void Scene::Update(float _deltaTime) {
 //描画処理
 void Scene::Draw() {
 	mpObjectManager->Draw();
-	mpCollisionManager->DrawDebag();
+	//mpCollisionManager->DrawDebag();	// Colliderの形のデバック用描画処理
 }
 
 

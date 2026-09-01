@@ -3,16 +3,17 @@
 // クラスの前方宣言
 class Scene;
 
+//シーン種類
+enum class SCENE_TYPE {
+	SCENE_NONE = 0,
+
+	SCENE_TITLE = 1,	// タイトルシーン
+	SCENE_GAME = 2,		// ゲームシーン
+	SCENE_RESULT = 3,	// リザルトシーン
+};
+
 class SceneManager
 {
-public: 
-	//シーン種類
-	enum SCENE_TYPE {
-		SCENE_NONE = 0,
-
-		SCENE_GAME = 1,	//ゲームシーン
-	};
-
 public:
 	SceneManager();
 	~SceneManager();

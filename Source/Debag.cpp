@@ -8,20 +8,6 @@ void Debag::PosLog(const char* _format, const Vector3& _pos) {
 	Log(_format, "( ", _pos.x, ",", _pos.y, ",", _pos.z, " )");
 }
 
-void Debag::DrawSphere(const Vector3& _position,
-	float _radius,
-	int _color
-) {
-	DrawSphere3D(
-		_position.ToDxVector(),
-		_radius,
-		16,
-		_color,
-		_color,
-		FALSE
-	);
-}
-
 void Debag::DrawDebugBox(const Vector3& center, const Vector3& halfSize, unsigned int color) {
 	VECTOR h = halfSize.ToDxVector(); // 半分のサイズ
 
