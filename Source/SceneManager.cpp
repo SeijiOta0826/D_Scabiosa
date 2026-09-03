@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+﻿#include "SceneManager.h"
 #include "Scene.h"
 
 #include "TitleScene.h"
@@ -23,16 +23,16 @@ SceneManager& SceneManager::GetInstance() {
 }
 
 void SceneManager::Initialize() {
-	mnNextSceneType = SCENE_TYPE::SCENE_TITLE;	//�����V�[���̐ݒ�
-	ChangeSceneIfNeeded();	//�V�[���J�ڏ���
+	mnNextSceneType = SCENE_TYPE::SCENE_GAME;	//初期シーンの設定
+	ChangeSceneIfNeeded();	//シーン遷移処理
 }
 
 void SceneManager::Update(float _deltaTime) {
-	mpCurrentScene->Update(_deltaTime);	//�V�[���X�V
+	mpCurrentScene->Update(_deltaTime);	//シーン更新
 }
 
 void SceneManager::Draw() {
-	mpCurrentScene->Draw();		//�V�[���`��
+	mpCurrentScene->Draw();		//シーン描画
 }
 
 void SceneManager::Finalize() {
@@ -40,15 +40,15 @@ void SceneManager::Finalize() {
 }
 
 void SceneManager::ChangeSceneIfNeeded() {
-	if (mnSceneType == mnNextSceneType)	return;	//�V�[���ݒ�ɕύX���Ȃ���Έȍ~�X���[
+	if (mnSceneType == mnNextSceneType)	return;	//シーン設定に変更がなければ以降スルー
 
-	//�ȍ~�A�V�[���ύX���������ꍇ
+	//以降、シーン変更があった場合
 
-	if (mpCurrentScene != nullptr)	mpCurrentScene->Finalize();		//�O�V�[���I������
+	if (mpCurrentScene != nullptr)	mpCurrentScene->Finalize();		//前シーン終了処理
 
-	mnSceneType = mnNextSceneType;	//���V�[���ɂ��邽�߃V�[���^�C�v���X�V
+	mnSceneType = mnNextSceneType;	//次シーンにするためシーンタイプを更新
 
-	//mnSCeneType �ɉ����ăV�[���𐶐�����
+	//mnSCeneType に応じてシーンを生成する
 	switch (mnSceneType)
 	{
 		case SCENE_TYPE::SCENE_TITLE:
@@ -64,5 +64,5 @@ void SceneManager::ChangeSceneIfNeeded() {
 		break;
 	}
 
-	mpCurrentScene->Initialize();	//�V�[���̐���������Ă���͂��Ȃ̂ŁA�������������Ă�ł���
+	mpCurrentScene->Initialize();	//シーンの生成がされているはずなので、初期化処理を呼んでおく
 }
